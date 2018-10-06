@@ -1,35 +1,34 @@
 <template>
   <div id="app">
-    <div class="header">
-      <menu-bar @change="fetchStocks"></menu-bar>
+    <div v-if="page" class="header">
+      <menu-bar @change="fetchSecurities"></menu-bar>
     </div>
-    <stocks-content class="main"/>
+    <login v-if="!page" class="main"/>
+    <securities-content v-else class="main"/>
   </div>
 </template>
 
 <script>
-import StocksContent from './components/StocksContent.vue'
+import SecuritiesContent from './components/SecuritiesContent.vue'
 import MenuBar from './components/MenuBar.vue'
+import Login from './components/Login.vue'
 
 export default {
   name: 'app',
-  components: { MenuBar, StocksContent },
+  components: { Login, MenuBar, SecuritiesContent },
   created() {
-    this.fetchStocks(this.$store.state.page);
-    this.$store.dispatch('fetchLinks');
-    this.$store.dispatch('fetchSectors');
-    this.$store.dispatch('fetchAccounts');
+    if (this.page) {
+      this.$store.dispatch('authenticated');
+    }
+  },
+  computed: {
+    page () {
+      return this.$store.getters.page;
+    }
   },
   methods: {
-    fetchStocks (page) {
-      this.$store.dispatch('fetchStocks', page)
-        .then(stocks => {
-           if(stocks.length) {
-             this.$store.dispatch('fetchStockInfo', stocks[0].id);
-           }else {
-             this.$store.dispatch('newStock', page);
-           }
-        });
+    fetchSecurities (page) {
+      this.$store.dispatch('fetchSecuritiesInfo', page)
     }
   }
 }

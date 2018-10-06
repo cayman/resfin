@@ -10,16 +10,16 @@
 <script>
   import {replaceUrl} from '../utils';
   export default {
-    name: 'stock-chart',
+    name: 'security-chart',
     computed: {
       link () {
         return this.$store.getters.chartLink;
       },
-      stock () {
-        return this.$store.state.stock.model;
+      security () {
+        return this.$store.state.security.model;
       },
       varValue () {
-        return this.stock[this.link.var];
+        return this.security[this.link.var];
       },
       src () {
         return this.link ? replaceUrl(this.link.chart, 'var', this.varValue, this.link.varLowerCase) : null

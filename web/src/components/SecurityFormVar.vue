@@ -18,7 +18,7 @@
 import {replaceUrl} from '../utils';
 import form from './form'
 export default {
-  name: 'stock-form-var',
+  name: 'security-form-var',
   mixins: [form],
   props: {
     link: {
@@ -27,19 +27,19 @@ export default {
     }
   },
   computed: {
-    stock () {
-      return this.$store.state.stock.model;
+    security () {
+      return this.$store.state.security.model;
     },
     filedRef: {
       get () {
-        return this.stock[this.link.var];
+        return this.security[this.link.var];
       },
       set (ref) {
-        this.setStockField(this.link.var, ref);
+        this.setSecurityField(this.link.var, ref);
       }
     },
     hrefSearch () {
-      return replaceUrl(this.link.search, 'name', this.stock.name);
+      return replaceUrl(this.link.search, 'name', this.security.name);
     },
     hrefTest () {
       return replaceUrl(this.link.url, 'var', this.filedRef, this.link.varLowerCase);

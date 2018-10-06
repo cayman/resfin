@@ -14,12 +14,12 @@
       </td>
 
       <template v-if="isDividendType">
-        <td class="trade__dividend">
-          <dividend :price="trade.calc.avg" :dividend="trade.price" :percent-visible="false"/>
+        <td class="trade__interest">
+          <interest-percent :price="trade.calc.avg" :interest="trade.price" :percent-visible="false"/>
         </td>
 
         <td class="trade__percent">
-          <dividend :price="trade.calc.avg" :dividend="trade.price" :dividend-visible="false"/>
+          <interest-percent :price="trade.calc.avg" :interest="trade.price" :interest-visible="false"/>
         </td>
 
         <td class="trade__sum">
@@ -87,7 +87,7 @@
               Дивиденды:
             </span>
             <span class="trade__value">
-               <dividend :price="trade.calc.avg" :dividend="trade.price"/>
+               <interest-percent :price="trade.calc.avg" :interest="trade.price"/>
             </span>
           </div>
           <div class="trade__field">
@@ -186,14 +186,14 @@
 </template>
 
 <script>
-import Dividend from './Dividend'
+import InterestPercent from './InterestPercent'
 import Profit from './Profit.vue'
 import form from './form'
 import {getCurrency, getLocalDate, percent} from '../utils';
 export default {
-  name: 'stock-trade',
+  name: 'security-trade',
   mixins: [form],
-  components: { Dividend, Profit },
+  components: { InterestPercent, Profit },
   props: {
     trade: {
       type: Object,
@@ -204,8 +204,8 @@ export default {
     date() {
       return getLocalDate(this.trade.date);
     },
-    stock () {
-      return this.$store.state.stock.model;
+    security () {
+      return this.$store.state.security.model;
     },
     types () {
       return this.$store.state.trade.types;
@@ -217,13 +217,13 @@ export default {
       return this.$store.state.trades.expanded.includes(this.trade.id);
     },
     isDividendType () {
-      return this.trade.type === 'dividend';
+      return this.trade.typeCode === 'dividend';
     },
     isBuyType () {
-      return this.trade.type === 'buy';
+      return this.trade.typeCode === 'buy';
     },
     type() {
-      return this.types.find(type => type.code === this.trade.type);
+      return this.types.find(type => type.code === this.trade.typeCode);
     },
     commissionSum () {
       return getCurrency(this.trade.commission ? this.trade.commission.reduce((sum, value) => sum + value, 0 ) : 0);
@@ -236,7 +236,7 @@ export default {
       return this.isBuyType ? '-' : '+';
     },
     calcIncome () {
-      return this.trade.calc.income + this.trade.calc.dividend;
+      return this.trade.calc.income + this.trade.calc.interest;
     },
     calcExpense () {
       return this.trade.calc.expense + this.trade.calc.commission;
@@ -258,7 +258,7 @@ export default {
     deleteTrade() {
       this.$store.dispatch('deleteTrade', this.trade.id).then(() =>{
         this.$store.commit('editingTrade', false);
-        this.$store.dispatch('fetchTrades', this.stock.code);
+        this.$store.dispatch('fetchTrades', this.security.code);
         this.$store.commit('setExpandTrades', []);
       });
     },
@@ -346,7 +346,7 @@ export default {
       font-weight: 600;
       text-align: right;
     }
-    &__dividend {
+    &__interest {
       text-align: right;
     }
     &__percent {

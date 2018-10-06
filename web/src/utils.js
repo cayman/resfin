@@ -1,12 +1,61 @@
+const appStorage = localStorage;
+
+export function getAppStorageItem(name) {
+  const item = appStorage.getItem('resfin_' + name);
+  try {
+    return item ? JSON.parse(item) : null;
+  }
+  catch (ignored){
+    return null;
+  }
+
+}
+
+export function setAppStorageItem(name, value) {
+  return appStorage.setItem('resfin_' + name, JSON.stringify(value));
+}
+
+
+function createModel(snap) {
+  const model = {id: snap.id, ...snap.data()};
+  // if(model.stock) {
+  //   model.securityCode = model.stock;
+  // }
+  // if(model.account) {
+  //   model.accountCode = model.account;
+  // }
+  // if(model.type) {
+  //   model.typeCode = model.type;
+  // }
+  // if(model.sector) {
+  //   model.sectorName = model.sector;
+  // }
+  // if(model.dividend) {
+  //   model.interest = model.dividend;
+  // }
+  return model;
+}
+
+export function getSnapList (snap) {
+  return snap.docs.map(item => createModel(item));
+}
+
+export function getSnapData (snap) {
+  return snap.exists ? createModel(snap) : {};
+}
 
 export function replaceUrl (template, varName, varValue, toLowerCase = false) {
   return template && varValue ? template.replace('{$'+ varName +'}', toLowerCase ? varValue.toLowerCase() : varValue ) : null;
 }
 
-export function percent(dividend, price) {
-  return (dividend / price * 100).toFixed(2);
+export function percent(interest, price) {
+  return (interest / price * 100).toFixed(2);
 }
 
+export function parseError(title, error) {
+  console.log(title, error);
+  return { type: 'error', title, error };
+}
 
 const datetimeParser = /(\d{2}).(\d{2}).(\d{4}) (\d{2}):(\d{2}):(\d{2})/;
 export function parseLocaleDatetime(value) {

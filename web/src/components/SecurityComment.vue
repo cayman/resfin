@@ -6,15 +6,15 @@
       </a>
       <span class="comment__date">{{ created }}</span>
       <span class="comment__price" v-if="comment.price">{{ comment.price }} &#8381;</span>
-      <span v-if="comment.dividend >=0 " class="comment__dividend">Дивиденды:
-         <dividend :price="comment.price" :dividend="comment.dividend"></dividend>
+      <span v-if="comment.interest >=0 " class="comment__interest">Интерес:
+         <interest-percent :price="comment.price" :interest="comment.interest"></interest-percent>
       </span>
-      <a v-if="comment.source" :href="comment.source" class="comment__link" target="_info" title="Источник">
-        <i class="fa fa-external-link" aria-hidden="true"></i>
-      </a>
     </div>
     <div class="comment__title">
       {{ comment.title }}
+      <a v-if="comment.source" :href="comment.source" class="comment__link" target="_info" title="Источник">
+        <i class="fa fa-external-link" aria-hidden="true"></i>
+      </a>
     </div>
     <div v-html="comment.text">
     </div>
@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import Dividend from './Dividend'
+import InterestPercent from './InterestPercent'
 import {getLocalDate} from '../utils';
 export default {
-  name: 'stock-comment',
-  components: { Dividend },
+  name: 'security-comment',
+  components: { InterestPercent },
   props: {
     comment: {
       type: Object,
@@ -71,8 +71,7 @@ export default {
     }
 
     &__link {
-      float: right;
-      margin: 5px 0 0 0;
+      color: lightsteelblue;
       vertical-align: bottom;
     }
     &__date {
@@ -82,7 +81,7 @@ export default {
     &__price {
       margin-left: 5px;
     }
-    &__dividend {
+    &__interest {
       margin-left: 5px;
     }
     &__title {

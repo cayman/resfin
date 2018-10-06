@@ -1,16 +1,16 @@
 <template>
   <ul>
     <li v-for="link in links" :key="link.id">
-      <stock-link :link="link"/>
+      <security-link :link="link"/>
     </li>
   </ul>
 </template>
 
 <script>
-  import StockLink from './StockLink.vue'
+  import SecurityLink from './SecurityLink.vue'
   export default {
-    name: 'stock-links',
-    components: { StockLink },
+    name: 'security-links',
+    components: { SecurityLink },
     computed: {
       links () {
         return this.$store.state.links.list;

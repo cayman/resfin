@@ -1,16 +1,16 @@
 <template>
   <div class="info">
-    <template v-if="stock.id">
-      <stock-links></stock-links>
+    <template v-if="security.id">
+      <security-links></security-links>
       <h3>
-        <a class="info__action" @click="editStock">
+        <a class="info__action" @click="editSecurity">
           <i class="fa fa fa-pencil" aria-hidden="true" ></i>
         </a>
-        <span class="info__title">{{ stock.desc }}</span>&nbsp;
-        <span class="info__sector">{{ stock.sector }}</span>
+        <span class="info__title">{{ security.desc }}</span>&nbsp;
+        <span class="info__sector">{{ security.sectorName }}</span>
       </h3>
-      <stock-chart/>
-      <stock-price/>
+      <security-chart/>
+      <security-price/>
       <div class="info__menu">
         <a class="info__action" @click="addComment">
           <i class="fa fa-commenting-o" aria-hidden="true" title="Добавить комментарий"></i>
@@ -25,24 +25,24 @@
           <i class="fa fa-minus" aria-hidden="true"></i>
         </a>
       </div>
-      <stock-comments/>
-      <stock-trades/>
+      <security-comments/>
+      <security-trades/>
     </template>
   </div>
 </template>
 
 <script>
-import StockLinks from './StockLinks.vue'
-import StockChart from './StockChart.vue'
-import StockPrice from './StockPrice.vue'
-import StockTrades from './StockTrades.vue'
-import StockComments from './StockComments';
+import SecurityLinks from './SecurityLinks.vue'
+import SecurityChart from './SecurityChart.vue'
+import SecurityPrice from './SecurityPrice.vue'
+import SecurityTrades from './SecurityTrades.vue'
+import SecurityComments from './SecurityComments';
 export default {
-  name: 'stock-info',
-  components: { StockLinks, StockChart, StockPrice, StockTrades, StockComments },
+  name: 'security-info',
+  components: { SecurityLinks, SecurityChart, SecurityPrice, SecurityTrades, SecurityComments },
   computed: {
-    stock () {
-      return this.$store.state.stock.model;
+    security () {
+      return this.$store.state.security.model;
     },
     accounts () {
       return this.$store.state.accounts.list ;
@@ -53,20 +53,20 @@ export default {
     lastTrade () {
       return this.trades.length > 0 ? this.trades[this.trades.length - 1] : null;
     },
-    stockPrice () {
-      return this.$store.getters.stockPrice;
+    securityPrice () {
+      return this.$store.getters.securityPrice;
     }
   },
   methods: {
-    editStock() {
-      this.$store.commit('editingStock', true);
+    editSecurity() {
+      this.$store.commit('editingSecurity', true);
     },
     addComment() {
-      this.$store.dispatch('newComment', {stock: this.stock.code, price: this.stockPrice});
+      this.$store.dispatch('newComment', {securityCode: this.security.code, price: this.securityPrice});
     },
-    addTrade(type) {
-      this.$store.dispatch('newTrade', {...this.lastTrade, type} ||
-        { stock: this.stock.code, account: this.accounts[0].code, type});
+    addTrade(typeCode) {
+      this.$store.dispatch('newTrade', {...this.lastTrade, typeCode} ||
+        { securityCode: this.security.code, accountCode: this.accounts[0].code, typeCode});
     }
   }
 }

@@ -1,4 +1,10 @@
 export default {
-  databaseId: 'name',
-  databaseURL: 'https://name.firebaseio.com'
+  firebase: {
+    apiKey: 'AIzaSyCcT0BUbiZiKUuCw3AtB4U8UExHQkjI2e8',
+    authDomain: 'vueschool-firebase-au.firebaseapp.com',
+    databaseURL: 'https://vueschool-firebase-au.firebaseio.com',
+    projectId: 'vueschool-firebase-au',
+    storageBucket: 'vueschool-firebase-au.appspot.com',
+    messagingSenderId: '795856805888'
+  }
 }

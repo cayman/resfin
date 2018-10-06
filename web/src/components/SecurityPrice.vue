@@ -8,26 +8,26 @@
 </template>
 
 <script>
-import StockLinks from './StockLinks.vue'
-import StockChart from './StockChart.vue'
+import SecurityLinks from './SecurityLinks.vue'
+import SecurityChart from './SecurityChart.vue'
 export default {
-  name: 'stock-price',
-  components: { StockLinks, StockChart },
+  name: 'security-price',
+  components: { SecurityLinks, SecurityChart },
   computed: {
-    micex () {
-      return this.$store.state.stock.micex;
+    moex () {
+      return this.$store.state.security.moex;
     },
     price () {
-      return this.$store.getters.stockPrice;
+      return this.$store.getters.securityPrice;
     },
     change () {
-      return this.$store.getters.stockPriceChange;
+      return this.$store.getters.securityPriceChange;
     },
     changeSign () {
       return this.change > 0 ? '+' : '';
     },
     percent () {
-      return this.$store.getters.stockPriceChangePercent;
+      return this.$store.getters.securityPriceChangePercent;
     }
   }
 }

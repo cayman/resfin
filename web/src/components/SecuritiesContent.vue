@@ -1,27 +1,27 @@
 <template>
   <div class="content">
     <div class="content__left">
-      <stock-list/>
+      <securities-list/>
     </div>
     <div class="content__right">
       <template>
-        <stock-form v-if="editing"></stock-form>
-        <stock-info v-else></stock-info>
+        <security-form v-if="editing"></security-form>
+        <security-card v-else></security-card>
       </template>
     </div>
   </div>
 </template>
 
 <script>
-import StockList from './StockList.vue'
-import StockInfo from './StockInfo.vue'
-import StockForm from './StockForm.vue'
+import SecuritiesList from './SecuritiesList.vue'
+import SecurityCard from './SecurityCard.vue'
+import SecurityForm from './SecurityForm.vue'
 export default {
-  name: 'stocks-content',
-  components: { StockList, StockInfo, StockForm },
+  name: 'securities-content',
+  components: { SecuritiesList, SecurityCard, SecurityForm },
   computed: {
     editing () {
-      return this.$store.state.stock.editing === true;
+      return this.$store.state.security.editing === true;
     }
   }
 }

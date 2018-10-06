@@ -1,6 +1,6 @@
 <template>
   <span :class="{good: percent >= 9, bad: percent <= 3, normal: percent > 3 && percent < 9 }">
-    <span v-if="dividend && dividendVisible">{{Number(dividend.toFixed(4))}}
+    <span v-if="interest && interestVisible">{{Number(interest.toFixed(4))}}
       <span v-if="percent && percentVisible"> ({{percent}} &#37;)</span>
     </span>
     <span v-else>{{percent}} &#37;</span>
@@ -10,13 +10,13 @@
 <script>
   import {percent} from '../utils';
   export default {
-    name: 'dividend',
+    name: 'interestPercent',
     props: {
-      dividend: {
+      interest: {
         type: Number,
         required: false
       },
-      dividendVisible: {
+      interestVisible: {
         type: Boolean,
         required: false,
         default: true
@@ -33,7 +33,7 @@
     },
     computed: {
       percent () {
-        return percent(this.dividend, this.price);
+        return percent(this.interest, this.price);
       }
     }
   }

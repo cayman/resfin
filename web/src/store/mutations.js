@@ -1,6 +1,21 @@
 import Vue from 'vue';
+import {setAppStorageItem} from '../utils';
 
 export default {
+
+  loading: (state, loading) => {
+    state.loading = loading;
+  },
+
+  setMessage: (state, message) => {
+    state.message = message;
+  },
+
+  setUser: (state, user) => {
+    state.user = user;
+    setAppStorageItem('user', user);
+  },
+
   setLinks: (state, list) => {
     Vue.set(state.links, 'list', list);
   },
@@ -12,28 +27,28 @@ export default {
   },
   setPage: (state, page) => {
     state.page = page;
-    localStorage.setItem('page', page);
+    setAppStorageItem('page', page);
   },
 
   // Акции
-  setStocks: (state, list) => {
-    Vue.set(state.stocks, 'list', list);
+  setSecurities: (state, list) => {
+    Vue.set(state.securities, 'list', list);
   },
-  setStock: (state, model) => {
-    Vue.set(state.stock, 'model', model);
+  setSecurity: (state, model) => {
+    Vue.set(state.security, 'model', model);
   },
-  setStockMicex: (state, micex) => {
-    const data = micex.data && micex.data[0] ? micex.columns.reduce((data, column, index) => {
-      data[column] = micex.data[0][index];
+  setSecurityMoex: (state, moex) => {
+    const data = moex.data && moex.data[0] ? moex.columns.reduce((data, column, index) => {
+      data[column] = moex.data[0][index];
       return data;
     },{}) :  {};
-    Vue.set(state.stock, 'micex', data);
+    Vue.set(state.security, 'moex', data);
   },
-  editingStock: (state, editing) => {
-    state.stock.editing = editing;
+  editingSecurity: (state, editing) => {
+    state.security.editing = editing;
   },
-  setStockField: (state, {name, value}) => {
-    Vue.set(state.stock.model, name, value);
+  setSecurityField: (state, {name, value}) => {
+    Vue.set(state.security.model, name, value);
   },
 
   // Комментарии

@@ -1,5 +1,14 @@
+import {getAppStorageItem} from "../utils";
+
 export default {
-  page: localStorage.getItem('page') || 'p',
+  page: getAppStorageItem('page') || 'p',
+  user: getAppStorageItem('user') || {},
+  loading: false,
+  message: {
+    type: null,
+    title: null,
+    error: null
+  },
   sectors : {
     list: []
   },
@@ -9,15 +18,14 @@ export default {
   accounts : {
     list: []
   },
-  stocks : {
+  securities : {
     list: []
   },
-  stock : {
+  security : {
     editing: false,
     expanded: [],
     url: 'https://iss.moex.com/iss/engines/stock/markets/shares/boards/tqbr/securities/',
-    // http://iss.moex.com/iss/engines/stock/markets/index/securities/columns.html
-    micex: {
+    moex: {
       columns: [],
       data: []
     },
@@ -25,8 +33,13 @@ export default {
       code: null
     },
     types: [
-      { code:'ап', name: 'Обыкновенная'},
-      { code:'ао', name: 'Превилигированная'}
+      { code:'ап', label:'ап', name: 'Превилигированная акция'},
+      { code:'ао', label:'ао', name: 'Обыкновенная акция'}
+    ],
+    favorites: [
+      { code:5, icon:'fa fa-star-o', name: 'Избранная'},
+      { code:1, icon:'fa fa-thumbs-o-down', name: 'Плохая'},
+      { code:0, icon:'fa', name: 'Обычная'},
     ],
   },
   trades : {
@@ -41,8 +54,9 @@ export default {
       { code:'sell', name: 'Продажа', icon: 'fa fa-minus'}
     ],
     model: {
-      stock: null,
-      account: null
+      code: null,
+      securityCode: null,
+      accountCode: null
     }
   },
   comments : {
@@ -51,7 +65,7 @@ export default {
   comment : {
     editing: false,
     model: {
-      stock: null
+      securityCode: null
     }
   }
 }

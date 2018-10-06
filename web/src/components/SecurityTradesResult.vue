@@ -11,7 +11,7 @@
         {{ account.avg | currency }}
       </td>
       <td class="footer__percent">
-        <profit :expense="account.avg" :income="stockPrice" ></profit>
+        <profit :expense="account.avg" :income="securityPrice" ></profit>
       </td>
       <td class="footer__sum">
         <profit :expense="calcExpense" :income="calcIncome" ></profit>
@@ -29,7 +29,7 @@
 <script>
   import Profit from './Profit.vue'
   export default {
-    name: 'stock-trades-result',
+    name: 'security-trades-result',
     components: { Profit },
     props: {
       account: {
@@ -38,11 +38,11 @@
       }
     },
     computed: {
-      stockPrice () {
-        return this.$store.getters.stockPrice;
+      securityPrice () {
+        return this.$store.getters.securityPrice || 0;
       },
       calcIncome () {
-        return this.account.income + this.account.dividend;
+        return this.account.income + this.account.interest;
       },
       calcExpense () {
         return this.account.expense + this.account.commission;

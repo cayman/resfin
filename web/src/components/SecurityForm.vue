@@ -29,7 +29,7 @@
     <div class="form__field">
       <span class="form__label">Тип акции:</span>
       <span class="form__input">
-        <select v-model="fieldType" placeholder="Выберите тип акции">
+        <select v-model="fieldTypeCode" placeholder="Выберите тип акции">
           <option disabled value="">Выберите тип акции</option>
           <option v-for="type in types" :key="type.code" :value="type.code" :label="type.name"></option>
         </select>
@@ -38,7 +38,10 @@
     <div class="form__field">
       <span class="form__label">Избранное:</span>
       <span class="form__input">
-        <input type="checkbox" v-model="fieldFavorite"/>
+        <select v-model="fieldFavorite" placeholder="Оценка бумаги">
+          <option disabled value="">Выберите оценку</option>
+          <option v-for="favorite in favorites" :key="favorite.code" :value="favorite.code" :label="favorite.name"></option>
+        </select>
       </span>        
     </div>
     <div class="form__field">
@@ -60,18 +63,18 @@
     <div class="form__field">
       <span class="form__label">Сектор полный:</span>
       <span class="form__input">
-        <textarea v-model="fieldSector" placeholder="Сектор включая дочерний" rows="2" cols="26"></textarea>
+        <textarea v-model="fieldSectorName" placeholder="Сектор включая дочерний" rows="2" cols="26"></textarea>
       </span>        
     </div>
-    <stock-form-var class="form__field" v-for="link in refLinks" :key="link.code" :link="link">
-    </stock-form-var>
+    <security-form-var class="form__field" v-for="link in refLinks" :key="link.code" :link="link">
+    </security-form-var>
     <div class="form__field">
       <span class="form__label">
         &nbsp;
       </span>
       <span class="form__input">
-        <button @click="saveStock" :disabled="!fieldCode || !fieldName || !fieldSectorCode">Сохранить</button>&nbsp;
-        <button @click="cancelStock">Отмена</button>
+        <button @click="saveSecurity" :disabled="!fieldCode || !fieldName || !fieldSectorCode">Сохранить</button>&nbsp;
+        <button @click="cancelSecurity">Отмена</button>
       </span>
     </div>
   </div>
@@ -79,11 +82,11 @@
 
 <script>
 import form from './form'
-import StockFormVar from './StockFormVar';
+import SecurityFormVar from './SecurityFormVar';
 import {replaceUrl} from '../utils';
 export default {
-  components: { StockFormVar },
-  name: 'stock-form',
+  components: { SecurityFormVar },
+  name: 'security-form',
   mixins: [form],
   computed: {
     currentPage () {
@@ -98,74 +101,77 @@ export default {
     sectors () {
       return this.$store.state.sectors.list;
     },
-    stock () {
-      return this.$store.state.stock.model;
+    security () {
+      return this.$store.state.security.model;
     },
     types () {
-      return this.$store.state.stock.types;
+      return this.$store.state.security.types;
+    },
+    favorites () {
+      return this.$store.state.security.favorites;
     },
     fieldCode: {
       get () {
-        return this.stock.code;
+        return this.security.code;
       },
       set (code) {
-        this.setStockField('code', code);
+        this.setSecurityField('code', code);
       }
     },
     fieldName: {
       get () {
-        return this.stock.name;
+        return this.security.name;
       },
       set (name) {
-        this.setStockField('name', name);
+        this.setSecurityField('name', name);
       }
     },
     fieldDesc: {
       get () {
-        return this.stock.desc;
+        return this.security.desc;
       },
       set (desc) {
-        this.setStockField('desc', desc);
+        this.setSecurityField('desc', desc);
       }
     },
-    fieldType: {
+    fieldTypeCode: {
       get () {
-        return this.stock.type;
+        return this.security.typeCode;
       },
-      set (type) {
-        this.setStockField('type', type);
+      set (typeCode) {
+        this.setSecurityField('typeCode', typeCode);
       }
     },
     fieldFavorite: {
       get () {
-        return this.stock.favorite;
+        return this.security.favorite;
       },
       set (favorite) {
-        this.setStockField('favorite', favorite);
+        this.setSecurityField('favorite', favorite);
       }
     },
     fieldPortfolio: {
       get () {
-        return this.stock.portfolio;
+        return this.security.portfolio;
       },
       set (portfolio) {
-        this.setStockField('portfolio', portfolio);
+        this.setSecurityField('portfolio', portfolio);
       }
     },
     fieldSectorCode: {
       get () {
-        return this.stock.sectorCode;
+        return this.security.sectorCode;
       },
       set (sectorCode) {
-        this.setStockField('sectorCode', sectorCode);
+        this.setSecurityField('sectorCode', sectorCode);
       }
     },
-    fieldSector: {
+    fieldSectorName: {
       get () {
-        return this.stock.sector;
+        return this.security.sectorName;
       },
-      set (sector) {
-        this.setStockField('sector', sector);
+      set (sectorName) {
+        this.setSecurityField('sectorName', sectorName);
       }
     }
   },
@@ -173,30 +179,30 @@ export default {
     selectSector(id) {
       console.log(id);
       const sector = this.sectors.find(sector => sector.id === id);
-      this.fieldSector = sector ? sector.name : null
+      this.fieldSectorName = sector ? sector.name : null
     },
     href (code) {
       return this.links.filter(link => link.code === code)
         .map(link => replaceUrl(link.search, 'name', this.fieldName))[0];
     },
-    calculatePage (page, stock) {
-      return page === 'f' && stock.favorite ? 'f'
-        : page === 'p' && stock.portfolio ? 'p'
-          : stock.sectorCode;
+    calculatePage (page, security) {
+      return page === 'f' && security.favorite ? 'f'
+        : page === 'p' && security.portfolio ? 'p'
+          : security.sectorCode;
     },
-    saveStock() {
-      this.$store.dispatch('saveStock', this.stock).then((stockId) =>{
-        this.$store.dispatch('fetchStockInfo', stockId).then(() => {
-          const page = this.calculatePage(this.currentPage, this.stock);
+    saveSecurity() {
+      this.$store.dispatch('saveSecurity', this.security).then((securityId) =>{
+        this.$store.dispatch('fetchSecurityInfo', securityId).then(() => {
+          const page = this.calculatePage(this.currentPage, this.security);
           this.$store.commit('setPage', page);
-          this.$store.dispatch('fetchStocks', page);
+          this.$store.dispatch('fetchSecurities', page);
         });
       });
     },
-    cancelStock() {
-      this.$store.commit('editingStock', false);
-      if (this.stock.id) {
-        this.$store.dispatch('fetchStock', this.stock.id);
+    cancelSecurity() {
+      this.$store.commit('editingSecurity', false);
+      if (this.security.id) {
+        this.$store.dispatch('fetchSecurity', this.security.id);
       }
     }
   }

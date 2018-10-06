@@ -14,15 +14,15 @@
           Цена:
       </span>
       <span class="form__input">
-        <input type="number" v-model="fieldPrice" style="width: 5em"/>
+        <input type="number" v-model="fieldPrice" step="any"  style="width: 5em"/>
       </span>
       <span class="form__label">
-          Дивиденд:
+          Начисление:
       </span>
       <span class="form__input">
-        <input type="number" v-model="fieldDividend" :disabled="!fieldPrice" style="width: 5em">
+        <input type="number" v-model="fieldInterest" step="any" :disabled="!fieldPrice" style="width: 5em">
       </span>
-      <dividend class="form__label" :price="fieldPrice" :dividend="fieldDividend"></dividend>
+      <interest-percent class="form__label" :price="fieldPrice" :interest="fieldInterest"></interest-percent>
     </div>
     <div class="form__field">
       <span class="form__label">
@@ -39,17 +39,17 @@
 <script>
 import form from './form'
 import {percent} from '../utils';
-import Dividend from './Dividend'
+import InterestPercent from './InterestPercent'
 export default {
-  name: 'stock-comment-form',
+  name: 'security-comment-form',
   mixins: [form],
-  components: { Dividend },
+  components: { InterestPercent },
   computed: {
-    stock () {
-      return this.$store.state.stock.model;
+    security () {
+      return this.$store.state.security.model;
     },
-    stockPrice () {
-      return this.$store.getters.stockPrice;
+    securityPrice () {
+      return this.$store.getters.securityPrice;
     },
     comment () {
       return this.$store.state.comment.model;
@@ -86,26 +86,26 @@ export default {
         this.setCommentField('price', price, Number);
       }
     },
-    fieldDividend: {
+    fieldInterest: {
       get () {
-        return this.comment.dividend;
+        return this.comment.interest;
       },
-      set (dividend) {
-        this.setCommentField('dividend', dividend, Number);
+      set (interest) {
+        this.setCommentField('interest', interest, Number);
       }
     },
     percent () {
-      return percent(this.fieldDividend, this.fieldPrice);
+      return percent(this.fieldInterest, this.fieldPrice);
     }
   },
   methods: {
     setFieldPrice () {
-      this.fieldPrice = this.stockPrice;
+      this.fieldPrice = this.securityPrice;
     },
     saveComment() {
       this.$store.dispatch('saveComment', this.comment).then((commentId) =>{
         this.$store.commit('editingComment', false);
-        this.$store.dispatch('fetchComments', this.stock.code);
+        this.$store.dispatch('fetchComments', this.security.code);
         this.$store.commit('setExpandComments', [commentId]);
       });
     },

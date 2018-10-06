@@ -8,7 +8,7 @@
 <script>
   import {replaceUrl} from '../utils';
   export default {
-    name: 'stock-link',
+    name: 'security-link',
     props: {
       link: {
         type: Object,
@@ -16,11 +16,11 @@
       }
     },
     computed: {
-      stock () {
-        return this.$store.state.stock.model;
+      security () {
+        return this.$store.state.security.model;
       },
       varValue () {
-        return this.stock[this.link.var];
+        return this.security[this.link.var];
       },
       href () {
         return replaceUrl(this.link.url, 'var', this.varValue, this.link.varLowerCase);

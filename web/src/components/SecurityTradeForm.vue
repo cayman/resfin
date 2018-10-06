@@ -6,7 +6,7 @@
            Вид сделки:
         </span>
         <span class="form__input">
-          <select v-model="fieldType" placeholder="Выберите">
+          <select v-model="fieldTypeCode" placeholder="Выберите">
             <option disabled value="">Выберите вид сделки</option>
             <option v-for="type in types" :key="type.code" :value="type.code" :label="type.name"></option>
           </select>
@@ -17,7 +17,7 @@
            Счет:
         </span>
         <span class="form__input">
-          <select v-model="fieldAccount" placeholder="Выберите">
+          <select v-model="fieldAccountCode" placeholder="Выберите">
             <option disabled value="">Выберите счет</option>
             <option v-for="account in accounts" :key="account.code" :value="account.code" :label="account.name"></option>
           </select>
@@ -64,7 +64,7 @@
              На одну:
           </span>
           <span class="form__input">
-            <input type="number" v-model="fieldPrice" style="width: 10em"/>
+            <input type="number" step="any" v-model="fieldPrice" style="width: 10em"/>
           </span>
         </div>
 
@@ -73,7 +73,7 @@
             Сумма:
           </span>
           <span class="form__input">
-           <input type="number" v-model="fieldSum" style="width: 10em"/>
+           <input type="number" step="any" v-model="fieldSum" style="width: 10em"/>
             {{ fieldSum / fieldCount  }}
           </span>
         </div>
@@ -107,7 +107,7 @@
              Цена:
           </span>
           <span class="form__input">
-           <input type="number" v-model="fieldPrice" style="width: 10em"/>
+           <input type="number" v-model="fieldPrice" step="any" style="width: 10em"/>
           </span>
         </div>
 
@@ -116,7 +116,7 @@
              Сумма:
           </span>
           <span class="form__input">
-             <input type="number" v-model="fieldSum" readonly style="width: 10em"/>
+             <input type="number" v-model="fieldSum" step="any" readonly style="width: 10em"/>
           </span>
         </div>
 
@@ -125,10 +125,10 @@
              Комиссия:
           </span>
             <span class="form__input">
-            <input type="number" v-model="fieldCommission0" style="width: 4em"/>
-            <input v-if="fieldCommission0" type="number" v-model="fieldCommission1" style="width: 4em"/>
-            <input v-if="fieldCommission1" type="number" v-model="fieldCommission2" style="width: 4em"/>
-            <input v-if="fieldCommission2" type="number" v-model="fieldCommission3" style="width: 4em"/>
+            <input type="number" v-model="fieldCommission0" step="any" style="width: 4em"/>
+            <input v-if="fieldCommission0" type="number" v-model="fieldCommission1" step="any" style="width: 4em"/>
+            <input v-if="fieldCommission1" type="number" v-model="fieldCommission2" step="any" style="width: 4em"/>
+            <input v-if="fieldCommission2" type="number" v-model="fieldCommission3" step="any" style="width: 4em"/>
           </span>
         </div>
 
@@ -160,18 +160,18 @@
 
 <script>
 import form from './form'
-import Dividend from './Dividend'
+import InterestPercent from './InterestPercent'
 import {getCurrency, getIsoDate} from '../utils';
 export default {
-  name: 'stock-trade-form',
+  name: 'security-trade-form',
   mixins: [form],
-  components: { Dividend },
+  components: { InterestPercent },
   computed: {
-    stock () {
-      return this.$store.state.stock.model;
+    security () {
+      return this.$store.state.security.model;
     },
-    stockPrice () {
-      return this.$store.getters.stockPrice;
+    securityPrice () {
+      return this.$store.getters.securityPrice;
     },
     types () {
       return this.$store.state.trade.types;
@@ -188,7 +188,7 @@ export default {
       },
       set (raw) {
         this.setTradeField('raw', raw);
-        this.updateTradePSB(this.trade.type, raw);
+        this.updateTradePSB(this.trade.typeCode, raw);
       }
     },
     fieldDate: {
@@ -199,24 +199,24 @@ export default {
         this.setTradeField('date', date, Date);
       }
     },
-    fieldAccount: {
+    fieldAccountCode: {
       get () {
-        return this.trade.account;
+        return this.trade.accountCode;
       },
-      set (account) {
-        this.setTradeField('account', account);
+      set (accountCode) {
+        this.setTradeField('accountCode', accountCode);
       }
     },
-    fieldType: {
+    fieldTypeCode: {
       get () {
-        return this.trade.type;
+        return this.trade.typeCode;
       },
-      set (type) {
-        this.setTradeField('type', type);
+      set (typeCode) {
+        this.setTradeField('typeCode', typeCode);
       }
     },
     isDividendType () {
-      return this.fieldType === 'dividend';
+      return this.fieldTypeCode === 'dividend';
     },
     fieldCode: {
       get () {
@@ -299,20 +299,20 @@ export default {
       return getCurrency(this.fieldCommission ? this.fieldCommission.reduce((sum,value) => sum + value, 0 ) : 0);
     },
     resultSum () {
-      return getCurrency(this.fieldSum + (this.fieldType === 'buy' ? this.commissionSum : - this.commissionSum));
+      return getCurrency(this.fieldSum + (this.fieldTypeCode === 'buy' ? this.commissionSum : - this.commissionSum));
     },
     allow () {
-      return this.fieldAccount && this.fieldType && this.fieldCode && this.fieldCount && this.fieldPrice;
+      return this.fieldAccountCode && this.fieldTypeCode && this.fieldCode && this.fieldCount && this.fieldPrice;
     }
   },
   methods: {
     setFieldPrice () {
-      this.fieldPrice = this.stockPrice;
+      this.fieldPrice = this.securityPrice;
     },
     saveTrade() {
       this.$store.dispatch('saveTrade', this.trade).then((tradeId) =>{
         this.$store.commit('editingTrade', false);
-        this.$store.dispatch('fetchTrades', this.stock.code);
+        this.$store.dispatch('fetchTrades', this.security.code);
         this.$store.commit('setExpandTrades', [tradeId]);
       });
     },

@@ -28,25 +28,25 @@
           </tr>
         </thead>
         <template v-for="_trade in account.trades" >
-          <stock-trade :key="_trade.id" :trade="_trade"></stock-trade>
-          <stock-trade-form v-if="editing && tradeId===_trade.id" :key="_trade.id + '_edit'"></stock-trade-form>
+          <security-trade :key="_trade.id" :trade="_trade"></security-trade>
+          <security-trade-form v-if="editing && tradeId===_trade.id" :key="_trade.id + '_edit'"></security-trade-form>
         </template>
-        <stock-trades-result :account="account" :key="code + '_footer'"></stock-trades-result>
-        <stock-trade-form v-if="editing && tradeAccount === code && !tradeId" :key="code + '_add'"></stock-trade-form>
+        <security-trades-result :account="account" :key="code + '_footer'"></security-trades-result>
+        <security-trade-form v-if="editing && tradeAccountCode === code && !tradeId" :key="code + '_add'"></security-trade-form>
       </template>
-      <stock-trade-form v-if="editing && emptyTrades" key="trade_add"></stock-trade-form>
+      <security-trade-form v-if="editing && emptyTrades" key="trade_add"></security-trade-form>
     </table>
 
   </div>
 </template>
 
 <script>
-  import StockTrade from './StockTrade.vue'
-  import StockTradeForm from './StockTradeForm.vue'
-  import StockTradesResult from "./StockTradesResult";
+  import SecurityTrade from './SecurityTrade.vue'
+  import SecurityTradeForm from './SecurityTradeForm.vue'
+  import SecurityTradesResult from "./SecurityTradesResult";
   export default {
-    name: 'stock-trades',
-    components: {StockTrade, StockTradeForm, StockTradesResult },
+    name: 'security-trades',
+    components: {SecurityTrade, SecurityTradeForm, SecurityTradesResult },
     computed: {
       accounts () {
         return this.$store.getters.tradeAccounts;
@@ -54,8 +54,8 @@
       editing () {
         return this.$store.state.trade.editing;
       },
-      tradeAccount () {
-        return this.$store.state.trade.model.account;
+      tradeAccountCode () {
+        return this.$store.state.trade.model.accountCode;
       },
       tradeId () {
         return this.$store.state.trade.model.id;

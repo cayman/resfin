@@ -7,10 +7,10 @@ export default {
       console.log('setCommentField', name, val, value);
       this.$store.commit('setCommentField', {name, value});
     },
-    setStockField(name, val, type) {
+    setSecurityField(name, val, type) {
       const value = parseValue(val, type);
-      console.log('setStockField', name, val, value);
-      this.$store.commit('setStockField', {name, value});
+      console.log('setSecurityField', name, val, value);
+      this.$store.commit('setSecurityField', {name, value});
     },
     setTradeField(name, val, type) {
       console.log('setTradeField', name, val, typeof val);
@@ -24,11 +24,11 @@ export default {
       commission.splice(index, 1, value);
       this.setTradeField('commission', commission, Array);
     },
-    updateTradePSB(type, raw) {
+    updateTradePSB(typeCode, raw) {
       try {
         const list = parseRawText(raw);
         console.log('updateTradePSB', list);
-        const isDividend = type === 'dividend';
+        const isDividend = typeCode === 'dividend';
         const params = {
           date: isDividend ? parseLocaleDate(list[0]) : parseLocaleDatetime(list[0]),
           code: parseValue(isDividend ? list[3] : list[2]),

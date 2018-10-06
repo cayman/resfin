@@ -1,14 +1,16 @@
 import config from  '../config';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/auth';
 
-firebase.initializeApp({
-  projectId: config.databaseId,
-  databaseURL: config.databaseURL
-});
+
+firebase.initializeApp(config.firebase);
+
+
+const db = firebase.firestore();
+const auth = firebase.auth();
 
 console.log(firebase.name);
 
-const db = firebase.firestore();
 
-export { db };
+export { db, auth };
