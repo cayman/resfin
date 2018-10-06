@@ -1,0 +1,4 @@
+export default {
+  databaseId: 'name',
+  databaseURL: 'https://name.firebaseio.com'
+}
