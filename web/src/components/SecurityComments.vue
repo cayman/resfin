@@ -1,5 +1,5 @@
 <template>
-  <div v-if="comments.length">
+  <div v-if="comments.length || editing">
     <security-comment-form v-if="editing && !commentId"></security-comment-form>
     <template v-for="_comment in comments" >
       <security-comment :key="_comment.id" :comment="_comment"></security-comment>

@@ -137,7 +137,7 @@
              Итого:
           </span>
           <span class="form__input">
-              {{ fieldSum | currency }} {{ this.fieldType === 'buy' ? '+' : ' - '}} {{ commissionSum | currency }} =
+              {{ fieldSum | currency }} {{ this.fieldTypeCode === 'buy' ? '+' : ' - '}} {{ commissionSum | currency }} =
               {{ resultSum | currency }}
           </span>
         </div>

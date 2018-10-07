@@ -2,7 +2,7 @@ import {getAppStorageItem} from "../utils";
 
 export default {
   page: getAppStorageItem('page') || 'p',
-  user: { }, // getAppStorageItem('user') || {},
+  user: getAppStorageItem('user') || {},
   loading: false,
   message: {
     type: null,

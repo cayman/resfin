@@ -2,7 +2,7 @@
   <div class="form">
     <div class="form__field">
       <span class="form__label">
-        <a :href="href('intelinvest.ru')" target="_search" title="Поиск бумаги">
+        <a :href="href('intelinvest.ru', false)" target="_search" title="Поиск бумаги">
           Код:
         </a>
       </span>
@@ -181,9 +181,9 @@ export default {
       const sector = this.sectors.find(sector => sector.id === id);
       this.fieldSectorName = sector ? sector.name : null
     },
-    href (code) {
+    href (code, replace = true) {
       return this.links.filter(link => link.code === code)
-        .map(link => replaceUrl(link.search, 'name', this.fieldName))[0];
+        .map(link => replace || this.fieldName ? replaceUrl(link.search, 'name', this.fieldName) : link.search)[0];
     },
     calculatePage (page, security) {
       return page === 'f' && security.favorite ? 'f'

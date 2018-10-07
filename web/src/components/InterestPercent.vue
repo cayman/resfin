@@ -40,5 +40,13 @@
 </script>
 
 <style scoped>
-
+  .good {
+    color: green;
+  }
+  .bad {
+    color: red;
+  }
+  .normal {
+    color: blue;
+  }
 </style>

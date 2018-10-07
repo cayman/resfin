@@ -69,13 +69,13 @@ export default {
   .main {
      flex: 1 1 300px;
    }
-  .good {
-    color: green;
-  }
-  .bad {
-    color: red;
-  }
-  .normal {
-    color: blue;
+
+  button, input, select, textarea {
+    font-family : inherit;
+    font-size   : 100%;
+
+    -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+    -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+    box-sizing: border-box;
   }
 </style>

@@ -32,7 +32,7 @@
           <security-trade-form v-if="editing && tradeId===_trade.id" :key="_trade.id + '_edit'"></security-trade-form>
         </template>
         <security-trades-result :account="account" :key="code + '_footer'"></security-trades-result>
-        <security-trade-form v-if="editing && tradeAccountCode === code && !tradeId" :key="code + '_add'"></security-trade-form>
+        <security-trade-form v-if="editing && !tradeId && tradeAccountCode === code" :key="code + '_add'"></security-trade-form>
       </template>
       <security-trade-form v-if="editing && emptyTrades" key="trade_add"></security-trade-form>
     </table>
@@ -61,7 +61,7 @@
         return this.$store.state.trade.model.id;
       },
       emptyTrades () {
-        return !this.accounts[this.tradeAccount];
+        return !this.accounts[this.tradeAccountCode];
       },
     },
   }

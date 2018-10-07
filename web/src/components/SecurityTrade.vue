@@ -167,7 +167,7 @@
             Общий баланс:
           </span>
           <span class="trade__value trade__comment">
-              {{ calcIncome | currency }} - ({{ calcExpense | currency }})
+              {{ calcIncome | currency }} - {{ calcExpense | currency }}
                = {{ calcProfit | currency }}
               (<profit :expense="calcExpense" :income="calcIncome"/>)
             </span>

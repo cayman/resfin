@@ -95,7 +95,7 @@
   }
 
   .portfolio {
-    color: darkgreen;
+    color: green;
   }
 
 

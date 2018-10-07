@@ -40,11 +40,11 @@
 
 <style scoped>
   .up {
-    color: darkolivegreen;
+    color: darkgreen;
   }
   .down {
     // color: red;
-    color: darkgoldenrod;
+    color: firebrick;
   }
   .zero {
     color: blue;

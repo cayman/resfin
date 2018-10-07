@@ -9,7 +9,7 @@ export default {
       return [];
     }
     commit('loading', true);
-    const securities = code === 'f' ? getters.securities.where('favorite', '>', 0)
+    const securities = code === 'f' ? getters.securities.where('favorite', '>', 1)
       : code === 'p' ? getters.securities.where('portfolio', '==', true)
         : getters.securities.where('sectorCode', '==', code);
     return securities.get()

@@ -1,6 +1,6 @@
 <template>
-  <tbody>
-    <tr class="footer">
+  <tbody class="footer">
+    <tr class="footer__row" :class="{ expanded }" @click="toggleExpand">
       <td class="footer__type" colspan="2">
         {{ account.date | date }}
       </td>
@@ -23,6 +23,68 @@
         {{ calcProfit | currency}}
       </td>
     </tr>
+    <tr class="footer__detail" :class="{ expanded }" v-if="expanded">
+      <td colspan="8">
+        <div class="footer__field">
+          <span class="footer__label">
+            Сумма покупок (расход):
+          </span>
+          <span class="footer__value">
+            -{{ account.expense | currency }}
+          </span>
+        </div>
+        <div class="footer__field">
+          <span class="footer__label">
+            Комиссия (расход):
+          </span>
+          <span class="footer__value footer__comment">
+            -{{ account.commission | currency }}
+          </span>
+        </div>
+
+        <div class="footer__field">
+          <span class="footer__label">
+            Сумма начислений:
+          </span>
+          <span class="footer__value">
+            {{ account.interest | currency }}
+            <span v-if="account.interest">(<profit :expense="calcExpense" :income="account.interest"/>)</span>
+          </span>
+        </div>
+        <div class="footer__field">
+          <span class="footer__label">
+            Сумма продаж (приход):
+          </span>
+          <span class="footer__value">
+            {{ account.income | currency }}
+            <span v-if="account.income">(<profit :expense="calcExpense" :income="account.income"/>)</span>
+          </span>
+        </div>
+
+        <div class="footer__field">
+          <span class="footer__label">
+            Средневзвешенная цена:
+          </span>
+          <span class="footer__value footer__comment">
+              ({{ account.avg | currency }} x {{ account.volume | count }})
+              = {{ account.avg * account.volume | currency }}
+            <span v-if="securityPrice">(<profit :expense="account.avg" :income="securityPrice"/>)</span>
+            </span>
+        </div>
+
+        <div class="footer__field">
+          <span class="footer__label">
+            Общий баланс:
+          </span>
+          <span class="footer__value footer__comment">
+              {{ calcIncome | currency }} - {{ calcExpense | currency }}
+               = {{ calcProfit | currency }}
+              (<profit :expense="calcExpense" :income="calcIncome"/>)
+            </span>
+        </div>
+
+      </td>
+    </tr>
   </tbody>
 </template>
 
@@ -31,6 +93,11 @@
   export default {
     name: 'security-trades-result',
     components: { Profit },
+    data () {
+      return {
+        expanded: false
+      }
+    },
     props: {
       account: {
         type: Object,
@@ -51,17 +118,23 @@
         return this.calcIncome - this.calcExpense;
       }
     },
+    methods: {
+      toggleExpand() {
+        this.expanded = !this.expanded;
+      }
+    }
   }
 </script>
 
 <style lang="scss" scoped>
-  .trades {
-    width: 100%;
-    border-collapse: collapse;
-    // border: 1px solid lightsteelblue;
-    margin: 5px 0;
-    th, td {
-      padding: 3px 0 3px 5px;
+  .footer {
+    font-size: 11px;
+    font-weight: 500;
+    font-stretch: condensed;
+    background-color: beige;
+
+    td {
+      padding: 2px 0 2px 5px;
       &:first-child {
         padding-left: 10px;
       }
@@ -69,48 +142,24 @@
         padding-right: 10px;
       }
     }
-  }
 
-  .header {
-    font-size: 11px;
-    font-weight: 500;
-    font-stretch: condensed;
-    background-color: aliceblue;
+    tr.expanded {
+      td {
+        background-color: whitesmoke;
+      }
+    }
 
-    &__type {
-      width: 40px;
+    &__row {
+      td {
+        line-height: 17px;
+      }
     }
-    &__count {
-      text-align: right;
-      width: auto;
-     }
-    &__price {
-      text-align: right;
-      width: auto;
-    }
-    &__percent {
-      text-align: right;
-      width: auto;
-    }
-    &__sum {
-      text-align: right;
-      width: auto;
-    }
-    &__commission {
-      text-align: right;
-      width: auto;
-    }
-    &__result {
-      text-align: right;
-      width: auto;
-    }
-  }
 
-  .footer {
-    font-size: 11px;
-    font-weight: 500;
-    font-stretch: condensed;
-    background-color: beige;
+    &__row:hover {
+      td {
+        background-color: mintcream;
+      }
+    }
 
     &__type {
       text-align: right;
@@ -144,5 +193,41 @@
       width: auto;
 
     }
+
+    &__detail {
+      line-height: 20px;
+      td {
+        border-top: 2px solid white;
+        border-bottom: 1px solid gray;
+      }
+    }
+
+    &__field {
+      width: 100%;
+      td {
+        line-height: 15px;
+      }
+    }
+
+    &__label {
+      font-weight: 400;
+      font-stretch: condensed;
+      line-height: 20px;
+      float: left;
+      width: 150px;
+      color: #727272;
+    }
+
+    &__value {
+      font-weight: 500;
+      font-stretch: normal;
+      color: black;
+    }
+
+    &__comment {
+      color: #637384;
+    }
+
+
   }
 </style>
