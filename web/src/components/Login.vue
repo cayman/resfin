@@ -54,9 +54,12 @@
         }
       }
     },
+    created () {
+      this.$store.dispatch('uiSignIn');
+    },
     methods:  {
       signIn (){
-        this.$store.dispatch('signIn', this.params).then(user => {
+        this.$store.dispatch('signInEmailPassword', this.params).then(user => {
           if (user && user.id) {
             this.$store.dispatch('authenticated');
           }

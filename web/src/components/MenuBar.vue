@@ -45,7 +45,7 @@
       setPage (code) {
         console.log('setPage', code);
         this.$store.commit('setPage', code);
-        this.$emit('change', code);
+        this.$store.dispatch('fetchSecuritiesInfo', code)
       }
     }
   }

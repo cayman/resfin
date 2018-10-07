@@ -1,6 +1,6 @@
 export default {
   firebase: {
-    apiKey: 'AIzaSyCcT0BUbiZiKUuCw3AtB4U8UExHQkjI2e8',
+    apiKey: null,
     authDomain: 'vueschool-firebase-au.firebaseapp.com',
     databaseURL: 'https://vueschool-firebase-au.firebaseio.com',
     projectId: 'vueschool-firebase-au',

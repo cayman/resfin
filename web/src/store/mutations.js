@@ -13,7 +13,7 @@ export default {
 
   setUser: (state, user) => {
     state.user = user;
-    setAppStorageItem('user', user);
+    // setAppStorageItem('user', state.user);
   },
 
   setLinks: (state, list) => {

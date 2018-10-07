@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <div v-if="page" class="header">
-      <menu-bar @change="fetchSecurities"></menu-bar>
-    </div>
-    <login v-if="!page" class="main"/>
-    <securities-content v-else class="main"/>
+    <template v-if="isAuthenticated">
+      <div  class="header">
+        <menu-bar></menu-bar>
+      </div>
+      <securities-content class="main"/>
+    </template>
+    <!--<login v-else class="main"/>-->
   </div>
 </template>
 
@@ -17,18 +19,19 @@ export default {
   name: 'app',
   components: { Login, MenuBar, SecuritiesContent },
   created() {
-    if (this.page) {
+    if (this.isAuthenticated) {
       this.$store.dispatch('authenticated');
+    } else {
+      this.$store.dispatch('signInPopup', this.params).then(user => {
+        if (user && user.id) {
+          this.$store.dispatch('authenticated');
+        }
+      });
     }
   },
   computed: {
-    page () {
-      return this.$store.getters.page;
-    }
-  },
-  methods: {
-    fetchSecurities (page) {
-      this.$store.dispatch('fetchSecuritiesInfo', page)
+    isAuthenticated () {
+      return this.$store.getters.isAuthenticated;
     }
   }
 }

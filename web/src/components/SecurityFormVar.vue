@@ -6,7 +6,7 @@
       </a>
     </span>
     <span class="field__input">
-      <input type="text" v-model="filedRef" size="18"></input>
+      <input type="text" v-model="filedRef" size="18"/>
     </span>
     <a v-if="hrefTest" :href="hrefTest" class="field__link" target="_test" :title="link.desc || link.code">
       <i class="fa fa-external-link" aria-hidden="true"></i>

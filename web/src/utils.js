@@ -1,4 +1,4 @@
-const appStorage = localStorage;
+const appStorage = sessionStorage;
 
 export function getAppStorageItem(name) {
   const item = appStorage.getItem('resfin_' + name);
@@ -42,6 +42,19 @@ export function getSnapList (snap) {
 
 export function getSnapData (snap) {
   return snap.exists ? createModel(snap) : {};
+}
+
+export function getSnapUser ({user, credential}) {
+  return  {
+    id: user.uid,
+    token: credential.accessToken,
+    email: user.email,
+    emailVerified: user.emailVerified,
+    name: user.displayName,
+    photoURL: user.photoURL,
+    metadata: user.metadata,
+    u: user.u
+  }
 }
 
 export function replaceUrl (template, varName, varValue, toLowerCase = false) {

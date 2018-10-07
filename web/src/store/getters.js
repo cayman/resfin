@@ -24,6 +24,10 @@ export default {
     return state.user.id? state.page : null;
   },
 
+  isAuthenticated (state) {
+    return !!state.user.id;
+  },
+
   getSecurity: (state) => (code) => {
     const url = state.security.url + code + '.json';
     console.log('fetch', url);

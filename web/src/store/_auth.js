@@ -1,23 +1,32 @@
-import {parseError} from "../utils";
-import {auth} from "./firebase";
+import {getSnapUser, parseError} from "../utils";
+import {auth, provider} from "./firebase";
 
 export default {
-  signIn: ({commit}, {email, password}) => {
-    console.log('signIn:' + email);
+  signInPopup: ({commit}) => {
+    console.log('signInPopup:');
     commit('loading', true);
-    return auth.signInWithEmailAndPassword(email, password)
-      .then(ref => {
-        console.log('success:', ref.user );
-        return {
-          id: ref.user.uid,
-          email: ref.user.email,
-          name: ref.user.displayName,
-          photoURL: ref.user.photoURL,
-          metadata: ref.user.metadata
-        };
-      })
+    return auth.signInWithPopup(provider)
+      .then(user => getSnapUser(user))
       .then(user => {
-        console.log('success:', );
+        console.log('success:', user);
+        commit('setUser', user);
+        commit('loading', false);
+        return user;
+      })
+      .catch((error) => {
+        commit('setMessage', parseError('Ошибка авторизации:', error));
+        commit('loading', false);
+        return null;
+      });
+  },
+
+  signInEmailPassword: ({commit}, {email, password}) => {
+    console.log('signInLoginPassword:' + email);
+    commit('loading', true);
+    return auth.signInEmailPassword(email, password)
+      .then(user => getSnapUser(user))
+      .then(user => {
+        console.log('success:', user);
         commit('setUser', user);
         commit('loading', false);
         return user;
@@ -34,10 +43,14 @@ export default {
     dispatch('fetchSectors');
     return dispatch('fetchAccounts')
       .then(() => {
-          return dispatch('fetchSecuritiesInfo', state.page);
+        return dispatch('fetchSecuritiesInfo', state.page);
       });
   }
+
 }
+
+
+
 
 // user: Q
 // G: []
