@@ -4,6 +4,7 @@
     <!-- http://mfd.ru/marketdata/chart/?id={$var}&timeframe=1440&intervalMode=closedRay&count=-60&width=320&height=200&lineColor=%234169E1-->
     <!-- http://mfd.ru/marketdata/chart/?id={$var}&timeframe=1440&count=-120&width=400&height=180&lineColor=%234169E1-->
     <!-- http://mfd.ru/marketdata/chart/?id={$var}&timeframe=1440&count=-60&intervalMode=closedRay&width=400&height=170&lineColor=%234169E1-->
+    <!-- http://mfd.ru/marketdata/chart/?id={$var}&timeframe=1440&intervalMode=closedRay&count=-60&width=255&height=150&lineColor=%23ff660a-->
   </div>
 </template>
 
