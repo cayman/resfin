@@ -1,7 +1,7 @@
 <template>
-  <a v-if="href" :href="href" target="_info" :title="link.desc || link.code">
+  <a v-if="href" target="_info" @click.stop="open" :title="link.desc || link.code">
     <img v-if="link.icon" :src="link.icon" height="16px" width="16px">
-    {{ link.name || link.code }}
+    {{ link.label }}
   </a>
 </template>
 
@@ -25,6 +25,12 @@
       href () {
         return replaceUrl(this.link.url, 'var', this.varValue, this.link.varLowerCase);
       }
+    },
+    methods: {
+      open () {
+        window.open(this.href,'_info','menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes').focus();
+      }
+
     }
   }
 </script>
@@ -45,3 +51,5 @@
   }
 
 </style>
+<!--https://ru.investing.com/equities/alrosa-ao-commentary-->
+<!--https://ru.investing.com/equities/alrosa-ao-commentary-->

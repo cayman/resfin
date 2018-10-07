@@ -58,7 +58,7 @@ export function getSnapUser ({user, credential}) {
 }
 
 export function replaceUrl (template, varName, varValue, toLowerCase = false) {
-  return template && varValue ? template.replace('{$'+ varName +'}', toLowerCase ? varValue.toLowerCase() : varValue ) : null;
+  return template && varValue ? encodeURI(template.replace('{$'+ varName +'}', toLowerCase ? varValue.toLowerCase() : varValue )) : null;
 }
 
 export function percent(interest, price) {
