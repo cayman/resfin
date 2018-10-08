@@ -25,6 +25,7 @@ export default {
     editing: false,
     expanded: [],
     url: 'https://iss.moex.com/iss/engines/stock/markets/shares/boards/tqbr/securities/',
+    url1: 'https://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities/LNZL/candles.html?till=2018-10-07&interval=24&start=0',
     moex: {
       columns: [],
       data: []

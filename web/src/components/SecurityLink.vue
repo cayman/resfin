@@ -1,6 +1,6 @@
 <template>
   <a v-if="href" target="_info" @click.stop="open" :title="link.desc || link.code">
-    <img v-if="link.icon" :src="link.icon" height="16px" width="16px">
+    <img v-if="link.iconSrc" :src="link.iconSrc" height="16px" width="16px">
     {{ link.label }}
   </a>
 </template>

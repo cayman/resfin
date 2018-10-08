@@ -36,8 +36,8 @@ export default {
       .then(data => data.marketdata || {});
   },
 
-  chartLink ({links}) {
-    return links.list.find(link => link.chart);
+  chartLinks ({links}) {
+    return links.list.filter(link => link.chartUrl)
   },
 
   securityTypes : ({security}) =>
