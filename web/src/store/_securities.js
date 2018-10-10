@@ -18,18 +18,7 @@ export default {
       )
       .then(securities => {
         commit('setSecurities', securities);
-        return securities.map(sec => sec.code);
-      })
-      .then(() => {
-        return getters.comments.where('interest', '>=', 0).get()
-      })
-      .then(comments => getSnapList(comments)
-        .sort((a,b) => a.created > b.created ? -1 : 1)
-      )
-      .then(comments => {
-        commit('setSecuritiesComments', comments);
-        commit('loading', false);
-        return comments;
+        return securities;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка получения ценных бумаг:', error));
@@ -41,8 +30,9 @@ export default {
     return dispatch('fetchSecurities', page)
       .then(securities => {
         if(securities.length) {
-          return dispatch('fetchSecurityInfo', securities[0].id);
-        }else {
+          dispatch('fetchSecuritiesComments');
+          dispatch('fetchSecurityInfo', securities[0].id);
+         }else {
           return dispatch('newSecurity', page);
         }
       });
@@ -79,7 +69,7 @@ export default {
     commit('setExpandTrades', []);
   },
 
-  newSecurity: ({commit}, page) =>{
+  newSecurity: ({commit, state}, page) =>{
     console.log('newSecurity in', page);
     commit('editingSecurity', true);
     commit('setSecurity', {
@@ -89,7 +79,8 @@ export default {
       typeCode: null,
       favorite: page === 'f',
       portfolio: page === 'p',
-      sectorName: null,
+      sectorName: state.sectors.list
+        .filter(sector => sector.code === page).map(sector => sector.name)[0],
       sectorCode: ['p', 'f'].includes(page) ? null : page,
     });
     commit('setSecurityMoex', {});

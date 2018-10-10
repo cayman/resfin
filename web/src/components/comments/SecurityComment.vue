@@ -6,7 +6,7 @@
       </a>
       <span class="comment__date">{{ created }}</span>
       <span class="comment__price" v-if="comment.price">{{ comment.price }} &#8381;</span>
-      <span v-if="comment.interest >=0 " class="comment__interest">Интерес:
+      <span v-if="comment.interest >= 0 " class="comment__interest">Интерес:
          <interest-percent :price="comment.price" :interest="comment.interest"></interest-percent>
       </span>
     </div>

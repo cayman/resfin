@@ -51,7 +51,7 @@
       </span>
     </div>
     <div class="form__field">
-      <span class="form__label">Сектор:</span>
+      <span class="form__label" @click="setSector()">Сектор:</span>
       <span class="form__input">
         <select v-model="fieldSectorCode" @change="selectSector(fieldSectorCode)">
           <option disabled value="">Выберите сектор</option>

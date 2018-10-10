@@ -21,6 +21,24 @@ export default {
       });
   },
 
+  fetchSecuritiesComments: ({commit, getters}, securities=[]) => {
+    console.log('fetchSecuritiesComments:', securities);
+    commit('loading', true);
+    return getters.comments.where('interest', '>=', 0).get()
+      .then(comments => getSnapList(comments)
+        .sort((a,b) => a.created > b.created ? -1 : 1)
+      )
+      .then(comments => {
+        commit('setSecuritiesComments', comments);
+        commit('loading', false);
+        return comments;
+      })
+      .catch((error) => {
+        commit('setMessage', parseError('Ошибка получения комментариев:', error));
+        commit('loading', false);
+      });
+    },
+
   newComment: ({commit}, {securityCode, price}) =>{
     console.log('newComment for', securityCode, price);
     commit('editingComment', true);

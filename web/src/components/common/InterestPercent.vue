@@ -1,6 +1,6 @@
 <template>
   <span :class="{small, good: percent >= 8, bad: percent <= 4, normal: percent > 4 && percent < 8 }">
-    <span v-if="interest && interestVisible">{{Number(interest.toFixed(4))}}
+    <span v-if="interestVal && interestVisible">{{ interestVal}}
       <span v-if="percent && percentVisible"> ({{percent}}<span v-if="!small">&nbsp;&#37;</span>)</span>
     </span>
     <span v-else>{{percent}}<span v-if="!small">&nbsp;&#37;</span></span>
@@ -39,6 +39,10 @@
     computed: {
       percent () {
         return percent(this.interest, this.price);
+      },
+      interestVal () {
+        return this.interest !== null && this.interest !== undefined  && this.interest >=0
+          ? Number(this.interest.toFixed(4)) : null
       }
     }
   }

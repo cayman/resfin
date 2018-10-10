@@ -4,6 +4,10 @@
     <span :class="{zero: change === 0, up: change > 0, down: change < 0}">
       {{changeSign}}{{change}} ({{changeSign}}{{percent}}%)
     </span>
+
+    <span class="price__portfolio" v-for="(account, code) in tradesAccounts" :key="code">
+      <span class="price__label">{{ account.name }}:</span> {{ account.avg * account.volume | currency }}&#8381;
+    </span>
   </div>
 </template>
 
@@ -28,6 +32,9 @@ export default {
     },
     percent () {
       return this.$store.getters.securityPriceChangePercent;
+    },
+    tradesAccounts () {
+      return this.$store.getters.tradeAccounts;
     }
   }
 }
@@ -54,6 +61,16 @@ export default {
     }
     .zero {
       color: blue;
+    }
+
+    &__label {
+      color: lightslategrey;
+    }
+
+    &__portfolio {
+      float: right;
+      font-stretch: condensed;
+      margin-left: 5px;
     }
   }
 
