@@ -99,8 +99,8 @@ export function parseDate(value) {
     return new Date(value);
 }
 
-export function parseValue(val, type) {
-  let value = val && (typeof val === 'string') && val.trim() ? val.trim() : val;
+export function parseValue(val = null, type) {
+  let value = val !== null && (typeof val === 'string') && val.trim() ? val.trim() : val;
   return type === Number && typeof value !== 'number' ? Number(value.replace(/\s/g,'').replace(',', '.')) :
     value && type === Date && (typeof value === 'number' || typeof value === 'string') ? parseDate(value)
     : value;

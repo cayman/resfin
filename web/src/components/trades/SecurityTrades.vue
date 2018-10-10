@@ -43,7 +43,7 @@
 <script>
   import SecurityTrade from './SecurityTrade.vue'
   import SecurityTradeForm from './SecurityTradeForm.vue'
-  import SecurityTradesResult from "./SecurityTradesResult";
+  import SecurityTradesResult from './SecurityTradesResult';
   export default {
     name: 'security-trades',
     components: {SecurityTrade, SecurityTradeForm, SecurityTradesResult },

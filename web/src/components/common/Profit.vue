@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import {percent} from '../utils';
+  import {percent} from '../../utils';
   export default {
     name: 'profit',
     props: {

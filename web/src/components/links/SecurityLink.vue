@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import {replaceUrl} from '../utils';
+  import {replaceUrl} from '../../utils';
   export default {
     name: 'security-link',
     props: {

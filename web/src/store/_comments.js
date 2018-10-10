@@ -52,8 +52,8 @@ export default {
       title: comment.title || null,
       text: comment.text || null,
       source: comment.source || null,
-      price: comment.price || null,
-      interest: comment.interest || null,
+      price: comment.price,
+      interest: comment.interest,
       created: comment.created || updated,
       updated: comment.updated || updated
     };

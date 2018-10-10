@@ -34,6 +34,16 @@ export default {
   setSecurities: (state, list) => {
     Vue.set(state.securities, 'list', list);
   },
+  setSecuritiesComments: (state, list) => {
+    Vue.set(state.securities, 'comments', list);
+  },
+  updateSecuritiesComments: (state, {code, list}) => {
+    state.securities.comments = state.securities.comments
+      .filter(com => com.securityCode !== code).concat(list);
+  },
+  addSecuritiesComments: (state, list) => {
+    state.securities.push = list;
+  },
   setSecurity: (state, model) => {
     Vue.set(state.security, 'model', model);
   },

@@ -32,11 +32,11 @@
 </template>
 
 <script>
-import SecurityLinks from './SecurityLinks.vue'
-import SecurityChart from './SecurityChart.vue'
+import SecurityLinks from './links/SecurityLinks.vue'
+import SecurityChart from './chart/SecurityChart.vue'
 import SecurityPrice from './SecurityPrice.vue'
-import SecurityTrades from './SecurityTrades.vue'
-import SecurityComments from './SecurityComments';
+import SecurityTrades from './trades/SecurityTrades.vue'
+import SecurityComments from './comments/SecurityComments';
 export default {
   name: 'security-info',
   components: { SecurityLinks, SecurityChart, SecurityPrice, SecurityTrades, SecurityComments },

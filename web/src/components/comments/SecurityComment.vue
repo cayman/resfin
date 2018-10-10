@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import InterestPercent from './InterestPercent'
-import {getLocalDate} from '../utils';
+import InterestPercent from '../common/InterestPercent'
+import {getLocalDate} from '../../utils';
 export default {
   name: 'security-comment',
   components: { InterestPercent },

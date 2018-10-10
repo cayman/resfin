@@ -22,7 +22,7 @@
       <span class="form__input">
         <input type="number" v-model="fieldInterest" step="any" :disabled="!fieldPrice" style="width: 5em">
       </span>
-      <interest-percent class="form__label" :price="fieldPrice" :interest="fieldInterest"></interest-percent>
+      <interest-percent v-if="fieldInterest" class="form__label" :price="fieldPrice" :interest="fieldInterest"></interest-percent>
     </div>
     <div class="form__field">
       <span class="form__label">
@@ -37,9 +37,9 @@
 </template>
 
 <script>
-import form from './form'
-import {percent} from '../utils';
-import InterestPercent from './InterestPercent'
+import form from '../form'
+import {percent} from '../../utils';
+import InterestPercent from '../common/InterestPercent'
 export default {
   name: 'security-comment-form',
   mixins: [form],
@@ -103,9 +103,13 @@ export default {
       this.fieldPrice = this.securityPrice;
     },
     saveComment() {
+      const code = this.security.code;
       this.$store.dispatch('saveComment', this.comment).then((commentId) =>{
         this.$store.commit('editingComment', false);
-        this.$store.dispatch('fetchComments', this.security.code);
+        this.$store.dispatch('fetchComments', code).then(comments => {
+          this.$store.commit('updateSecuritiesComments', { code, list: comments.filter(c => c.interest >= 0) });
+        });
+
         this.$store.commit('setExpandComments', [commentId]);
       });
     },

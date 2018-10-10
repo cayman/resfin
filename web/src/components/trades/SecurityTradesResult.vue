@@ -89,7 +89,7 @@
 </template>
 
 <script>
-  import Profit from './Profit.vue'
+  import Profit from '../common/Profit.vue'
   export default {
     name: 'security-trades-result',
     components: { Profit },

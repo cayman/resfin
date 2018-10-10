@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import SecurityLinks from './SecurityLinks.vue'
-import SecurityChart from './SecurityChart.vue'
+import SecurityLinks from './links/SecurityLinks.vue'
+import SecurityChart from './chart/SecurityChart.vue'
 export default {
   name: 'security-price',
   components: { SecurityLinks, SecurityChart },

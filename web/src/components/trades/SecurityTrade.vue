@@ -186,10 +186,10 @@
 </template>
 
 <script>
-import InterestPercent from './InterestPercent'
-import Profit from './Profit.vue'
-import form from './form'
-import {getCurrency, getLocalDate, percent} from '../utils';
+import InterestPercent from '../common/InterestPercent'
+import Profit from '../common/Profit.vue'
+import form from '../form'
+import {getCurrency, getLocalDate, percent} from '../../utils';
 export default {
   name: 'security-trade',
   mixins: [form],

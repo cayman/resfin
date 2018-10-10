@@ -19,7 +19,8 @@ export default {
     list: []
   },
   securities : {
-    list: []
+    list: [],
+    comments: []
   },
   security : {
     editing: false,

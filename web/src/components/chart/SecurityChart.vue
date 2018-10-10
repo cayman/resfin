@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import {replaceUrl} from '../utils';
+  import {replaceUrl} from '../../utils';
   import TradingView from './TradingView';
   export default {
     name: 'security-chart',

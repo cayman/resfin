@@ -3,7 +3,10 @@
     <a class="security__code" :title="security.desc + ' ' + securityType.label" @click="select(security.id)">{{ security.code }}</a>
     <a class="security__name" :title="security.desc + ' ' + securityType.label" @click="select(security.id)">
       {{ security.name }}
-      {{ securityType.label }}
+      {{ securityType.label  }}
+      <span v-if="lastComment">
+        <interest-percent :interest="lastComment.interest" :interest-visible="false" :price="lastComment.price" :small="true"></interest-percent>
+      </span>
     </a>
     <a class="security__icon" @click="toggleFavorite" title="Избранное">
       <i :class="favorites[security.favorite || 0].icon" aria-hidden="true"></i>
@@ -12,10 +15,12 @@
 </template>
 
 <script>
+  import InterestPercent from './common/InterestPercent'
   import form from './form'
   export default {
     name: 'securities-list-item',
     mixins: [form],
+      components: { InterestPercent },
     props: {
       security: {
         type: Object,
@@ -37,6 +42,13 @@
       },
       active () {
         return this.$store.state.security.model.id === this.security.id;
+      },
+      comments () {
+        return this.$store.state.securities.comments
+          .filter(comment => comment.securityCode === this.security.code);
+      },
+      lastComment () {
+        return this.comments[0];
       }
     },
     methods: {
@@ -68,7 +80,8 @@
     }
     &__code {
       float: left;
-      width: 50px;
+      width: 45px;
+      font-stretch: condensed;
     }
     &__name {
       font-stretch: condensed;

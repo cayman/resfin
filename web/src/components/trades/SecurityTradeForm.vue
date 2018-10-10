@@ -159,9 +159,9 @@
 </template>
 
 <script>
-import form from './form'
-import InterestPercent from './InterestPercent'
-import {getCurrency, getIsoDate} from '../utils';
+import form from '../form'
+import InterestPercent from '../common/InterestPercent'
+import {getCurrency, getIsoDate} from '../../utils';
 export default {
   name: 'security-trade-form',
   mixins: [form],

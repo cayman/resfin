@@ -18,8 +18,18 @@ export default {
       )
       .then(securities => {
         commit('setSecurities', securities);
+        return securities.map(sec => sec.code);
+      })
+      .then(() => {
+        return getters.comments.where('interest', '>=', 0).get()
+      })
+      .then(comments => getSnapList(comments)
+        .sort((a,b) => a.created > b.created ? -1 : 1)
+      )
+      .then(comments => {
+        commit('setSecuritiesComments', comments);
         commit('loading', false);
-        return securities;
+        return comments;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка получения ценных бумаг:', error));
