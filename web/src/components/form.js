@@ -2,28 +2,6 @@ import {parseLocaleDate, parseLocaleDatetime, parseRawText, parseValue} from "..
 
 export default {
   methods: {
-    setCommentField(name, val, type) {
-      const value = parseValue(val, type);
-      console.log('setCommentField', name, val, value);
-      this.$store.commit('setCommentField', {name, value});
-    },
-    setSecurityField(name, val, type) {
-      const value = parseValue(val, type);
-      console.log('setSecurityField', name, val, value);
-      this.$store.commit('setSecurityField', {name, value});
-    },
-    setTradeField(name, val, type) {
-      console.log('setTradeField', name, val, typeof val);
-      const value = parseValue(val, type);
-      console.log('setTradeFieldParsed', name, value, typeof value);
-      this.$store.commit('setTradeField', {name, value});
-    },
-    setTradeCommissionField(index, val) {
-      const value = parseValue(val, Number);
-      const commission = this.fieldCommission.slice();
-      commission.splice(index, 1, value);
-      this.setTradeField('commission', commission, Array);
-    },
     updateTradePSB(typeCode, raw) {
       try {
         const list = parseRawText(raw);

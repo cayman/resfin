@@ -37,6 +37,24 @@ export default {
       });
   },
 
+  fetchIndicators: ({commit, getters}) => {
+    console.log('fetchIndicators');
+    commit('loading', true);
+    return getters.indicators.orderBy('order').get()
+      .then(indicators => getSnapList(indicators)
+        .sort((a,b) => a.order > b.order ? 1 : -1)
+      )
+      .then(indicators => {
+        commit('setIndicators', indicators);
+        commit('loading', false);
+        return indicators;
+      })
+      .catch((error) => {
+        commit('setMessage', parseError('Ошибка получения индикаторов:', error));
+        commit('loading', false);
+      });
+  },
+
   fetchAccounts: ({commit, getters}) => {
     console.log('fetchAccounts');
     commit('loading', true);

@@ -15,6 +15,9 @@ export default {
   links : {
     list: []
   },
+  indicators : {
+    list: []
+  },
   accounts : {
     list: []
   },
@@ -58,7 +61,8 @@ export default {
     model: {
       code: null,
       securityCode: null,
-      accountCode: null
+      accountCode: null,
+      commission: null,
     }
   },
   comments : {
@@ -67,7 +71,8 @@ export default {
   comment : {
     editing: false,
     model: {
-      securityCode: null
+      securityCode: null,
+      indicators: null,
     }
   }
 }

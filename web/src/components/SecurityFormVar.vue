@@ -34,8 +34,8 @@ export default {
       get () {
         return this.security[this.link.var];
       },
-      set (ref) {
-        this.setSecurityField(this.link.var, ref);
+      set (value) {
+        this.$store.commit('setSecurityField', {name: this.link.var, value});
       }
     },
     hrefSearch () {

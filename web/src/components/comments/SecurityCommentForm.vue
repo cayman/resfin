@@ -24,12 +24,16 @@
       </span>
       <interest-percent v-if="fieldInterest" class="form__label" :price="fieldPrice" :interest="fieldInterest"></interest-percent>
     </div>
+    <div v-for="(fieldIndicator, index) in fieldIndicators" :key="index + 1">
+      <security-comment-form-indicator :index="index"></security-comment-form-indicator>
+    </div>
+    <security-comment-form-indicator :index="fieldIndicators.length"></security-comment-form-indicator>
     <div class="form__field">
       <span class="form__label">
         &nbsp;
       </span>
       <span class="form__input">
-        <button @click="saveComment" :disabled="!fieldText">Сохранить</button>&nbsp;
+        <button @click="saveComment" :disabled="!fieldTitle && !fieldText">Сохранить</button>&nbsp;
         <button @click="cancelComment">Отмена</button>
       </span>
     </div>
@@ -40,10 +44,11 @@
 import form from '../form'
 import {percent} from '../../utils';
 import InterestPercent from '../common/InterestPercent'
+import SecurityCommentFormIndicator from './SecurityCommentFormIndicator'
 export default {
   name: 'security-comment-form',
   mixins: [form],
-  components: { InterestPercent },
+  components: { InterestPercent, SecurityCommentFormIndicator },
   computed: {
     security () {
       return this.$store.state.security.model;
@@ -59,7 +64,7 @@ export default {
         return this.comment.title;
       },
       set (title) {
-        this.setCommentField('title', title);
+        this.setField('title', title);
       }
     },
     fieldText: {
@@ -67,7 +72,7 @@ export default {
         return this.comment.text;
       },
       set (text) {
-        this.setCommentField('text', text);
+        this.setField('text', text);
       }
     },
     fieldSource: {
@@ -75,7 +80,7 @@ export default {
         return this.comment.source;
       },
       set (source) {
-        this.setCommentField('source', source);
+        this.setField('source', source);
       }
     },
     fieldPrice: {
@@ -83,7 +88,7 @@ export default {
         return this.comment.price;
       },
       set (price) {
-        this.setCommentField('price', price, Number);
+        this.setField('price', price, Number);
       }
     },
     fieldInterest: {
@@ -91,8 +96,11 @@ export default {
         return this.comment.interest;
       },
       set (interest) {
-        this.setCommentField('interest', interest, Number);
+        this.setField('interest', interest, Number);
       }
+    },
+    fieldIndicators () {
+      return this.comment.indicators || [];
     },
     percent () {
       return percent(this.fieldInterest, this.fieldPrice);
@@ -101,6 +109,10 @@ export default {
   methods: {
     setFieldPrice () {
       this.fieldPrice = this.securityPrice;
+    },
+    setField(name, value, type) {
+      console.log('setField', name, value, typeof value);
+      this.$store.commit('setCommentField', {name, value, type});
     },
     saveComment() {
       const code = this.security.code;

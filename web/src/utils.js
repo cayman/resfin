@@ -61,6 +61,22 @@ export function replaceUrl (template, varName, varValue, toLowerCase = false) {
   return template && varValue ? encodeURI(template.replace('{$'+ varName +'}', toLowerCase ? varValue.toLowerCase() : varValue )) : null;
 }
 
+export function evalCriterion (criterion = null, value = null) {
+  try {
+    if (criterion === null && value === null) {
+      return null;
+    }
+    const _criterion = criterion.replace(/\$value/g, value);
+    const result = eval(_criterion);
+    console.log('evalCriterion:', _criterion, result);
+    return result;
+
+  } catch (error) {
+    console.error('evalCriterion', error);
+    return null;
+  }
+}
+
 export function percent(interest, price) {
   return (interest / price * 100).toFixed(2);
 }
@@ -101,9 +117,10 @@ export function parseDate(value) {
 
 export function parseValue(val = null, type) {
   let value = val !== null && (typeof val === 'string') && val.trim() ? val.trim() : val;
-  return type === Number && typeof value !== 'number' ? Number(value.replace(/\s/g,'').replace(',', '.')) :
-    value && type === Date && (typeof value === 'number' || typeof value === 'string') ? parseDate(value)
-    : value;
+  return val === null ? null
+    : type === Number && typeof value !== 'number' ? Number(value.replace(/\s/g,'').replace(',', '.'))
+      : type === Date && (typeof value === 'number' || typeof value === 'string') ? parseDate(value)
+        : value;
 }
 
 

@@ -187,7 +187,7 @@ export default {
         return this.trade.raw;
       },
       set (raw) {
-        this.setTradeField('raw', raw);
+        this.setField('raw', raw);
         this.updateTradePSB(this.trade.typeCode, raw);
       }
     },
@@ -196,7 +196,7 @@ export default {
         return getIsoDate(this.trade.date);
       },
       set (date) {
-        this.setTradeField('date', date, Date);
+        this.setField('date', date, Date);
       }
     },
     fieldAccountCode: {
@@ -204,7 +204,7 @@ export default {
         return this.trade.accountCode;
       },
       set (accountCode) {
-        this.setTradeField('accountCode', accountCode);
+        this.setField('accountCode', accountCode);
       }
     },
     fieldTypeCode: {
@@ -212,7 +212,7 @@ export default {
         return this.trade.typeCode;
       },
       set (typeCode) {
-        this.setTradeField('typeCode', typeCode);
+        this.setField('typeCode', typeCode);
       }
     },
     isDividendType () {
@@ -223,7 +223,7 @@ export default {
         return this.trade.code;
       },
       set (code) {
-        this.setTradeField('code', code);
+        this.setField('code', code);
       }
     },
     fieldCount: {
@@ -231,7 +231,7 @@ export default {
         return this.trade.count;
       },
       set (count) {
-        this.setTradeField('count', count, Number);
+        this.setField('count', count, Number);
         this.fieldSum = getCurrency(this.fieldCount * this.fieldPrice);
       }
     },
@@ -240,7 +240,7 @@ export default {
         return this.trade.price;
       },
       set (price) {
-        this.setTradeField('price', price, Number);
+        this.setField('price', price, Number);
         this.fieldSum = getCurrency(this.fieldCount * this.fieldPrice);
       }
     },
@@ -249,7 +249,7 @@ export default {
         return this.trade.sum;
       },
       set (sum) {
-        this.setTradeField('sum', sum, Number);
+        this.setField('sum', sum, Number);
       }
     },
     fieldTax: {
@@ -257,7 +257,7 @@ export default {
         return this.trade.tax;
       },
       set (tax) {
-        this.setTradeField('tax', tax, Number);
+        this.setField('tax', tax, Number);
       }
     },
     fieldCommission () {
@@ -267,32 +267,32 @@ export default {
       get () {
         return this.fieldCommission[0];
       },
-      set (commission) {
-        this.setTradeCommissionField(0, commission);
+      set (value) {
+        this.setCommissionField(0, value);
       }
     },
     fieldCommission1: {
       get () {
         return this.fieldCommission[1];
       },
-      set (commission) {
-        this.setTradeCommissionField(1, commission);
+      set (value) {
+        this.setCommissionField(1, value);
       }
     },
     fieldCommission2: {
       get () {
         return this.fieldCommission[2];
       },
-      set (commission) {
-        this.setTradeCommissionField(2, commission);
+      set (value) {
+        this.setCommissionField(2, value);
       }
     },
     fieldCommission3: {
       get () {
         return this.fieldCommission[3];
       },
-      set (commission) {
-        this.setTradeCommissionField(3, commission);
+      set (value) {
+        this.setCommissionField(3, value);
       }
     },
     commissionSum () {
@@ -308,6 +308,12 @@ export default {
   methods: {
     setFieldPrice () {
       this.fieldPrice = this.securityPrice;
+    },
+    setField(name, value, type) {
+      this.$store.commit('setTradeField', {name, value, type});
+    },
+    setCommissionField(index, value) {
+      this.$store.commit('spliceTradeField', {name:'commission', index, value, type: Number});
     },
     saveTrade() {
       this.$store.dispatch('saveTrade', this.trade).then((tradeId) =>{

@@ -49,6 +49,7 @@ export default {
       source: null,
       price,
       interest: null,
+      indicators: [],
       created: null,
       updated: null,
     });
@@ -72,6 +73,7 @@ export default {
       source: comment.source || null,
       price: comment.price,
       interest: comment.interest,
+      indicators: comment.indicators,
       created: comment.created || updated,
       updated: comment.updated || updated
     };

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import {setAppStorageItem} from '../utils';
+import {parseValue, setAppStorageItem} from '../utils';
 
 export default {
 
@@ -22,6 +22,9 @@ export default {
   setSectors: (state, list) => {
     Vue.set(state.sectors, 'list', list);
   },
+  setIndicators: (state, list) => {
+    Vue.set(state.indicators, 'list', list);
+  },
   setAccounts: (state, list) => {
     Vue.set(state.accounts, 'list', list);
   },
@@ -41,9 +44,6 @@ export default {
     state.securities.comments = state.securities.comments
       .filter(com => com.securityCode !== code).concat(list);
   },
-  addSecuritiesComments: (state, list) => {
-    state.securities.push = list;
-  },
   setSecurity: (state, model) => {
     Vue.set(state.security, 'model', model);
   },
@@ -57,8 +57,10 @@ export default {
   editingSecurity: (state, editing) => {
     state.security.editing = editing;
   },
-  setSecurityField: (state, {name, value}) => {
-    Vue.set(state.security.model, name, value);
+  setSecurityField: (state, {name, value, type}) => {
+    const val = parseValue(value, type);
+    console.log('parsed:', name, value, '=>', val, typeof val);
+    Vue.set(state.security.model, name, val);
   },
 
   // Комментарии
@@ -84,8 +86,17 @@ export default {
   editingComment: (state, editing) => {
     state.comment.editing = editing;
   },
-  setCommentField: (state, {name, value}) => {
-    Vue.set(state.comment.model, name, value);
+  setCommentField: (state, {name, value, type}) => {
+    const val = parseValue(value, type);
+    console.log('parsed:', name, value, '=>', val, typeof val);
+    Vue.set(state.comment.model, name, val);
+  },
+  spliceCommentField: (state, {name, index, value, type}) => {
+    const val = parseValue(value, type);
+    console.log('parsed:', name, value, '=>', val, typeof val);
+    const list = state.comment.model[name] || [];
+    list.splice(index, 1, val);
+    Vue.set(state.comment.model, name, list);
   },
 
   // Сделки
@@ -114,8 +125,17 @@ export default {
   editingTrade: (state, editing) => {
     state.trade.editing = editing;
   },
-  setTradeField: (state, {name, value}) => {
-    Vue.set(state.trade.model, name, value);
+  setTradeField: (state, {name, value, type}) => {
+    const val = parseValue(value, type);
+    console.log('parsed:', name, value, '=>', val, typeof val);
+    Vue.set(state.trade.model, name, val);
+  },
+  spliceTradeField: (state, {name, index, value, type}) => {
+    const val = parseValue(value, type);
+    console.log('parsed:', name, value, '=>', val, typeof val);
+    const list = state.trade.model[name] || [];
+    list.splice(index, 1, val);
+    Vue.set(state.trade.model, name, list);
   },
 
 };

@@ -19,6 +19,9 @@ export default {
   trades () {
     return db.collection('trades');
   },
+  indicators () {
+    return db.collection('indicators');
+  },
 
   page (state) {
     return state.user.id? state.page : null;
@@ -55,9 +58,10 @@ export default {
   tradeAccounts ({trades, accounts}) {
     return trades.list.reduce((items, model) => {
       console.log('model', model);
+      const account = accounts.list.find(account => account.code === model.accountCode);
       items[model.accountCode] = items[model.accountCode] ||
         { code: model.accountCode,
-          name: accounts.list.find(account => account.code === model.accountCode).name,
+          name: account ? account.name : '-',
           date: null,
           volume: 0,
           avg: 0,

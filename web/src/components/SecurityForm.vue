@@ -51,7 +51,7 @@
       </span>
     </div>
     <div class="form__field">
-      <span class="form__label" @click="setSector()">Сектор:</span>
+      <span class="form__label">Сектор:</span>
       <span class="form__input">
         <select v-model="fieldSectorCode" @change="selectSector(fieldSectorCode)">
           <option disabled value="">Выберите сектор</option>
@@ -115,7 +115,7 @@ export default {
         return this.security.code;
       },
       set (code) {
-        this.setSecurityField('code', code);
+        this.setField('code', code);
       }
     },
     fieldName: {
@@ -123,7 +123,7 @@ export default {
         return this.security.name;
       },
       set (name) {
-        this.setSecurityField('name', name);
+        this.setField('name', name);
       }
     },
     fieldDesc: {
@@ -131,7 +131,7 @@ export default {
         return this.security.desc;
       },
       set (desc) {
-        this.setSecurityField('desc', desc);
+        this.setField('desc', desc);
       }
     },
     fieldTypeCode: {
@@ -139,7 +139,7 @@ export default {
         return this.security.typeCode;
       },
       set (typeCode) {
-        this.setSecurityField('typeCode', typeCode);
+        this.setField('typeCode', typeCode);
       }
     },
     fieldFavorite: {
@@ -147,7 +147,7 @@ export default {
         return this.security.favorite;
       },
       set (favorite) {
-        this.setSecurityField('favorite', favorite);
+        this.setField('favorite', favorite);
       }
     },
     fieldPortfolio: {
@@ -155,7 +155,7 @@ export default {
         return this.security.portfolio;
       },
       set (portfolio) {
-        this.setSecurityField('portfolio', portfolio);
+        this.setField('portfolio', portfolio, Boolean);
       }
     },
     fieldSectorCode: {
@@ -163,7 +163,7 @@ export default {
         return this.security.sectorCode;
       },
       set (sectorCode) {
-        this.setSecurityField('sectorCode', sectorCode);
+        this.setField('sectorCode', sectorCode);
       }
     },
     fieldSectorName: {
@@ -171,7 +171,7 @@ export default {
         return this.security.sectorName;
       },
       set (sectorName) {
-        this.setSecurityField('sectorName', sectorName);
+        this.setField('sectorName', sectorName);
       }
     }
   },
@@ -189,6 +189,9 @@ export default {
       return page === 'f' && security.favorite ? 'f'
         : page === 'p' && security.portfolio ? 'p'
           : security.sectorCode;
+    },
+    setField(name, value, type) {
+      this.$store.commit('setSecurityField', {name, value, type});
     },
     saveSecurity() {
       this.$store.dispatch('saveSecurity', this.security).then((securityId) =>{

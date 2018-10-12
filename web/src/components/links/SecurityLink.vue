@@ -1,5 +1,5 @@
 <template>
-  <a v-if="href" target="_info" @click.stop="open" :title="link.desc || link.code">
+  <a v-if="href" :href="href" :target="link.urlTarget || '_info'" :title="link.desc || link.code">
     <img v-if="link.iconSrc" :src="link.iconSrc" height="16px" width="16px">
     {{ link.label }}
   </a>

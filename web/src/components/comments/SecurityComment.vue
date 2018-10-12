@@ -18,15 +18,20 @@
     </div>
     <div v-html="comment.text">
     </div>
+    <div class="comment__indicator" v-if="comment.indicators && comment.indicators.length">
+      <security-comment-indicator v-for="(indicator, index) in comment.indicators"
+                                  :key="index" :indicator="indicator"></security-comment-indicator>
+    </div>
   </div>
 </template>
 
 <script>
-import InterestPercent from '../common/InterestPercent'
+import InterestPercent from '../common/InterestPercent';
+import SecurityCommentIndicator from './SecurityCommentIndicator';
 import {getLocalDate} from '../../utils';
 export default {
   name: 'security-comment',
-  components: { InterestPercent },
+  components: { InterestPercent, SecurityCommentIndicator },
   props: {
     comment: {
       type: Object,
@@ -86,6 +91,9 @@ export default {
     }
     &__title {
       font-weight: bold;
+    }
+    &__indicator {
+      padding-top: 5px;
     }
   }
 </style>

@@ -41,6 +41,7 @@ export default {
   authenticated: ({state, dispatch}) => {
     dispatch('fetchLinks');
     dispatch('fetchSectors');
+    dispatch('fetchIndicators');
     return dispatch('fetchAccounts')
       .then(() => {
         return dispatch('fetchSecuritiesInfo', state.page);
