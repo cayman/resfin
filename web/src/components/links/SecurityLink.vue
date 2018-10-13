@@ -1,5 +1,5 @@
 <template>
-  <a v-if="href" :href="href" :target="link.urlTarget || '_info'" :title="link.desc || link.code">
+  <a v-if="href" @click.stop="open" :target="link.urlTarget || '_info'" :title="link.desc || link.code">
     <img v-if="link.iconSrc" :src="link.iconSrc" height="16px" width="16px">
     {{ link.label }}
   </a>
@@ -28,7 +28,9 @@
     },
     methods: {
       open () {
-        window.open(this.href,'_info','menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes').focus();
+        const win = window.open(this.href,'_info','menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes');
+        win.location = this.href;
+        win.focus();
       }
 
     }

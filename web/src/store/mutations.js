@@ -46,6 +46,8 @@ export default {
   },
   setSecurity: (state, model) => {
     Vue.set(state.security, 'model', model);
+    state.security.id = model.id || null;
+    setAppStorageItem('securityId', state.security.id);
   },
   setSecurityMoex: (state, moex) => {
     const data = moex.data && moex.data[0] ? moex.columns.reduce((data, column, index) => {

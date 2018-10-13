@@ -44,7 +44,16 @@ export default {
     dispatch('fetchIndicators');
     return dispatch('fetchAccounts')
       .then(() => {
-        return dispatch('fetchSecuritiesInfo', state.page);
+        return dispatch('fetchSecurities', state.page);
+      })
+      .then(securities => {
+        if(securities.length) {
+          const ids = securities.map(security => security.id);
+          const id = state.security.id && ids.includes(state.security.id) ? state.security.id : ids[0];
+          dispatch('fetchSecurityInfo', id);
+        }else {
+          return dispatch('newSecurity', state.page);
+        }
       });
   }
 

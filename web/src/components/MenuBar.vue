@@ -45,7 +45,14 @@
       setPage (code) {
         console.log('setPage', code);
         this.$store.commit('setPage', code);
-        this.$store.dispatch('fetchSecuritiesInfo', code)
+        this.$store.dispatch('fetchSecurities', code)
+          .then(securities => {
+            if(securities.length) {
+              this.$store.dispatch('fetchSecurityInfo', securities[0].id);
+            }else {
+              this.$store.dispatch('newSecurity', code);
+            }
+          });
       }
     }
   }

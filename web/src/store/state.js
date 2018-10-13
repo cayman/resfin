@@ -26,6 +26,7 @@ export default {
     comments: []
   },
   security : {
+    id: getAppStorageItem('securityId') || null,
     editing: false,
     expanded: [],
     url: 'https://iss.moex.com/iss/engines/stock/markets/shares/boards/tqbr/securities/',

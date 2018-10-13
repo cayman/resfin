@@ -33,7 +33,7 @@
         &nbsp;
       </span>
       <span class="form__input">
-        <button @click="saveComment" :disabled="!fieldTitle && !fieldText">Сохранить</button>&nbsp;
+        <button @click="saveComment" :disabled="!allow">Сохранить</button>&nbsp;
         <button @click="cancelComment">Отмена</button>
       </span>
     </div>
@@ -101,6 +101,12 @@ export default {
     },
     fieldIndicators () {
       return this.comment.indicators || [];
+    },
+    fieldIndicatorsWrong () {
+      return this.fieldIndicators.some(indicator => !indicator.code || indicator.value === null)
+    },
+    allow () {
+      return (this.fieldTitle || this.fieldText) && !this.fieldIndicatorsWrong;
     },
     percent () {
       return percent(this.fieldInterest, this.fieldPrice);

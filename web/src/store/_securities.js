@@ -2,7 +2,7 @@ import {getSnapList, getSnapData, parseError} from '../utils';
 
 export default {
   // Акции
-  fetchSecurities: ({commit, getters}, code) => {
+  fetchSecurities: ({commit, getters, dispatch}, code) => {
     console.log('fetchSecurities', code);
     if (!code) {
       commit('setSecurities', []);
@@ -18,6 +18,7 @@ export default {
       )
       .then(securities => {
         commit('setSecurities', securities);
+        dispatch('fetchSecuritiesComments');
         return securities;
       })
       .catch((error) => {
@@ -26,19 +27,7 @@ export default {
       });
   },
 
-  fetchSecuritiesInfo ({dispatch}, page) {
-    return dispatch('fetchSecurities', page)
-      .then(securities => {
-        if(securities.length) {
-          dispatch('fetchSecuritiesComments');
-          dispatch('fetchSecurityInfo', securities[0].id);
-         }else {
-          return dispatch('newSecurity', page);
-        }
-      });
-  },
-
-  fetchSecurity: ({commit, getters}, id) => {
+  fetchSecurity: ({commit, getters, state}, id) => {
     console.log('fetchSecurity:' + id);
     commit('loading', true);
     commit('editingSecurity', false);
@@ -46,12 +35,12 @@ export default {
       .then(security => getSnapData(security))
       .then(security => {
         commit('setSecurity', security);
-        return  getters.getSecurity(security.code);
+        return getters.getSecurity(security.code);
       })
       .then(data => {
         commit('setSecurityMoex', data);
         commit('loading', false);
-        return data;
+        return state.security.model;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка получения ценной бумаги:', error));
@@ -62,11 +51,13 @@ export default {
   fetchSecurityInfo: ({dispatch, commit}, id) => {
     console.log('fetchSecurityInfo', id);
     commit('editingSecurity', false);
-    dispatch('fetchSecurity', id);
-    dispatch('fetchComments', id);
-    commit('setExpandComments', []);
-    dispatch('fetchTrades', id);
-    commit('setExpandTrades', []);
+    return dispatch('fetchSecurity', id)
+      .then(security => {
+        commit('setExpandTrades', []);
+        commit('setExpandComments', []);
+        dispatch('fetchTrades', security.code);
+        return dispatch('fetchComments', security.code);
+      });
   },
 
   newSecurity: ({commit, state}, page) =>{
@@ -89,13 +80,13 @@ export default {
   },
 
   saveSecurity: ({commit, getters}, security) => {
-    const id = security.id || security.code;
+    const id = security.id || security.code.toUpperCase();
     console.log('saveSecurity:', id, security);
     commit('loading', true);
     const data = Object.keys(security)
       .filter(key  => key.startsWith('ref'))
       .reduce((model, key) => ({...model, [key]: security[key]}),
-        { code: security.code,
+        { code: security.code.toUpperCase(),
           name: security.name,
           desc: security.desc,
           typeCode: security.typeCode,
