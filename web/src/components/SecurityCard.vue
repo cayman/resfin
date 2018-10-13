@@ -82,6 +82,7 @@ export default {
     &__title {
       font-weight: 500;
       margin-right: 5px;
+      font-stretch: condensed;
     }
     &__menu {
       font-weight: 400;
@@ -93,6 +94,9 @@ export default {
     &__sector {
       color: cornflowerblue;
       margin-right: 5px;
+      font-stretch: condensed;
+      font-size: 11px;
+      white-space: nowrap;
     }
     &__action {
       color: darkblue;
