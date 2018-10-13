@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div class="content__left">
+    <div class="content__left" :class="{expanded}">
       <securities-list/>
     </div>
     <div class="content__right">
@@ -22,6 +22,9 @@ export default {
   computed: {
     editing () {
       return this.$store.state.security.editing === true;
+    },
+    expanded () {
+      return this.$root.expanded;
     }
   }
 }
@@ -29,13 +32,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  @import "../assets/var.scss";
   .content {
-    background: lightsteelblue;
+    background: $bg-color-base;
     padding: 5px;
     display: flex;
     display: -webkit-flex;
     flex-wrap: nowrap;
     &__left {
+      flex: 0 0 40px;
+    }
+    .expanded {
       flex: 0 0 190px;
     }
     &__right {

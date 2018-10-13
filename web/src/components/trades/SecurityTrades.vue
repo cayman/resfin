@@ -68,6 +68,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../../assets/var.scss";
   .trades {
     width: 100%;
     border-collapse: collapse;
@@ -81,6 +82,9 @@
       &:last-child {
         padding-right: 10px;
       }
+    }
+    th {
+      color: $text-color-label;
     }
   }
 

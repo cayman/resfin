@@ -37,7 +37,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  @import "./assets/var.scss";
+
   html {
     height: 100%;
   }
@@ -45,22 +47,22 @@ export default {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: whitesmoke;
+    background-color: $bg-color-white;
   }
   #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    font-size: 12px;
+    font-family: $font-family-base;
+    font-weight: $font-weight-regular;
+    font-size: $font-size-base;
+    color: $text-color-base;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
     text-align: left;
-    color: #2c3e50;
     margin: 0;
     height: 100%;
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
-    max-width: 600px;
-    min-width: 400px;
   }
   .header {
     background: gainsboro;

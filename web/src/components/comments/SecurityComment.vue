@@ -5,7 +5,7 @@
         <i class="fa fa fa-pencil" aria-hidden="true" ></i>
       </a>
       <span class="comment__date">{{ created }}</span>
-      <span class="comment__price" v-if="comment.price">{{ comment.price }} &#8381;</span>
+      <span class="comment__price" v-if="comment.price">{{ comment.price | currency }} &#8381;</span>
       <span v-if="comment.interest >= 0 " class="comment__interest">Интерес:
          <interest-percent :price="comment.price" :interest="comment.interest"></interest-percent>
       </span>
@@ -16,7 +16,7 @@
         <i class="fa fa-external-link" aria-hidden="true"></i>
       </a>
     </div>
-    <div v-html="comment.text">
+    <div class="comment__text" v-html="comment.text">
     </div>
     <div class="comment__indicator" v-if="comment.indicators && comment.indicators.length">
       <security-comment-indicator v-for="(indicator, index) in comment.indicators"
@@ -53,8 +53,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  @import "../../assets/var.scss";
   .comment {
-    border-bottom: 0.5px solid lavender;
+    border-bottom: 0.5px solid $line-color-base;
     padding: 5px 10px;
     &:last-child {
       // border-bottom: none;
@@ -68,20 +69,20 @@ export default {
       width: auto;
       padding: 0 3px 0 3px;
       border-radius: 2px;
-      color: lightslategrey;
+      color: $icon-color;
       &:hover {
-        background-color: cornflowerblue;
-        color: white;
+        background-color: $bg-color-hover;
+        color: $icon-color-hover;
       }
     }
 
     &__link {
-      color: lightsteelblue;
+      color: $text-color-link;
       vertical-align: bottom;
     }
     &__date {
-      color: lightsteelblue;
-      font-stretch: condensed;
+      color: $text-color-date;
+      font-style: $font-family-condensed;
     }
     &__price {
       margin-left: 5px;
@@ -90,7 +91,12 @@ export default {
       margin-left: 5px;
     }
     &__title {
-      font-weight: bold;
+      font-style: $font-family-condensed;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-base;
+    }
+    &__text {
+      font-style: $font-family-base;
     }
     &__indicator {
       padding-top: 5px;

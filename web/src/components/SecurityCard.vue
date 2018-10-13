@@ -2,13 +2,13 @@
   <div class="info">
     <template v-if="security.id">
       <security-links></security-links>
-      <h3>
+      <div class="info__header">
         <a class="info__action" @click="editSecurity">
           <i class="fa fa fa-pencil" aria-hidden="true" ></i>
         </a>
         <span class="info__title">{{ security.desc }}</span>&nbsp;
         <span class="info__sector">{{ security.sectorName }}</span>
-      </h3>
+      </div>
       <security-chart/>
       <security-price/>
       <div class="info__menu">
@@ -74,64 +74,57 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  @import "../assets/var.scss";
+
   .info {
     height: 100%;
-    background-color: white;
+    background-color: $bg-color-white;
     overflow-y: auto;
     overflow-x: hidden;
-    &__title {
-      font-weight: 500;
-      margin-right: 5px;
-      font-stretch: condensed;
+
+    &__header {
+      width: 100%;
+      margin: 5px 10px 0 10px;
     }
-    &__menu {
-      font-weight: 400;
-      margin: 5px 0;
-      padding: 5px 10px 0 10px;
-      border-top: 1px solid lightsteelblue;
-      background-color: aliceblue;
-    }
-    &__sector {
-      color: cornflowerblue;
-      margin-right: 5px;
-      font-stretch: condensed;
-      font-size: 11px;
-      white-space: nowrap;
-    }
+
     &__action {
-      color: darkblue;
+      color: $icon-color;
       cursor: pointer;
       margin-right: 5px;
       padding: 5px;
       border-radius: 2px;
       &:hover {
-        background-color: cornflowerblue;
-        color: white;
+        background-color: $bg-color-hover;
+        color: $icon-color-hover;
       }
     }
-    h3 {
-      width: 100%;
-      margin: 5px 10px 0 10px;
-      font-size: 13px;
-      font-weight: 400;
-      .bg_up {
-        background-color: honeydew;
-      }
-      .bg_down {
-        background-color: lavenderblush;
-      }
-      .bg_zero {
-        background-color: azure;
-      }
-      .up {
-        color: green;
-      }
-      .down {
-        color: red;
-      }
-      .zero {
-        color: blue;
-      }
+
+    &__title {
+      font-style: $font-family-condensed;
+      font-weight: $font-weight-regular;
+      font-size: $font-size-big;
+      white-space: nowrap;
+      margin-right: 5px;
     }
+    &__sector {
+      font-weight: $font-weight-lite;
+      font-size: $font-size-big;
+      color: $text-color-lite;
+      margin-right: 5px;
+      white-space: nowrap;
+    }
+    &__menu {
+      font-style: $font-family-condensed;
+      font-weight: $font-weight-lite;
+      background-color: $bg-color-menu;
+
+      margin: 5px 0;
+      padding: 5px 10px 0 10px;
+      border-top: 1px solid $line-color-dark;
+
+    }
+
+
+
   }
 </style>

@@ -24,5 +24,7 @@ Vue.filter('date', function (value) {
 new Vue({
   render: h => h(App),
   store,
-  data: {  }
+  data: {
+    expanded: true
+  }
 }).$mount('#app');

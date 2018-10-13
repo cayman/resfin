@@ -1,14 +1,22 @@
 <template>
   <div class="security" :class="{active, portfolio}">
-    <a class="security__code" :title="security.desc + ' ' + securityType.label" @click="select(security.id)">{{ security.code }}</a>
-    <a class="security__name" :title="security.desc + ' ' + securityType.label" @click="select(security.id)">
-      {{ security.name }}
-      {{ securityType.label  }}
-      <span v-if="lastComment">
-        <interest-percent :interest="lastComment.interest" :interest-visible="false" :price="lastComment.price" :small="true"></interest-percent>
-      </span>
+    <a class="security__code" :title="security.desc + ' ' + securityType.label" @click="select(security.id)">
+      <div class="security__text">{{ security.code }}</div>
+      <div class="security__indicator" >
+        <interest-percent v-if="lastComment" :interest="lastComment.interest" :interest-visible="false" :price="lastComment.price" :small="true"></interest-percent>
+        <span v-else> - </span>
+      </div>
     </a>
-    <a class="security__icon" @click="toggleFavorite" title="Избранное">
+    <a class="security__name" v-if="expanded" :title="security.desc + ' ' + securityType.label" @click="select(security.id)">
+      <div class="security__text">{{ security.name }} {{ securityType.label  }}</div>
+      <div class="security__indicator" v-if="indicators.length">
+        <template v-for="(indicator, index) in indicators">
+          <security-comment-indicator :key="index" :indicator="indicator" :small="true"></security-comment-indicator>
+          <span>&nbsp;</span>
+        </template>
+      </div>
+    </a>
+    <a class="security__icon" v-if="expanded" @click="toggleFavorite" title="Избранное">
       <i :class="favorites[security.favorite || 0].icon" aria-hidden="true"></i>
     </a>
   </div>
@@ -16,11 +24,12 @@
 
 <script>
   import InterestPercent from './common/InterestPercent'
+  import SecurityCommentIndicator from './comments/SecurityCommentIndicator';
   import form from './form'
   export default {
     name: 'securities-list-item',
     mixins: [form],
-      components: { InterestPercent },
+      components: { InterestPercent, SecurityCommentIndicator  },
     props: {
       security: {
         type: Object,
@@ -49,6 +58,12 @@
       },
       lastComment () {
         return this.comments[0];
+      },
+      indicators () {
+        return this.lastComment.indicators ? this.lastComment.indicators.slice(0,4) : [];
+      },
+      expanded () {
+        return this.$root.expanded;
       }
     },
     methods: {
@@ -65,12 +80,33 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../assets/var.scss";
 
   .security {
     text-align: left;
-    padding: 2px 2px 2px 5px;
+    padding: 1px 5px 1px 5px;
     border-radius: 2px;
-    line-height: 20px;
+    height: 25px;
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: nowrap;
+
+    &__text {
+      font-style: $font-family-condensed;
+      font-weight: $font-weight-bold;
+      color: $text-color-dark;
+      line-height: normal;
+      margin: 0;
+      padding: 0;
+    }
+    &__indicator {
+      font-style: $font-family-base;
+      font-weight: $font-weight-regular;
+      font-size: $font-size-small;
+      line-height: 10px;
+      margin: 0;
+      padding: 0 2px;
+    }
 
     &:hover {
       background-color: whitesmoke;
@@ -79,32 +115,32 @@
      // border-radius: 2px;
     }
     &__code {
-      float: left;
-      width: 45px;
-      font-stretch: condensed;
+      flex: 0 0 42px;
+
     }
     &__name {
+      flex: 0 0 110px;
+      line-height: 20px;
       font-stretch: condensed;
+      overflow: hidden;
     }
     &__icon {
-      color: darkslategray;
-      float: right;
-      margin: 0;
+      flex: 0 0 20px;
+      line-height: 20px;
+      color: $icon-color;
       // padding: 2px 2px;
       text-align: center;
-      line-height: 20px;
-      width: 20px;
       cursor: pointer;
       border-radius: 2px;
       &:hover {
-        background-color: cornflowerblue;
-        color: white;
+        background-color: $bg-color-hover;
+        color: $icon-color-hover;
       }
     }
   }
 
   .active {
-    background-color: white;
+    background-color: $bg-color-white;
   }
 
   .portfolio {

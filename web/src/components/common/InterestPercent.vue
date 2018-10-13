@@ -1,7 +1,7 @@
 <template>
-  <span :class="{small, good: percent >= 8, bad: percent <= 4, normal: percent > 4 && percent < 8 }">
-    <span v-if="interestVal && interestVisible">{{ interestVal}}
-      <span v-if="percent && percentVisible"> ({{percent}}<span v-if="!small">&nbsp;&#37;</span>)</span>
+  <span :class="{good: percent >= 8, bad: percent <= 4, normal: percent > 4 && percent < 8 }">
+    <span v-if="interestVal && interestVisible">{{ interestVal | currency }}
+      <span v-if="percent && percentVisible">({{percent}}<span v-if="!small">&nbsp;&#37;</span>)</span>
     </span>
     <span v-else>{{percent}}<span v-if="!small">&nbsp;&#37;</span></span>
   </span>
@@ -57,8 +57,5 @@
   }
   .normal {
     color: blue;
-  }
-  .small {
-    font-size: 8px;
   }
 </style>

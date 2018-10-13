@@ -1,6 +1,11 @@
 <template>
   <nav class="menu-bar">
     <ul>
+      <li>
+        <a @click="toggleExpand()">
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </a>
+      </li>
       <template v-for="page in pages" >
         <li :key="page.id" :class="{active: currentPage === page.code}" >
           <a @click="setPage(page.code)" :title="page.code + ' - ' + page.name">
@@ -53,33 +58,40 @@
               this.$store.dispatch('newSecurity', code);
             }
           });
+      },
+      toggleExpand() {
+        this.$root.expanded = !this.$root.expanded;
+        console.log('expanded', this.$root.expanded);
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
+  @import "../assets/var.scss";
   .menu-bar {
+    background-color: $bg-color-black;
+    font-family:  $font-family-condensed;
+    font-weight:  $font-weight-regular;
+    font-size:  $font-size-base;
     ul {
       list-style-type: none;
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background-color: #333333;
     }
 
     li {
       float: left;
-      color: white;
+      color: $text-color-white;
       &.active {
-        background-color: lightsteelblue;
-        color: black;
+        background-color: $bg-color-base;
+        color: $text-color-base;
       }
     }
 
     li a {
       display: block;
-
       text-align: center;
       padding: 5px;
       text-decoration: none;
@@ -87,7 +99,7 @@
     }
 
     li a:hover {
-      background-color: darkslategray;
+      background-color: $bg-color-black-hover;
     }
   }
 </style>

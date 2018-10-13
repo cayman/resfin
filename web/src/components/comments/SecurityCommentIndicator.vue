@@ -1,12 +1,11 @@
 <template>
   <span class="indicator">
-    <a :title="_indicator.desc" class="indicator__label">
+    <a v-if="!small" :title="_indicator.desc" class="indicator__label">
       {{ _indicator.name || _indicator.code  }}:
     </a>
-    <span class="indicator__value" :class="{bad, good}">
+    <span class="indicator__value" :title="_indicator.desc" :class="{bad, good}">
        {{ indicator.value }}&nbsp;
     </span>
-
   </span>
 </template>
 
@@ -19,6 +18,11 @@ export default {
     indicator: {
       type: Object,
       required: true
+    },
+    small: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   computed: {
@@ -45,13 +49,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  @import "../../assets/var.scss";
+
   .indicator {
     &__label {
-      color: #637384;
-      font-weight: bold;
+      font-style: $font-family-condensed;
+      color: $text-color-label;
+      font-weight: $font-weight-bold;
     }
     &__value {
       color: blue;
+      font-weight: $font-weight-lite;
     }
   }
   .good {

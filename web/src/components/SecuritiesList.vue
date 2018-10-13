@@ -43,20 +43,21 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../assets/var.scss";
+
   .security-list {
     text-align: left;
-    border: darkblue;
     padding-right: 5px;
 
     &__actions {
       text-align: left;
-      background: lightsteelblue;
+      /*background: lightsteelblue;*/
       padding: 2px 2px 2px 5px;
       border-radius: 2px;
       line-height: 20px;
     }
     &__action {
-      color: darkslategray;
+      color: $icon-color;
       float: right;
       margin: 0;
       // padding: 2px 2px;
@@ -66,8 +67,8 @@
       cursor: pointer;
       border-radius: 2px;
       &:hover {
-        background-color: cornflowerblue;
-        color: white;
+        background-color: $bg-color-hover;
+        color: $icon-color-hover;
       }
     }
   }
