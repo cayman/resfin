@@ -5,7 +5,9 @@
         <i class="fa fa fa-pencil" aria-hidden="true" ></i>
       </a>
       <span class="comment__date">{{ created }}</span>
-      <span class="comment__price" v-if="comment.price">{{ comment.price | currency }} &#8381;</span>
+      <span class="comment__price" v-if="comment.price">
+        <span class="comment__label">Цена:</span>{{ comment.price | currency }} &#8381;
+      </span>
       <span v-if="comment.interest >= 0 " class="comment__interest">
         <span class="comment__label">Интерес:</span>
         <interest-percent :price="comment.price" :interest="comment.interest"></interest-percent>
@@ -94,6 +96,7 @@ export default {
     }
     &__label {
       margin-left: $px5;
+      margin-right: $px2;
       color: $text-color-label;
     }
     &__title {
