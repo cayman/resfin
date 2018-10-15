@@ -6,8 +6,9 @@
       </a>
       <span class="comment__date">{{ created }}</span>
       <span class="comment__price" v-if="comment.price">{{ comment.price | currency }} &#8381;</span>
-      <span v-if="comment.interest >= 0 " class="comment__interest">Интерес:
-         <interest-percent :price="comment.price" :interest="comment.interest"></interest-percent>
+      <span v-if="comment.interest >= 0 " class="comment__interest">
+        <span class="comment__label">Интерес:</span>
+        <interest-percent :price="comment.price" :interest="comment.interest"></interest-percent>
       </span>
     </div>
     <div class="comment__title">
@@ -55,8 +56,8 @@ export default {
 <style lang="scss" scoped>
   @import "../../assets/var.scss";
   .comment {
-    border-bottom: 0.5px solid $line-color-base;
-    padding: 5px 10px;
+    border-bottom: $px1 solid $line-color-base;
+    padding: $px10 $px10;
     &:last-child {
       // border-bottom: none;
     }
@@ -68,10 +69,11 @@ export default {
       float: right;
       width: auto;
       padding: 0 3px 0 3px;
-      border-radius: 2px;
+      border-radius: $px2;
+      background-color: $button-color;
       color: $icon-color;
       &:hover {
-        background-color: $bg-color-hover;
+        background-color: $button-color-hover;
         color: $icon-color-hover;
       }
     }
@@ -82,24 +84,31 @@ export default {
     }
     &__date {
       color: $text-color-date;
-      font-style: $font-family-condensed;
+      font-family: $font-family-condensed;
     }
     &__price {
-      margin-left: 5px;
+      margin-left: $px5;
     }
     &__interest {
-      margin-left: 5px;
+      margin-left: $px5;
+    }
+    &__label {
+      margin-left: $px5;
+      color: $text-color-label;
     }
     &__title {
-      font-style: $font-family-condensed;
+      font-family: $font-family-base;
       font-weight: $font-weight-bold;
       font-size: $font-size-base;
     }
     &__text {
-      font-style: $font-family-base;
+      font-family: $font-family-base;
+      font-weight: $font-weight-regular;
+      font-size: $font-size-base;
     }
     &__indicator {
-      padding-top: 5px;
+      padding-top: $px5;
+      font-weight: $font-weight-bold;
     }
   }
 </style>

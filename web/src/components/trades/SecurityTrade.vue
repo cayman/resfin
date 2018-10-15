@@ -271,25 +271,25 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-
+  @import "../../assets/var.scss";
   .trade {
-    font-size: 11px;
-    padding: 0 5px;
-    border-bottom: 0.5px solid lavender;
+    font-size: $font-size-smaller;
+    padding: 0 $px5;
+    border-bottom: $px1 solid $line-color-base;
 
     td {
-      padding: 2px 0 2px 5px;
+      padding: $px2 0 $px2 $px5;
       &:first-child {
-        padding-left: 10px;
+        padding-left: $px10;
       }
       &:last-child {
-        padding-right: 10px;
+        padding-right: $px10;
       }
     }
 
     tr.expanded {
       td {
-        background-color: whitesmoke;
+        background-color: $bg-color-white;
       }
     }
 
@@ -312,7 +312,7 @@ export default {
     }
 
     &:first-child {
-      border-top: 0.5px solid lavender;
+      border-top: $px1 solid $line-color-base;
     }
 
     &__detail {

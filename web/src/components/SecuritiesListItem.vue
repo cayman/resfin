@@ -3,13 +3,13 @@
     <a class="security__code" :title="security.desc + ' ' + securityType.label" @click="select(security.id)">
       <div class="security__text">{{ security.code }}</div>
       <div class="security__indicator" >
-        <interest-percent v-if="lastComment" :interest="lastComment.interest" :interest-visible="false" :price="lastComment.price" :small="true"></interest-percent>
+        <interest-percent v-if="interestComment" :interest="interestComment.interest" :interest-visible="false" :price="interestComment.price" :small="true"></interest-percent>
         <span v-else> - </span>
       </div>
     </a>
     <a class="security__name" v-if="expanded" :title="security.desc + ' ' + securityType.label" @click="select(security.id)">
       <div class="security__text">{{ security.name }} {{ securityType.label  }}</div>
-      <div class="security__indicator" v-if="indicators.length">
+      <div class="security__indicator" v-if="indicatorsComment">
         <template v-for="(indicator, index) in indicators">
           <security-comment-indicator :key="index" :indicator="indicator" :small="true"></security-comment-indicator>
           <span>&nbsp;</span>
@@ -56,11 +56,14 @@
         return this.$store.state.securities.comments
           .filter(comment => comment.securityCode === this.security.code);
       },
-      lastComment () {
-        return this.comments[0];
+      interestComment () {
+        return this.comments.find(comment => comment.interest >= 0);
+      },
+      indicatorsComment () {
+        return this.comments.find(comment => comment.indicators && comment.indicators.length);
       },
       indicators () {
-        return this.lastComment.indicators ? this.lastComment.indicators.slice(0,4) : [];
+        return this.indicatorsComment ? this.indicatorsComment.indicators.slice(0,4) : null;
       },
       expanded () {
         return this.$root.expanded;
@@ -84,67 +87,68 @@
 
   .security {
     text-align: left;
-    padding: 1px 5px 1px 5px;
-    border-radius: 2px;
-    height: 25px;
+    padding: $px1 $px5;
+    border-radius: $px2;
     display: flex;
     display: -webkit-flex;
     flex-wrap: nowrap;
 
+    &:hover {
+      background-color: $bg-color-sidebar-hover;
+      cursor: pointer;
+    }
+
+    // поле кода с индикатором цены
+    &__code {
+      flex: 0 0 42px;
+    }
+    // поле имени с мультипликторами
+    &__name {
+      flex: 0 0 110px;
+      overflow: hidden;
+    }
+    // строка текста
     &__text {
-      font-style: $font-family-condensed;
+      font-family: $font-family-condensed;
       font-weight: $font-weight-bold;
-      color: $text-color-dark;
+      color: $text-color-base;
       line-height: normal;
       margin: 0;
       padding: 0;
     }
+    // строка индикаторов
     &__indicator {
-      font-style: $font-family-base;
+      font-family: $font-family-base;
       font-weight: $font-weight-regular;
       font-size: $font-size-small;
-      line-height: 10px;
+      // line-height: $px10;
       margin: 0;
-      padding: 0 2px;
+      padding: 0 $px2 0 $px2;
     }
-
-    &:hover {
-      background-color: whitesmoke;
-      cursor: pointer;
-     // border: 1px solid powderblue;
-     // border-radius: 2px;
-    }
-    &__code {
-      flex: 0 0 42px;
-
-    }
-    &__name {
-      flex: 0 0 110px;
-      line-height: 20px;
-      font-stretch: condensed;
-      overflow: hidden;
-    }
+    // иконка избранного
     &__icon {
+      margin: $px2;
+      padding: $px3;
       flex: 0 0 20px;
-      line-height: 20px;
+      background-color: $button-color;
       color: $icon-color;
-      // padding: 2px 2px;
+      // line-height: $px20;
       text-align: center;
       cursor: pointer;
-      border-radius: 2px;
+      border-radius: $px2;
       &:hover {
-        background-color: $bg-color-hover;
+        background-color: $button-color-hover;
         color: $icon-color-hover;
       }
     }
   }
 
   .active {
-    background-color: $bg-color-white;
+    background-color: $bg-color-sidebar-active;
   }
 
   .portfolio {
-    color: green;
+    color: $text-color-portfolio;
   }
 
 

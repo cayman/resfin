@@ -140,12 +140,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  @import "../../assets/var.scss";
   .form {
-    padding: 10px;
-    box-sizing: border-box;
-    background-color: white;
+    padding: $px10;
+    background-color: $bg-color-white;
     &__field {
-      padding-bottom: 10px;
+      padding-bottom: $px10;
     }
     &__label {
       font-weight: 400;
@@ -153,8 +153,8 @@ export default {
       line-height: 25px;
     }
     &__input {
-      padding-left: 5px;
-      padding-right: 5px;
+      padding-left: $px5;
+      padding-right: $px5;
     }
   }
 </style>

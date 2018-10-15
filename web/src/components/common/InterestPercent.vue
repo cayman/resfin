@@ -48,14 +48,15 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "../../assets/var.scss";
   .good {
-    color: green;
+    color: $text-color-good;
   }
   .bad {
-    color: red;
+    color: $text-color-bad;
   }
   .normal {
-    color: blue;
+    color: $text-color-normal
   }
 </style>

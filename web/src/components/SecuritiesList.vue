@@ -47,14 +47,14 @@
 
   .security-list {
     text-align: left;
-    padding-right: 5px;
+    padding-right: $px5;
 
     &__actions {
       text-align: left;
       /*background: lightsteelblue;*/
       padding: 2px 2px 2px 5px;
       border-radius: 2px;
-      line-height: 20px;
+      line-height: $px20;
     }
     &__action {
       color: $icon-color;
@@ -62,12 +62,12 @@
       margin: 0;
       // padding: 2px 2px;
       text-align: center;
-      line-height: 20px;
-      width: 20px;
+      line-height: $px20;
+      width: $px20;
       cursor: pointer;
-      border-radius: 2px;
+      border-radius: $px2;
       &:hover {
-        background-color: $bg-color-hover;
+        background-color: $button-color-hover;
         color: $icon-color-hover;
       }
     }

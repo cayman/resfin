@@ -70,10 +70,10 @@
 <style lang="scss" scoped>
   @import "../assets/var.scss";
   .menu-bar {
-    background-color: $bg-color-black;
+    background-color: $bg-color-menu;
     font-family:  $font-family-condensed;
     font-weight:  $font-weight-regular;
-    font-size:  $font-size-base;
+    font-size: $font-size-middle;
     ul {
       list-style-type: none;
       margin: 0;
@@ -82,24 +82,32 @@
     }
 
     li {
+      margin-top: $px5;
+      line-height: 20px;
       float: left;
-      color: $text-color-white;
-      &.active {
-        background-color: $bg-color-base;
-        color: $text-color-base;
+      padding: 0;
+      a {
+        display: block;
+        text-align: center;
+        padding: $px5;
+        color: $text-color-white;
+        &:hover {
+          color: $text-color-base;
+          border-top-left-radius: $px2;
+          border-top-right-radius: $px2;
+          background-color: $bg-color-menu-hover;
+        }
       }
-    }
 
-    li a {
-      display: block;
-      text-align: center;
-      padding: 5px;
-      text-decoration: none;
-      cursor: pointer;
-    }
+      &.active {
+        border-top-left-radius: $px2;
+        border-top-right-radius: $px2;
+        background-color: $bg-color-menu-active;
+        a {
+          color: $text-color-base;
+        }
+      }
 
-    li a:hover {
-      background-color: $bg-color-black-hover;
     }
   }
 </style>

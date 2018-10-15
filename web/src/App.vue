@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <template v-if="isAuthenticated">
-      <div  class="header">
+      <div class="header">
         <menu-bar></menu-bar>
       </div>
       <securities-content class="main"/>
@@ -40,9 +40,26 @@ export default {
 <style lang="scss">
   @import "./assets/var.scss";
 
+  * {
+    box-sizing: border-box;
+  }
+
   html {
     height: 100%;
   }
+  a {
+    color: $text-color-link;
+    cursor: pointer;
+    text-decoration: none;
+    &:hover {
+      color: $text-color-link-hover;
+    }
+    a:hover, a:visited, a:link, a:active
+    {
+      text-decoration: none;
+    }
+  }
+
   body {
     height: 100%;
     margin: 0;
@@ -66,7 +83,7 @@ export default {
   }
   .header {
     background: gainsboro;
-    flex: 0 0 10px;
+    flex: 0 0 30px;
   }
   .main {
      flex: 1 1 300px;

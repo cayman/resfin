@@ -50,27 +50,30 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  @import "../assets/var.scss";
   .field {
     padding-bottom: 10px;
     &__label {
-      font-weight: 600;
       float: left;
       width: 100px;
-      line-height: 25px;
+      font-weight: $font-weight-bold;
+      font-family: $font-family-condensed;
+      color: $text-color-label;
+      line-height: $px25;
       a {
         cursor: pointer;
-        color: royalblue;
+        color: $text-color-link;
         text-decoration: none;
       }
     }
     &__input {
-      line-height: 25px;
+      line-height: $px25;
     }
     &__link {
-      padding: 5px 5px 5px 5px;
-      line-height: 25px;
+      padding: $px5;
+      line-height: $px25;
       cursor: pointer;
-      color: royalblue;
+      color: $text-color-link;
       text-decoration: none;
     }
   }

@@ -1,8 +1,8 @@
 <template>
   <div class="price">
-    <span :class="{bg_up: change > 0, bg_down: change < 0}" >
+    <span :class="{bg_up: change > 0, bg_down: change < 0, bg_zero: !change}" >
       <span class="price__value" >{{price | currency}}</span> <!--&#8381;-->
-      <span :class="{zero: change === 0, up: change > 0, down: change < 0}">
+      <span :class="{zero: !change, up: change > 0, down: change < 0}">
         &nbsp;{{changeSign}}{{change}} ({{changeSign}}{{percent}}%)
       </span>
     </span>
@@ -46,7 +46,7 @@ export default {
   @import "../assets/var.scss";
 
   .price {
-    margin: 0 10px 0 10px;
+    margin: 0 $px10;
     .up {
       color: $text-color-up;
     }
@@ -56,6 +56,7 @@ export default {
     .zero {
       color: $text-color-zero;
     }
+
     .bg_up {
       background-color: $bg-color-up;
     }
@@ -76,7 +77,7 @@ export default {
 
     &__portfolio {
       float: right;
-      font-style: $font-family-condensed;
+      font-family: $font-family-condensed;
       margin-left: 5px;
     }
   }

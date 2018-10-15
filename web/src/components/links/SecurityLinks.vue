@@ -20,25 +20,21 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../../assets/var.scss";
   ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: aliceblue;
-  }
+    background-color: $bg-color-toolbar;
 
-  li {
-    float: left;
-    color: royalblue;
-    a {
-      display: block;
-      text-align: center;
-      padding: 5px 0 5px 5px;
-      text-decoration: none;
-      cursor: pointer;
+    li {
+      float: left;
+      padding: $px2;
+      a {
+        display: block;
+      }
     }
-
   }
 
 </style>

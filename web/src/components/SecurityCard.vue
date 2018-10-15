@@ -11,7 +11,7 @@
       </div>
       <security-chart/>
       <security-price/>
-      <div class="info__menu">
+      <div class="info__toolbar">
         <a class="info__action" @click="addComment">
           <i class="fa fa-commenting-o" aria-hidden="true" title="Добавить комментарий"></i>
         </a>
@@ -79,52 +79,51 @@ export default {
   .info {
     height: 100%;
     background-color: $bg-color-white;
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    font-weight: $font-weight-regular;
+    color: $text-color-base;
+
     overflow-y: auto;
     overflow-x: hidden;
 
     &__header {
       width: 100%;
       margin: 5px 10px 0 10px;
+      font-size: $font-size-middle;
     }
 
     &__action {
+      background-color: $button-color;
       color: $icon-color;
       cursor: pointer;
-      margin-right: 5px;
-      padding: 5px;
-      border-radius: 2px;
+      margin-right: $px5;
+      padding: $px5;
+      border-radius: $px2;
       &:hover {
-        background-color: $bg-color-hover;
+        background-color: $button-color-hover;
         color: $icon-color-hover;
       }
     }
-
     &__title {
-      font-style: $font-family-condensed;
-      font-weight: $font-weight-regular;
-      font-size: $font-size-big;
+      font-family: $font-family-base;
       white-space: nowrap;
-      margin-right: 5px;
+      margin-right: $px5;
     }
     &__sector {
+      font-family: $font-family-condensed;
       font-weight: $font-weight-lite;
-      font-size: $font-size-big;
-      color: $text-color-lite;
-      margin-right: 5px;
+      color: $text-color-sector;
+      margin-right: $px5;
       white-space: nowrap;
     }
-    &__menu {
-      font-style: $font-family-condensed;
+    &__toolbar {
+      font-family: $font-family-condensed;
       font-weight: $font-weight-lite;
-      background-color: $bg-color-menu;
-
-      margin: 5px 0;
-      padding: 5px 10px 0 10px;
-      border-top: 1px solid $line-color-dark;
-
+      background-color: $bg-color-toolbar;
+      margin: $px5 0;
+      padding: $px5 $px10 0 $px10;
+      border-top: $px1 solid $line-color-dark;
     }
-
-
-
   }
 </style>

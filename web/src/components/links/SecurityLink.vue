@@ -38,13 +38,14 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../../assets/var.scss";
   a {
-    line-height: 20px;
-    cursor: pointer;
-    color: royalblue;
+    line-height: $px20;
+    font-family: $font-family-condensed;
+    font-size: $font-size-smaller;
+    color: $text-color-link;
     text-decoration: none;
-    font-stretch: condensed;
-    font-size: 10px;
+    cursor: pointer;
     img {
       margin: auto;
       vertical-align: middle;

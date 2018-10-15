@@ -69,16 +69,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  @import "../../assets/var.scss";
   .field {
-    padding-bottom: 10px;
+    padding-bottom: $px10;
     &__label {
-      font-weight: 400;
-      font-stretch: condensed;
-      line-height: 25px;
+      font-weight: $font-weight-regular;
+      font-family: $font-family-condensed;
+      color: $text-color-label;
+      line-height: $px25;
     }
     &__input {
-      padding-left: 5px;
-      padding-right: 5px;
+      padding-left: $px5;
+      padding-right: $px5;
     }
   }
 </style>

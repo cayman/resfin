@@ -13,7 +13,7 @@
 import {evalCriterion} from '../../utils';
 
 export default {
-  name: 'security-comment-indicator',
+  name: 'security-indicator',
   props: {
     indicator: {
       type: Object,
@@ -52,20 +52,21 @@ export default {
   @import "../../assets/var.scss";
 
   .indicator {
-    &__label {
-      font-style: $font-family-condensed;
+    a {
       color: $text-color-label;
+    }
+    &__label {
       font-weight: $font-weight-bold;
+      font-family: $font-family-condensed;
     }
     &__value {
-      color: blue;
-      font-weight: $font-weight-lite;
+      color: $text-color-normal;
     }
   }
   .good {
-    color: green;
+    color: $text-color-good;
   }
   .bad {
-    color: red;
+    color: $text-color-bad;
   }
 </style>

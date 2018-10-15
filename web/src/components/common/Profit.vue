@@ -38,15 +38,16 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "../../assets/var.scss";
   .up {
-    color: darkgreen;
+    color: $text-color-profit;
   }
   .down {
     // color: red;
-    color: firebrick;
+    color: $text-color-loss;
   }
   .zero {
-    color: blue;
+    color: $text-color-normal;
   }
 </style>
