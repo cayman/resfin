@@ -2,7 +2,7 @@ import {getSnapList, getSnapData, parseError} from '../utils';
 
 export default {
   // Акции
-  fetchSecurities: ({commit, getters, dispatch}, code) => {
+  fetchSecurities: ({commit, getters}, code) => {
     console.log('fetchSecurities', code);
     if (!code) {
       commit('setSecurities', []);
@@ -18,7 +18,6 @@ export default {
       )
       .then(securities => {
         commit('setSecurities', securities);
-        dispatch('fetchSecuritiesComments');
         return securities;
       })
       .catch((error) => {

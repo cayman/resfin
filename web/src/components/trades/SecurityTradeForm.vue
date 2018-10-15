@@ -331,6 +331,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  @import "../../assets/var.scss";
+
   .trade {
     padding: 5px;
     border-bottom: 0.5px solid lavender;

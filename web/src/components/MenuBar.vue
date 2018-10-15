@@ -54,6 +54,8 @@
           .then(securities => {
             if(securities.length) {
               this.$store.dispatch('fetchSecurityInfo', securities[0].id);
+              // this.$store.dispatch('fetchSecuritiesComments', securities.map(s => s.code));
+              // не запрашиваем, так как уже имеем весь список, в релации будем
             }else {
               this.$store.dispatch('newSecurity', code);
             }

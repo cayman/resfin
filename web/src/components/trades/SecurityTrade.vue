@@ -1,6 +1,7 @@
 <template>
   <tbody class="trade">
     <tr class="trade__row" :class="{ expanded, editing }" @click="toggleExpandTrade">
+
       <td class="trade__type">
         <a v-if="type" :title="type.name">
           <i :class="type.icon" aria-hidden="true"></i>
@@ -14,7 +15,7 @@
       </td>
 
       <template v-if="isDividendType">
-        <td class="trade__interest">
+        <td class="trade__price">
           <interest-percent :price="trade.calc.avg" :interest="trade.price" :percent-visible="false"/>
         </td>
 
@@ -26,8 +27,9 @@
           {{ trade.sum - trade.tax | currency }}
         </td>
 
-        <!--<td class="trade__commission">-->
-        <!--</td>-->
+        <td class="trade__tax">
+          <!--({{trade.tax}})-->
+        </td>
 
         <td class="trade__result" >
           {{ resultSumSign }}{{ resultSum | currency  }}
@@ -46,9 +48,9 @@
           {{ trade.sum | currency }}
         </td>
 
-        <!--<td class="trade__commission">-->
-          <!--&lt;!&ndash;{{ commissionSum | currency }}&ndash;&gt;-->
-        <!--</td>-->
+        <td class="trade__commission">
+          {{ commissionSum | currency }}
+        </td>
 
         <td class="trade__result" >
           {{ resultSumSign }}{{ resultSum | currency }}
@@ -57,7 +59,7 @@
 
     </tr>
     <tr class="trade__detail" :class="{ expanded }" v-if="expanded">
-      <td colspan="8">
+      <td colspan="9">
 
         <div class="trade__field">
           <span class="trade__label">
@@ -102,7 +104,7 @@
             <span class="trade__label">
               Налог:
             </span>
-            <span class="trade__value trade__comment">
+            <span class="trade__comment">
               {{ trade.tax }}
             </span>
           </div>
@@ -110,7 +112,7 @@
             <span class="trade__label">
                Итоговая сумма:
             </span>
-            <span class="trade__value">
+            <span class="trade__result">
               ({{ trade.price | currency }} x {{ trade.count | count }})
               -
               {{ trade.tax | currency }} = {{ trade.sum - trade.tax | currency }}
@@ -130,7 +132,7 @@
             <span class="trade__label">
               Комиссия:
             </span>
-            <span class="trade__value trade__comment">
+            <span class="trade__comment">
               <span v-if=" trade.commission.length > 1">
                 {{ trade.commission.join(' + ') }} = {{ commissionSum | currency }}
               </span>
@@ -143,7 +145,7 @@
             <span class="trade__label">
               Итоговая сумма:
             </span>
-            <span class="trade__value">
+            <span class="trade__result">
               ({{ trade.price | currency }} x {{ trade.count | count }})
               {{ trade.type === 'buy' ? '+' : ' - '}}
               {{ commissionSum | currency }} = {{ resultSum | currency }}
@@ -155,7 +157,7 @@
             <span class="trade__label">
               Средневзвешенная цена:
             </span>
-          <span class="trade__value trade__comment">
+          <span class="trade__addition">
               ({{ trade.calc.avg | currency }} x {{ trade.calc.volume | count }})
               = {{ trade.calc.avg * trade.calc.volume | currency }}
               <!--(<profit :expense="calcExpense" :income="calcIncome"/>)-->
@@ -166,7 +168,7 @@
           <span class="trade__label">
             Общий баланс:
           </span>
-          <span class="trade__value trade__comment">
+          <span class="trade__addition">
               {{ calcIncome | currency }} - {{ calcExpense | currency }}
                = {{ calcProfit | currency }}
               (<profit :expense="calcExpense" :income="calcIncome"/>)
@@ -273,7 +275,6 @@ export default {
 <style lang="scss" scoped>
   @import "../../assets/var.scss";
   .trade {
-    font-size: $font-size-smaller;
     padding: 0 $px5;
     border-bottom: $px1 solid $line-color-base;
 
@@ -287,38 +288,77 @@ export default {
       }
     }
 
-    tr.expanded {
-      td {
-        background-color: $bg-color-white;
-      }
+    tr.expanded td {
+      background-color: $bg-color-row-expanded;
+    }
+    tr.editing td {
+      background-color: $bg-color-form;
+    }
+    tr:hover td {
+      background-color: $bg-color-row-hover;
     }
 
-    tr.editing {
-      td {
-        background-color: aliceblue;
-      }
-    }
-
+    // Строка таблицы
     &__row {
+      padding-bottom: 1px;
       td {
-        line-height: 17px;
+        font-family: $font-family-condensed;
+        font-size: $font-size-smaller;
+        line-height: $px20;
       }
     }
 
-    &__row:hover {
-      td {
-        background-color: mintcream;
-      }
-    }
+
 
     &:first-child {
       border-top: $px1 solid $line-color-base;
     }
 
+    &__date {
+      width: 50px;
+      font-weight: $font-weight-lite;
+      color: $text-color-date;
+    }
+    &__type {
+      width: 10px;
+    }
+    &__count {
+      font-weight: $font-weight-regular;
+      text-align: right;
+    }
+    &__price {
+      font-weight: $font-weight-bold;
+      text-align: right;
+    }
+    &__percent {
+      font-weight: $font-weight-regular;
+      text-align: right;
+    }
+    &__sum {
+      font-weight: $font-weight-bold;
+      text-align: right;
+    }
+    &__commission {
+      font-weight: $font-weight-lite;
+      text-align: right;
+    }
+    &__tax {
+      font-weight: $font-weight-lite;
+      text-align: right;
+      color: $text-color-label;
+    }
+    &__result {
+      font-weight: $font-weight-bold;
+      text-align: right;
+    }
+
     &__detail {
-      line-height: 20px;
+      line-height: $px25;
       td {
-        border-top: 2px solid white;
+        font-family: $font-family-base;
+        font-weight: $font-weight-regular;
+        font-size: $font-size-smaller;
+        border-top: $px2 solid $line-color-white;
       }
     }
 
@@ -329,51 +369,14 @@ export default {
       }
     }
 
-    &__date {
-      color: grey;
-      width: 50px;
-      font-stretch: condensed;
-    }
-    &__type {
-      font-stretch: condensed;
-      width: 10px;
-      color: darkcyan;
-    }
-    &__count {
-      text-align: right;
-    }
-    &__price {
-      font-weight: 600;
-      text-align: right;
-    }
-    &__interest {
-      text-align: right;
-    }
-    &__percent {
-      text-align: right;
-    }
-    &__sum {
-      color: grey;
-      text-align: right;
-    }
-    &__commission {
-      color: grey;
-      text-align: right;
-    }
-    &__result {
-      text-align: right;
-    }
 
-    &__row {
-      padding-bottom: 1px;
-    }
     &__label {
-      font-weight: 400;
-      font-stretch: condensed;
-      line-height: 20px;
+      font-family: $font-family-condensed;
+      font-weight: $font-weight-bold;
+      color: $text-color-label;
+      line-height: $px20;
       float: left;
       width: 150px;
-      color: #727272;
     }
 
     &__action {
@@ -381,26 +384,33 @@ export default {
       float: right;
       width: auto;
       padding: 0;
-      color: lightslategrey;
       a {
         cursor: pointer;
-        border-radius: 2px;
         padding: 5px;
+        border-radius: $px2;
+        background-color: $button-color;
+        color: $icon-color;
         &:hover {
-          background-color: cornflowerblue;
-          color: white;
+          background-color: $button-color-hover;
+          color: $icon-color-hover;
         }
       }
     }
 
     &__value {
-      font-weight: 500;
-      font-stretch: normal;
-      color: black;
+    }
+
+    &__result {
+      font-weight: $font-weight-bold;
     }
 
     &__comment {
-      color: #637384;
+      color: $text-color-label;
+    }
+
+    &__addition {
+      font-weight: $font-weight-lite;
+      color: $text-color-label;
     }
 
   }

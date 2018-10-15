@@ -65,21 +65,19 @@ export default {
     margin: 0;
     padding: 0;
     background-color: $bg-color-white;
-  }
-  #app {
     font-family: $font-family-base;
     font-weight: $font-weight-regular;
     font-size: $font-size-base;
     color: $text-color-base;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
+  }
+  #app {
     text-align: left;
     margin: 0;
     height: 100%;
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
+    width: 750px;
   }
   .header {
     background: gainsboro;

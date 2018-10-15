@@ -40,7 +40,8 @@ export default {
     },
     types: [
       { code:'ап', label:'ап', name: 'Превилигированная акция'},
-      { code:'ао', label:'ао', name: 'Обыкновенная акция'}
+      { code:'ао', label:'ао', name: 'Обыкновенная акция'},
+      { code:'др', label:'др', name: 'Депозитарные расписки'}
     ],
     favorites: [
       { code:5, icon:'fa fa-star-o', name: 'Избранная'},

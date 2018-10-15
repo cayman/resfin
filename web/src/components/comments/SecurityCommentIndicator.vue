@@ -61,6 +61,9 @@ export default {
     }
     &__value {
       color: $text-color-normal;
+      &:hover {
+        font-weight: $font-weight-boldest;
+      }
     }
   }
   .good {

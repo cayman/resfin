@@ -83,6 +83,7 @@ export default {
     font-size: $font-size-base;
     font-weight: $font-weight-regular;
     color: $text-color-base;
+    padding: 5px;
 
     overflow-y: auto;
     overflow-x: hidden;

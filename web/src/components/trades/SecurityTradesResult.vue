@@ -16,9 +16,9 @@
       <td class="footer__sum">
         <profit :expense="calcExpense" :income="calcIncome" ></profit>
       </td>
-      <!--<td class="footer__commission">-->
-        <!--{{ account.commission | currency }}-->
-      <!--</td>-->
+      <td class="footer__commission">
+        {{ account.commission | currency }}
+      </td>
       <td class="footer__result">
         {{ calcProfit | currency}}
       </td>
@@ -65,7 +65,7 @@
           <span class="footer__label">
             Средневзвешенная цена:
           </span>
-          <span class="footer__value footer__comment">
+          <span class="footer__addition">
               ({{ account.avg | currency }} x {{ account.volume | count }})
               = {{ account.avg * account.volume | currency }}
             <span v-if="securityPrice">(<profit :expense="account.avg" :income="securityPrice"/>)</span>
@@ -76,7 +76,7 @@
           <span class="footer__label">
             Общий баланс:
           </span>
-          <span class="footer__value footer__comment">
+          <span class="footer__value">
               {{ calcIncome | currency }} - {{ calcExpense | currency }}
                = {{ calcProfit | currency }}
               (<profit :expense="calcExpense" :income="calcIncome"/>)
@@ -127,42 +127,48 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../../assets/var.scss";
+
   .footer {
-    font-size: 11px;
-    font-weight: 500;
-    font-stretch: condensed;
-    background-color: beige;
 
     td {
-      padding: 2px 0 2px 5px;
+      padding: $px2 0 $px2 $px5;
       &:first-child {
-        padding-left: 10px;
+        padding-left: $px10;
       }
       &:last-child {
-        padding-right: 10px;
+        padding-right: $px10;
       }
     }
 
-    tr.expanded {
-      td {
-        background-color: whitesmoke;
-      }
+    tr.expanded td {
+      background-color: $bg-color-row-expanded;
+    }
+    tr:hover td {
+      background-color: $bg-color-row-hover;
     }
 
+    // Строка таблицы
     &__row {
+      font-weight: $font-weight-bold;
+      background-color: $bg-color-row-result;
       td {
-        line-height: 17px;
+        font-family: $font-family-condensed;
+        font-size: $font-size-smaller;
+        line-height: $px20;
       }
     }
 
     &__row:hover {
       td {
-        background-color: mintcream;
+        background-color: $bg-color-row-hover;
       }
     }
 
     &__type {
+      font-weight: $font-weight-regular;
       text-align: right;
+      color: $text-color-date;
     }
     &__count {
       text-align: right;
@@ -177,15 +183,17 @@
       width: auto;
     }
     &__sum {
+      font-weight: $font-weight-bold;
       text-align: right;
       width: auto;
     }
     &__commission {
+      font-weight: $font-weight-regular;
       text-align: right;
       width: auto;
-      color: grey;
     }
     &__result {
+      font-weight: $font-weight-boldest;
       text-align: right;
       width: auto;
     }
@@ -195,10 +203,13 @@
     }
 
     &__detail {
-      line-height: 20px;
+      line-height: $px25;
       td {
-        border-top: 2px solid white;
-        border-bottom: 1px solid gray;
+        font-family: $font-family-base;
+        font-weight: $font-weight-regular;
+        font-size: $font-size-smaller;
+        border-top: 2px solid $line-color-white;
+        border-bottom: 1px solid $line-color-dark;
       }
     }
 
@@ -210,24 +221,28 @@
     }
 
     &__label {
-      font-weight: 400;
-      font-stretch: condensed;
-      line-height: 20px;
+      font-family: $font-family-condensed;
+      font-weight: $font-weight-bold;
+      color: $text-color-label;
+      line-height: $px20;
       float: left;
       width: 150px;
-      color: #727272;
     }
 
     &__value {
-      font-weight: 500;
-      font-stretch: normal;
-      color: black;
     }
 
     &__comment {
-      color: #637384;
+      color: $text-color-label;
     }
 
+    &__addition {
+      font-weight: $font-weight-lite;
+    }
+
+    &__result {
+      font-weight: $font-weight-regular;
+    }
 
   }
 </style>

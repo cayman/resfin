@@ -12,7 +12,6 @@
       <div class="security__indicator" v-if="indicatorsComment">
         <template v-for="(indicator, index) in indicators">
           <security-comment-indicator :key="index" :indicator="indicator" :small="true"></security-comment-indicator>
-          <span>&nbsp;</span>
         </template>
       </div>
     </a>
@@ -76,6 +75,7 @@
       toggleFavorite() {
         this.$store.dispatch('favoriteSecurity', this.security).then(() =>
           this.$store.dispatch('fetchSecurities', this.page)
+          // комментарии не запрашиваем, так как поменялся только объект
         );
       }
     }
@@ -87,8 +87,10 @@
 
   .security {
     text-align: left;
-    padding: $px1 $px5;
-    border-radius: $px2;
+    margin-bottom: $px2;
+    padding: $px2 $px3 $px2 $px3;
+    border-top-left-radius: $px2;
+    border-bottom-left-radius: $px2;
     display: flex;
     display: -webkit-flex;
     flex-wrap: nowrap;
@@ -100,21 +102,25 @@
 
     // поле кода с индикатором цены
     &__code {
-      flex: 0 0 42px;
+      display: inline-block;
+      flex: 0 0 43px;
     }
     // поле имени с мультипликторами
     &__name {
-      flex: 0 0 110px;
+      display: inline-block;
+      flex: 0 0 115px;
       overflow: hidden;
     }
     // строка текста
     &__text {
       font-family: $font-family-condensed;
-      font-weight: $font-weight-bold;
+      font-weight: $font-weight-regular;
+      font-size: $font-size-base;
       color: $text-color-base;
-      line-height: normal;
+      height: $px20;
       margin: 0;
       padding: 0;
+      overflow: hidden;
     }
     // строка индикаторов
     &__indicator {

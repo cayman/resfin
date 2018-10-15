@@ -199,6 +199,8 @@ export default {
           const page = this.calculatePage(this.currentPage, this.security);
           this.$store.commit('setPage', page);
           this.$store.dispatch('fetchSecurities', page);
+          // комментарии не запрашиваем, так как поменялся только объект
+          // или создался новый без комментариев
         });
       });
     },
@@ -232,11 +234,9 @@ export default {
       font-weight: $font-weight-bold;
       font-family: $font-family-condensed;
       color: $text-color-label;
-
       line-height: $px25;
     }
     &__input {
-
     }
   }
 </style>

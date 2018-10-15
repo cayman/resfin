@@ -21,11 +21,12 @@ export default {
       });
   },
 
-  fetchSecuritiesComments: ({commit, getters}, securities=[]) => {
-    console.log('fetchSecuritiesComments:', securities);
+  fetchSecuritiesComments: ({commit, getters}, codes) => {
+    console.log('fetchSecuritiesComments:', codes);
     commit('loading', true);
-    return getters.comments.where('interest', '>=', 0).get()
+    return getters.comments.get()
       .then(comments => getSnapList(comments)
+        .filter(comment => !codes || codes.includes(comment.securityCode))
         .sort((a,b) => a.created > b.created ? -1 : 1)
       )
       .then(comments => {

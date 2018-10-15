@@ -143,14 +143,20 @@ export default {
   @import "../../assets/var.scss";
   .form {
     padding: $px10;
-    background-color: $bg-color-white;
+    background-color: $bg-color-form;
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    font-weight: $font-weight-regular;
+    color: $text-color-base;
+
     &__field {
       padding-bottom: $px10;
     }
     &__label {
-      font-weight: 400;
-      font-stretch: condensed;
-      line-height: 25px;
+      font-weight: $font-weight-bold;
+      font-family: $font-family-condensed;
+      color: $text-color-label;
+      line-height: $px25;
     }
     &__input {
       padding-left: $px5;

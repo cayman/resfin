@@ -42,6 +42,7 @@ export default {
     dispatch('fetchLinks');
     dispatch('fetchSectors');
     dispatch('fetchIndicators');
+    dispatch('fetchSecuritiesComments'); // полный список комментариев
     return dispatch('fetchAccounts')
       .then(() => {
         return dispatch('fetchSecurities', state.page);

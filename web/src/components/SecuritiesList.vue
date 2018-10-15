@@ -47,7 +47,6 @@
 
   .security-list {
     text-align: left;
-    padding-right: $px5;
 
     &__actions {
       text-align: left;

@@ -6,12 +6,13 @@ $font-family-condensed:  'Roboto Condensed', sans-serif;
 $font-weight-lite: 300;
 $font-weight-regular: 400;
 $font-weight-bold: 500;
+$font-weight-boldest: 600;
 
-$font-size-small: 8px;
-$font-size-smaller: 12px;
-$font-size-base: 13px;
-$font-size-middle: 14px;
-$font-size-big: 15px;
+$font-size-small: 9px;
+$font-size-smaller: 13px;
+$font-size-base: 14px;
+$font-size-middle: 15px;
+$font-size-big: 16px;
 
 $px1: 1px;
 $px2: 2px;
@@ -25,6 +26,7 @@ $px25: 25px;
 //цвета линий
 $line-color-dark: lightsteelblue;
 $line-color-base: lavender;
+$line-color-white: whitesmoke;
 
 // основные цвета текста
 $text-color-white: whitesmoke;
@@ -32,8 +34,8 @@ $text-color-base: #23313f;
 $text-color-portfolio: #008f00;
 
 // $text-color-dark: #3e4757;
-$text-color-label: #69798a; // lightslategrey;
-$text-color-date: cornflowerblue; // цвета дат
+$text-color-label: #606f80; // lightslategrey;
+$text-color-date: #7987b9; // цвета дат
 $text-color-sector: cornflowerblue; // цвет сектора
 
 $text-color-link: #6775de; // цвета ссылок
@@ -63,7 +65,7 @@ $text-color-loss: firebrick;
 // $text-color-lite: cornflowerblue;
 
 // цвета иконок и кнопок
-$icon-color: darkslategray; // #2d4999; // lightslategrey
+$icon-color: #8975cf; // #725b71; // #2d4999; // lightslategrey
 $icon-color-hover: white;
 $button-color: transparent;
 $button-color-hover: cornflowerblue;
@@ -72,14 +74,16 @@ $button-color-hover: cornflowerblue;
 $bg-color-white: white; // цвет базового фона
 $bg-color-menu: #2c3e50; // цвет меню
 $bg-color-menu-active: lightsteelblue; // цвет активного меню
-$bg-color-menu-hover: aliceblue; // цвет подсветки меню
+$bg-color-menu-hover: mintcream; // : aliceblue; // цвет подсветки меню
 $bg-color-sidebar: lightsteelblue; //цвет сайдбара
 $bg-color-sidebar-active: white; //цвет активного элемента сайдбара
-$bg-color-sidebar-hover: aliceblue; //цвет подсветки элемента сайдбара
+$bg-color-sidebar-hover: mintcream; // aliceblue; //цвет подсветки элемента сайдбара
 $bg-color-toolbar: aliceblue; // цвета тулабаров в основной зоне
 $bg-color-form: aliceblue; // цвет форм редактирования
-
-
+$bg-color-row-header: aliceblue;
+$bg-color-row-result: aliceblue; // beige;
+$bg-color-row-hover: mintcream;
+$bg-color-row-expanded: #faf9ff;
 
 
 
