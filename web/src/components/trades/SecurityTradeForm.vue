@@ -6,7 +6,7 @@
            Вид сделки:
         </span>
         <span class="form__input">
-          <select v-model="fieldTypeCode" placeholder="Выберите">
+          <select v-model="fieldTypeCode" placeholder="Выберите" style="width: 180px">
             <option disabled value="">Выберите вид сделки</option>
             <option v-for="type in types" :key="type.code" :value="type.code" :label="type.name"></option>
           </select>
@@ -17,7 +17,7 @@
            Счет:
         </span>
         <span class="form__input">
-          <select v-model="fieldAccountCode" placeholder="Выберите">
+          <select v-model="fieldAccountCode" placeholder="Выберите" style="width: 180px">
             <option disabled value="">Выберите счет</option>
             <option v-for="account in accounts" :key="account.code" :value="account.code" :label="account.name"></option>
           </select>
@@ -28,7 +28,7 @@
            ПСБ:
         </span>
         <span class="form__input">
-          <textarea v-model="fieldRaw" rows="2" cols="16"/>
+          <textarea v-model="fieldRaw" rows="2" style="width: 180px"/>
         </span>
       </div>
       <div class="form__field">
@@ -36,15 +36,15 @@
            Дата:
         </span>
         <span class="form__input">
-          <input type="date" v-model="fieldDate"/>
+          <input type="date" v-model="fieldDate" style="width: 120px"/>
         </span>
       </div>
       <div class="form__field">
         <span class="form__label">
-           Номер (Код):
+           Код сделки:
         </span>
         <span class="form__input">
-          <input type="text" v-model="fieldCode" style="width: 10em"/>
+          <input type="text" v-model="fieldCode" style="width: 120px"/>
         </span>
       </div>
       <div class="form__field">
@@ -52,7 +52,7 @@
            Количество:
         </span>
         <span class="form__input">
-          <input type="number" v-model="fieldCount" style="width: 10em"/>
+          <input type="number" v-model="fieldCount" style="width: 120px"/>
         </span>
       </div>
 
@@ -64,7 +64,7 @@
              На одну:
           </span>
           <span class="form__input">
-            <input type="number" step="any" v-model="fieldPrice" style="width: 10em"/>
+            <input type="number" step="any" v-model="fieldPrice" style="width: 120px"/>
           </span>
         </div>
 
@@ -73,7 +73,9 @@
             Сумма:
           </span>
           <span class="form__input">
-           <input type="number" step="any" v-model="fieldSum" style="width: 10em"/>
+           <input type="number" step="any" v-model="fieldSum" style="width: 120px"/>
+          </span>
+          <span class="form__comment">
             {{ fieldSum / fieldCount  }}
           </span>
         </div>
@@ -83,8 +85,10 @@
             Налог:
           </span>
           <span class="form__input">
-           <input type="number" v-model="fieldTax" style="width: 10em"/>
-             {{(fieldSum * 0.13) | currency(0)   }}
+            <input type="number" v-model="fieldTax" style="width: 120px"/>
+          </span>
+          <span class="form__comment">
+            {{(fieldSum * 0.13) | currency(0)}}
           </span>
         </div>
 
@@ -98,6 +102,7 @@
             {{ fieldSum  - fieldTax | currency }}
           </span>
         </div>
+
       </template>
 
       <!--Покупка или продажа-->
@@ -107,7 +112,7 @@
              Цена:
           </span>
           <span class="form__input">
-           <input type="number" v-model="fieldPrice" step="any" style="width: 10em"/>
+           <input type="number" v-model="fieldPrice" step="any" style="width: 120px"/>
           </span>
         </div>
 
@@ -116,7 +121,7 @@
              Сумма:
           </span>
           <span class="form__input">
-             <input type="number" v-model="fieldSum" step="any" readonly style="width: 10em"/>
+             <input type="number" v-model="fieldSum" step="any" readonly style="width: 120px"/>
           </span>
         </div>
 
@@ -124,11 +129,14 @@
           <span class="form__label">
              Комиссия:
           </span>
-            <span class="form__input">
-            <input type="number" v-model="fieldCommission0" step="any" style="width: 4em"/>
-            <input v-if="fieldCommission0" type="number" v-model="fieldCommission1" step="any" style="width: 4em"/>
-            <input v-if="fieldCommission1" type="number" v-model="fieldCommission2" step="any" style="width: 4em"/>
-            <input v-if="fieldCommission2" type="number" v-model="fieldCommission3" step="any" style="width: 4em"/>
+          <span class="form__input">
+            <input type="number" v-model="fieldCommission0" step="any" style="width: 60px"/>
+            <input v-if="fieldCommission0" type="number" v-model="fieldCommission1" step="any" style="width: 60px"/>
+            <input v-if="fieldCommission1" type="number" v-model="fieldCommission2" step="any" style="width: 60px"/>
+            <input v-if="fieldCommission2" type="number" v-model="fieldCommission3" step="any" style="width: 60px"/>
+          </span>
+          <span class="form__comment">
+            {{ commissionSum }}
           </span>
         </div>
 
@@ -141,7 +149,6 @@
               {{ resultSum | currency }}
           </span>
         </div>
-
       </template>
 
       <div class="form__field">
@@ -353,21 +360,36 @@ export default {
   }
 
   .form {
-    padding: 10px;
+    padding: $px10;
     box-sizing: border-box;
-    background-color: aliceblue;
+    background-color: $bg-color-form;
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    font-weight: $font-weight-regular;
+    color: $text-color-base;
+
     &__field {
-      padding-bottom: 5px;
-      line-height: 20px;
+      padding-bottom: $px5;
     }
     &__label {
-      font-weight: 400;
-      font-stretch: condensed;
       float: left;
       width: 100px;
+      font-weight: $font-weight-bold;
+      font-family: $font-family-condensed;
+      color: $text-color-label;
+      padding-right: $px5;
+      line-height: $px20;
     }
     &__input {
+      padding-right: $px10;
+      line-height: $px20;
     }
+    &__comment {
+      line-height: $px20;
+      font-family: $font-family-condensed;
+      font-weight: $font-weight-lite;
+    }
+
   }
 
 

@@ -21,7 +21,7 @@
     </div>
     <div class="comment__text" v-html="comment.text">
     </div>
-    <div class="comment__indicator" v-if="comment.indicators && comment.indicators.length">
+    <div class="comment__indicators" v-if="comment.indicators && comment.indicators.length">
       <security-comment-indicator v-for="(indicator, index) in comment.indicators"
                                   :key="index" :indicator="indicator"></security-comment-indicator>
     </div>
@@ -89,28 +89,36 @@ export default {
     }
     &__date {
       color: $text-color-date;
+      font-size: $font-size-base;
       font-family: $font-family-condensed;
     }
     &__price {
+      font-size: $font-size-base;
       margin-left: $px5;
     }
     &__interest {
+      font-size: $font-size-base;
       margin-left: $px5;
     }
     &__label {
       margin-left: $px5;
       margin-right: $px2;
+      font-size: $font-size-base;
       color: $text-color-label;
     }
     &__title {
       font-weight: $font-weight-bold;
+      font-size: $font-size-base;
     }
     &__text {
+      font-family: $font-family-condensed;
       font-weight: $font-weight-regular;
+      font-size: $font-size-base;
     }
-    &__indicator {
-      padding-top: $px5;
+    &__indicators{
+      padding-top: $px10;
       font-weight: $font-weight-bold;
+      font-size: $font-size-smaller;
     }
   }
 </style>

@@ -6,6 +6,8 @@
         &nbsp;{{changeSign}}{{change}} ({{changeSign}}{{percent}}%)
       </span>
     </span>
+    <span>
+    <span class="price__label">Листинг:</span> {{ securityLevel }}</span>
     <span class="price__portfolio" v-for="(account, code) in tradesAccounts" :key="code">
       <span class="price__label">{{ account.name }}:</span> {{ account.avg * account.volume | currency }} &#8381;
     </span>
@@ -19,11 +21,14 @@ export default {
   name: 'security-price',
   components: { SecurityLinks, SecurityChart },
   computed: {
-    moex () {
-      return this.$store.state.security.moex;
-    },
     price () {
       return this.$store.getters.securityPrice;
+    },
+    securityLevel () {
+      return this.$store.getters.securityLevel;
+    },
+    securityStatus () {
+      return this.$store.getters.securityStatus;
     },
     change () {
       return this.$store.getters.securityPriceChange;
@@ -74,6 +79,7 @@ export default {
 
     &__label {
       color: $text-color-label;
+      padding-left: $px5;
     }
 
     &__portfolio {

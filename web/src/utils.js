@@ -68,7 +68,7 @@ export function evalCriterion (criterion = null, value = null) {
     }
     const _criterion = criterion.replace(/\$value/g, value);
     const result = eval(_criterion);
-    console.log('evalCriterion:', _criterion, result);
+    // console.log('evalCriterion:', _criterion, result);
     return result;
 
   } catch (error) {
@@ -123,6 +123,12 @@ export function parseValue(val = null, type) {
         : value;
 }
 
+export function parseMoex(metadata) {
+  return metadata.data && metadata.columns && metadata.data[0] ? metadata.columns.reduce((model, column, index) => {
+    model[column] = metadata.data[0][index];
+    return model;
+  },{}) :  {};
+}
 
 export function getCurrency(value) {
   return  Number(value.toFixed(2));

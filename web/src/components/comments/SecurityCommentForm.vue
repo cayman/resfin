@@ -1,39 +1,42 @@
 <template>
   <div class="form">
     <div class="form__field">
-      <input type="text" v-model="fieldTitle" placeholder="Заголовок" size="44"/>
+      <input type="text" v-model="fieldTitle" placeholder="Заголовок" style="width: 360px"/>
     </div>
     <div class="form__field">
-        <textarea v-model="fieldText" placeholder="Комментарий" rows="4" cols="44"></textarea>
+        <textarea v-model="fieldText" placeholder="Комментарий" rows="4" style="width: 360px"></textarea>
     </div>
     <div class="form__field">
-      <input type="text" v-model="fieldSource" placeholder="Источник" size="44"/>
+      <input type="text" v-model="fieldSource" placeholder="Источник" style="width: 360px"/>
     </div>
     <div class="form__field">
        <span class="form__label" @click="setFieldPrice">
           Цена:
       </span>
       <span class="form__input">
-        <input type="number" v-model="fieldPrice" step="any"  style="width: 5em"/>
+        <input type="number" v-model="fieldPrice" step="any"  style="width: 80px"/>
       </span>
+    </div>
+    <div class="form__field">
       <span class="form__label">
           Начисление:
       </span>
       <span class="form__input">
-        <input type="number" v-model="fieldInterest" step="any" :disabled="!fieldPrice" style="width: 5em">
+        <input type="number" v-model="fieldInterest" step="any" :disabled="!fieldPrice" style="width: 80px">
       </span>
-      <interest-percent v-if="fieldInterest" class="form__label" :price="fieldPrice" :interest="fieldInterest"></interest-percent>
-    </div>
+      <span class="form__comment" v-if="fieldInterest" >
+         <interest-percent :price="fieldPrice" :interest="fieldInterest"></interest-percent>
+      </span>
+   </div>
     <div v-for="(fieldIndicator, index) in fieldIndicators" :key="index + 1">
       <security-comment-form-indicator :index="index"></security-comment-form-indicator>
     </div>
     <security-comment-form-indicator :index="fieldIndicators.length"></security-comment-form-indicator>
     <div class="form__field">
       <span class="form__label">
-        &nbsp;
+        <button @click="saveComment" :disabled="!allow">Сохранить</button>
       </span>
       <span class="form__input">
-        <button @click="saveComment" :disabled="!allow">Сохранить</button>&nbsp;
         <button @click="cancelComment">Отмена</button>
       </span>
     </div>
@@ -153,14 +156,19 @@ export default {
       padding-bottom: $px10;
     }
     &__label {
+      float: left;
+      width: 100px;
       font-weight: $font-weight-bold;
       font-family: $font-family-condensed;
       color: $text-color-label;
       line-height: $px25;
+      padding-right: $px5;
     }
     &__input {
-      padding-left: $px5;
       padding-right: $px5;
+    }
+    &__comment {
+      font-family: $font-family-condensed;
     }
   }
 </style>

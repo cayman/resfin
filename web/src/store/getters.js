@@ -31,12 +31,11 @@ export default {
     return !!state.user.id;
   },
 
-  getSecurity: (state) => (code) => {
+  getSecurityMoex: (state) => (code) => {
     const url = state.security.url + code + '.json';
     console.log('fetch', url);
     return axios.get(url)
       .then(response => response.data || {})
-      .then(data => data.marketdata || {});
   },
 
   chartLinks ({links}) {
@@ -104,13 +103,31 @@ export default {
     }, {});
   },
 
+  securityCode : ({security}) =>
+    security.market['SECID'],
+
+  securityName : ({security}) =>
+    security.market['SECNAME'],
+
+  securityIsin : ({security}) =>
+    security.market['ISIN'],
+
+  securityLevel : ({security}) =>
+    security.market['LISTLEVEL'],
+
+  securityStatus : ({security}) =>
+    security.market['STATUS'],
+
+  securityReg : ({security}) =>
+    security.market['REGNUMBER'],
+
   securityPrice : ({security}) =>
-    security.moex['LAST'] || security.moex['LCURRENTPRICE'],
+    security.price['LAST'] || security.price['LCURRENTPRICE'],
 
   securityPriceChange : ({security}) =>
-    security.moex['CHANGE'],
+    security.price['CHANGE'],
 
   securityPriceChangePercent : ({security}) =>
-    security.moex['LASTTOPREVPRICE']
+    security.price['LASTTOPREVPRICE']
 
 };

@@ -47,6 +47,20 @@ export default {
     }
     &__right {
       flex: 1 1 200px;
+      &::-webkit-scrollbar {
+        width: 1em;
+      }
+
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+        outline: 1px solid slategrey;
+      }
     }
+
+
   }
 </style>

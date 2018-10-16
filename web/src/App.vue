@@ -41,6 +41,9 @@ export default {
   @import "./assets/var.scss";
 
   html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
     -webkit-text-size-adjust: none;
     -moz-text-size-adjust: none;
     -ms-text-size-adjust: none;
@@ -73,9 +76,6 @@ export default {
   }
 
   body {
-    min-height: 100%;
-    margin: 0;
-    padding: 0;
     background-color: $bg-color-white;
     color: $text-color-base;
   }
@@ -89,7 +89,6 @@ export default {
     width: 640px;
   }
   .header {
-    background: gainsboro;
     flex: 0 0 30px;
   }
   .main {

@@ -154,7 +154,9 @@
   }
 
   .portfolio {
-    color: $text-color-portfolio;
+    .security__text {
+      color: $text-color-portfolio;
+    }
   }
 
 

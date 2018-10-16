@@ -7,7 +7,7 @@
         </a>
       </span>
       <span class="form__input">
-        <input type="text" v-model="fieldCode" placeholder="Тикер" size="9"/>
+        <input type="text" v-model="fieldCode" placeholder="Тикер" size="9" style="width: 60px"/>
       </span>
     </div>
     <div class="form__field">
@@ -17,19 +17,19 @@
          </a>
       </span>
       <span class="form__input">
-        <input type="text" v-model="fieldName" placeholder="Краткое название" size="18"/>
+        <input type="text" v-model="fieldName" placeholder="Краткое название" style="width: 120px"/>
       </span>
     </div>
     <div class="form__field">
       <span class="form__label">Полное:</span>
       <span class="form__input">
-        <input type="text" v-model="fieldDesc" placeholder="Краткое название" size="25"/>
+        <input type="text" v-model="fieldDesc" placeholder="Полное название" style="width: 250px"/>
       </span>
     </div>
     <div class="form__field">
       <span class="form__label">Тип акции:</span>
       <span class="form__input">
-        <select v-model="fieldTypeCode" placeholder="Выберите тип акции">
+        <select v-model="fieldTypeCode" placeholder="Выберите тип акции" style="width: 250px">
           <option disabled value="">Выберите тип акции</option>
           <option v-for="type in types" :key="type.code" :value="type.code" :label="type.name"></option>
         </select>
@@ -53,7 +53,7 @@
     <div class="form__field">
       <span class="form__label">Сектор:</span>
       <span class="form__input">
-        <select v-model="fieldSectorCode" @change="selectSector(fieldSectorCode)">
+        <select v-model="fieldSectorCode" @change="selectSector(fieldSectorCode)" style="width: 250px">
           <option disabled value="">Выберите сектор</option>
           <option v-for="sector in sectors" :key="sector.id" :value="sector.id" :label="sector.name">
           </option>
@@ -63,7 +63,7 @@
     <div class="form__field">
       <span class="form__label">Сектор полный:</span>
       <span class="form__input">
-        <textarea v-model="fieldSectorName" placeholder="Сектор включая дочерний" rows="2" cols="26"></textarea>
+        <textarea v-model="fieldSectorName" placeholder="Сектор включая дочерний" rows="2" style="width: 250px"></textarea>
       </span>        
     </div>
     <security-form-var class="form__field" v-for="link in refLinks" :key="link.code" :link="link">

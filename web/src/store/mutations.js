@@ -1,5 +1,6 @@
 import Vue from 'vue';
-import {parseValue, setAppStorageItem} from '../utils';
+import {parseValue, setAppStorageItem, parseMoex} from '../utils';
+
 
 export default {
 
@@ -49,12 +50,9 @@ export default {
     state.security.id = model.id || null;
     setAppStorageItem('securityId', state.security.id);
   },
-  setSecurityMoex: (state, moex) => {
-    const data = moex.data && moex.data[0] ? moex.columns.reduce((data, column, index) => {
-      data[column] = moex.data[0][index];
-      return data;
-    },{}) :  {};
-    Vue.set(state.security, 'moex', data);
+  setSecurityMoex: (state, {securities, marketdata}) => {
+    Vue.set(state.security, 'market', parseMoex(securities));
+    Vue.set(state.security, 'price', parseMoex(marketdata));
   },
   editingSecurity: (state, editing) => {
     state.security.editing = editing;

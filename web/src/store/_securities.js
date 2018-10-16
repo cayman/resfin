@@ -34,7 +34,7 @@ export default {
       .then(security => getSnapData(security))
       .then(security => {
         commit('setSecurity', security);
-        return getters.getSecurity(security.code);
+        return getters.getSecurityMoex(security.code);
       })
       .then(data => {
         commit('setSecurityMoex', data);

@@ -7,7 +7,7 @@
       </select>
     </span>
     <span class="field__input">
-      <input type="number" v-model="fieldIndicatorValue" step="any"  style="width: 5em"/>
+      <input type="number" v-model="fieldIndicatorValue" step="any"  style="width: 80px"/>
     </span>
   </div>
 </template>
@@ -73,13 +73,14 @@ export default {
   .field {
     padding-bottom: $px10;
     &__label {
+      float: left;
+      width: 100px;
       font-weight: $font-weight-regular;
       font-family: $font-family-condensed;
       color: $text-color-label;
       line-height: $px25;
     }
     &__input {
-      padding-left: $px5;
       padding-right: $px5;
     }
   }

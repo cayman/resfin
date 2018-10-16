@@ -83,6 +83,7 @@
 
         </div>
 
+        <!--Дивиденды-->
         <template v-if="isDividendType">
           <div class="trade__field">
             <span class="trade__label">
@@ -119,6 +120,8 @@
             </span>
           </div>
         </template>
+
+        <!--Покупка или продажа-->
         <template v-else>
           <div class="trade__field">
             <span class="trade__label">
@@ -153,6 +156,8 @@
           </div>
         </template>
 
+
+        <!--Общие итоги-->
         <div class="trade__field">
             <span class="trade__label">
               Средневзвешенная цена:
@@ -182,6 +187,19 @@
               <!--АО "Корпорация "Иркут" ОАО, выпуск 03 RU0006752979-->
             </span>
         </div>
+
+        <div v-if="isDividendType" class="trade__field trade__export" >
+          <pre @click="copyText">{{ security.code }}: {{ trade.count | count(false) }}x{{ trade.price | currency }}={{ trade.sum | currency }}
+Налог: {{ trade.tax | currency }}, Итого: {{ resultSum | currency }}
+{{ securityName }} ({{ securityIsin}}), {{ securityReg }}</pre>
+</div>
+
+        <div v-else class="trade__field trade__export">
+          <pre @click="copyText">{{ security.code }}: {{ trade.count | count(false) }}x{{ trade.price | currency }}={{ trade.sum | currency }}
+Комиссия: {{ trade.commission.join('+') }}={{ commissionSum | currency }}
+{{ securityName }} ({{ securityIsin}}), {{ securityReg }}</pre>
+        </div>
+
       </td>
     </tr>
   </tbody>
@@ -208,6 +226,18 @@ export default {
     },
     security () {
       return this.$store.state.security.model;
+    },
+    securityCode () {
+      return this.$store.getters.securityCode;
+    },
+    securityName () {
+      return this.$store.getters.securityName;
+    },
+    securityIsin () {
+      return this.$store.getters.securityIsin;
+    },
+    securityReg() {
+      return this.$store.getters.securityReg;
     },
     types () {
       return this.$store.state.trade.types;
@@ -266,6 +296,16 @@ export default {
     },
     toggleExpandTrade() {
       this.$store.commit('toggleExpandTrade', this.trade.id);
+    },
+    copyText (event) {
+      const div = event.target;
+      const el = document.createElement('textarea');
+      document.body.appendChild(el);
+      el.value = div.textContent;
+      console.log('copy', el.value);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
     }
   }
 }
@@ -368,7 +408,19 @@ export default {
         line-height: 15px;
       }
     }
-
+    &__export {
+      border-top: $px1 solid $line-color-base;
+      line-height: $px20;
+      padding-top: $px5;
+      pre {
+        padding: 0;
+        margin: 0;
+        font-family: $font-family-condensed;
+        font-weight: $font-weight-lite;
+        font-size: $font-size-smaller;
+        color: $text-color-label;
+      }
+    }
 
     &__label {
       font-family: $font-family-condensed;
@@ -413,6 +465,8 @@ export default {
       font-weight: $font-weight-lite;
       color: $text-color-label;
     }
+
+
 
   }
 
