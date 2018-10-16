@@ -88,10 +88,11 @@
       line-height: 20px;
       float: left;
       padding: 0;
+      min-width: 30px;
       a {
         display: block;
         text-align: center;
-        padding: $px5;
+        padding: $px3;
         color: $text-color-white;
         &:hover {
           color: $text-color-base;

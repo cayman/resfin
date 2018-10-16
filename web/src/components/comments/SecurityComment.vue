@@ -60,6 +60,9 @@ export default {
   .comment {
     border-bottom: $px1 solid $line-color-base;
     padding: $px10 $px10;
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    font-weight: $font-weight-regular;
     &:last-child {
       // border-bottom: none;
     }
@@ -100,14 +103,10 @@ export default {
       color: $text-color-label;
     }
     &__title {
-      font-family: $font-family-base;
       font-weight: $font-weight-bold;
-      font-size: $font-size-base;
     }
     &__text {
-      font-family: $font-family-base;
       font-weight: $font-weight-regular;
-      font-size: $font-size-base;
     }
     &__indicator {
       padding-top: $px5;

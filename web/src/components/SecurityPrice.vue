@@ -46,6 +46,7 @@ export default {
   @import "../assets/var.scss";
 
   .price {
+    font-size: $font-size-base;
     margin: 0 $px10;
     .up {
       color: $text-color-up;

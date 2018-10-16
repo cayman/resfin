@@ -6,7 +6,7 @@
         <a class="info__action" @click="editSecurity">
           <i class="fa fa fa-pencil" aria-hidden="true" ></i>
         </a>
-        <span class="info__title">{{ security.desc }}</span>&nbsp;
+        <span class="info__title">{{ security.desc }}</span>
         <span class="info__sector">{{ security.sectorName }}</span>
       </div>
       <security-chart/>
@@ -95,23 +95,28 @@ export default {
     }
 
     &__action {
+      display: inline-block;
       background-color: $button-color;
       color: $icon-color;
       cursor: pointer;
+      margin-left: $px5;
       margin-right: $px5;
       padding: $px5;
       border-radius: $px2;
+      line-height: normal;
       &:hover {
         background-color: $button-color-hover;
         color: $icon-color-hover;
       }
     }
     &__title {
+      display: inline-block;
       font-family: $font-family-base;
       white-space: nowrap;
-      margin-right: $px5;
+      margin-right: $px10;
     }
     &__sector {
+      display: inline-block;
       font-family: $font-family-condensed;
       font-weight: $font-weight-lite;
       color: $text-color-sector;
@@ -122,8 +127,8 @@ export default {
       font-family: $font-family-condensed;
       font-weight: $font-weight-lite;
       background-color: $bg-color-toolbar;
-      margin: $px5 0;
-      padding: $px5 $px10 0 $px10;
+      margin: $px5 $px2 $px2 $px2;
+      padding: $px2 $px5 $px2 $px5;
       border-top: $px1 solid $line-color-dark;
     }
   }

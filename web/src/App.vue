@@ -40,12 +40,24 @@ export default {
 <style lang="scss">
   @import "./assets/var.scss";
 
+  html, body {
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    text-size-adjust: none;
+    font-family: $font-family-base;
+    font-weight: $font-weight-regular;
+    font-size: $font-size-base;
+  }
+
   * {
     box-sizing: border-box;
   }
 
-  html {
-    height: 100%;
+  textarea, input, select, button  {
+    font-family: $font-family-base;
+    font-weight: $font-weight-regular;
+    font-size: $font-size-base;
   }
   a {
     color: $text-color-link;
@@ -61,13 +73,10 @@ export default {
   }
 
   body {
-    height: 100%;
+    min-height: 100%;
     margin: 0;
     padding: 0;
     background-color: $bg-color-white;
-    font-family: $font-family-base;
-    font-weight: $font-weight-regular;
-    font-size: $font-size-base;
     color: $text-color-base;
   }
   #app {
@@ -77,14 +86,14 @@ export default {
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
-    width: 750px;
+    width: 640px;
   }
   .header {
     background: gainsboro;
     flex: 0 0 30px;
   }
   .main {
-     flex: 1 1 300px;
+     flex: 1 1 auto;
    }
 
   button, input, select, textarea {

@@ -387,6 +387,7 @@ export default {
       a {
         cursor: pointer;
         padding: 5px;
+        margin-left: 5px;
         border-radius: $px2;
         background-color: $button-color;
         color: $icon-color;

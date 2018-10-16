@@ -25,6 +25,6 @@ new Vue({
   render: h => h(App),
   store,
   data: {
-    expanded: true
+    expanded: window.innerWidth > 640
   }
 }).$mount('#app');

@@ -40,6 +40,7 @@
 <style lang="scss" scoped>
   @import "../../assets/var.scss";
   a {
+    padding: $px2;
     line-height: $px20;
     font-family: $font-family-condensed;
     font-size: $font-size-smaller;
