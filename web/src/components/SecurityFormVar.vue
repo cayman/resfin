@@ -58,6 +58,7 @@ export default {
       width: 100px;
       font-weight: $font-weight-bold;
       font-family: $font-family-condensed;
+      font-size: $font-size-smaller;
       color: $text-color-label;
       line-height: $px25;
       a {

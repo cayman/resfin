@@ -34,33 +34,20 @@ export default {
 <style lang="scss" scoped>
   @import "../assets/var.scss";
   .content {
+    height: 100%;
     background: $bg-color-sidebar;
     padding: $px5;
     display: flex;
     display: -webkit-flex;
     flex-wrap: nowrap;
     &__left {
-      flex: 0 0 40px;
+      flex: 0 0 50px;
     }
     .expanded {
       flex: 0 0 190px;
     }
     &__right {
       flex: 1 1 200px;
-      &::-webkit-scrollbar {
-        width: 1em;
-      }
-
-      &::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: darkgrey;
-        outline: 1px solid slategrey;
-      }
     }
-
-
   }
 </style>

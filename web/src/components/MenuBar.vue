@@ -80,15 +80,17 @@
       list-style-type: none;
       margin: 0;
       padding: 0;
-      overflow: hidden;
+      overflow: auto;
+      display: flex;
+      display: -webkit-flex;
+      flex-wrap: nowrap;
     }
-
     li {
       margin-top: $px5;
-      line-height: 20px;
-      float: left;
+      line-height: 28px;
+      flex: 0 0 auto;
       padding: 0;
-      min-width: 30px;
+      min-width: 45px;
       a {
         display: block;
         text-align: center;

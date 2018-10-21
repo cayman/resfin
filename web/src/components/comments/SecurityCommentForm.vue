@@ -14,7 +14,7 @@
           Цена:
       </span>
       <span class="form__input">
-        <input type="number" v-model="fieldPrice" step="any"  style="width: 80px"/>
+        <input type="number" v-model="fieldPrice" step="any"  style="width: 90px"/>
       </span>
     </div>
     <div class="form__field">
@@ -22,7 +22,7 @@
           Начисление:
       </span>
       <span class="form__input">
-        <input type="number" v-model="fieldInterest" step="any" :disabled="!fieldPrice" style="width: 80px">
+        <input type="number" v-model="fieldInterest" step="any" :disabled="!fieldPrice" style="width: 90px">
       </span>
       <span class="form__comment" v-if="fieldInterest" >
          <interest-percent :price="fieldPrice" :interest="fieldInterest"></interest-percent>
@@ -157,9 +157,10 @@ export default {
     }
     &__label {
       float: left;
-      width: 100px;
+      width: 110px;
       font-weight: $font-weight-bold;
       font-family: $font-family-condensed;
+      font-size: $font-size-smaller;
       color: $text-color-label;
       line-height: $px25;
       padding-right: $px5;
@@ -169,6 +170,10 @@ export default {
     }
     &__comment {
       font-family: $font-family-condensed;
+    }
+    textarea {
+      max-height:1000000px;
+      height: 90px;
     }
   }
 </style>

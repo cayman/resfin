@@ -8,16 +8,17 @@ $font-weight-regular: 400;
 $font-weight-bold: 500;
 $font-weight-boldest: 600;
 
-$font-size-small: 9px;
-$font-size-smaller: 13px;
-$font-size-base: 14px;
-$font-size-middle: 15px;
-$font-size-big: 16px;
+$font-size-small: 0.6rem; // 9px;
+$font-size-smaller: 0.9rem; // 13px;
+$font-size-base: 1rem; // 14px;
+$font-size-middle: 1.1rem; // 15px;
+$font-size-big: 1.2rem; // 16px;
 
 $px1: 1px;
 $px2: 2px;
 $px3: 3px;
 $px5: 5px;
+$px7: 7px;
 $px10: 10px;
 $px20: 20px;
 $px25: 25px;
@@ -84,6 +85,9 @@ $bg-color-row-header: aliceblue;
 $bg-color-row-result: aliceblue; // beige;
 $bg-color-row-hover: mintcream;
 $bg-color-row-expanded: #faf9ff;
+$bg-scrollbar-track: lightsteelblue;
+$bg-scrollbar-thumb: #8c9cb1;
+$bg-scrollbar-thumb-hover: #7162ac;
 
 
 

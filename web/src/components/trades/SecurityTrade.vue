@@ -160,7 +160,7 @@
         <!--Общие итоги-->
         <div class="trade__field">
             <span class="trade__label">
-              Средневзвешенная цена:
+              Средневзв.цена:
             </span>
           <span class="trade__addition">
               ({{ trade.calc.avg | currency }} x {{ trade.calc.volume | count }})
@@ -428,7 +428,7 @@ export default {
       color: $text-color-label;
       line-height: $px20;
       float: left;
-      width: 150px;
+      width: 100px;
     }
 
     &__action {
@@ -466,9 +466,5 @@ export default {
       color: $text-color-label;
     }
 
-
-
   }
-
-
 </style>

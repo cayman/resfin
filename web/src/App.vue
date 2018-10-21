@@ -40,28 +40,62 @@ export default {
 <style lang="scss">
   @import "./assets/var.scss";
 
-  html, body {
-    height: 100%;
-    margin: 0;
+  html {
+    font-size: 15px;
+  }
+
+  * {
+    max-height:1000000px;
+    box-sizing: border-box;
     padding: 0;
+    margin: 0;
     -webkit-text-size-adjust: none;
     -moz-text-size-adjust: none;
     -ms-text-size-adjust: none;
     text-size-adjust: none;
+  }
+
+  html, body, #fullheight {
+    min-height: 100% !important;
+    height: 100%;
+  }
+
+  body {
+    background-color: $bg-color-white;
+    color: $text-color-base;
+  }
+
+  body, textarea, input, select, button {
     font-family: $font-family-base;
     font-weight: $font-weight-regular;
     font-size: $font-size-base;
+    -webkit-text-size-adjust: none !important;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    text-size-adjust: none;
   }
 
-  * {
-    box-sizing: border-box;
+  /* width */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
   }
 
-  textarea, input, select, button  {
-    font-family: $font-family-base;
-    font-weight: $font-weight-regular;
-    font-size: $font-size-base;
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: $bg-scrollbar-track;
   }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: $bg-scrollbar-thumb;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: $bg-scrollbar-thumb-hover;
+  }
+
   a {
     color: $text-color-link;
     cursor: pointer;
@@ -75,24 +109,27 @@ export default {
     }
   }
 
-  body {
-    background-color: $bg-color-white;
-    color: $text-color-base;
-  }
+
   #app {
     text-align: left;
     margin: 0;
+    min-height: 100% !important;
     height: 100%;
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
-    width: 640px;
+    max-width: 800px;
+    min-width: 480px;
   }
   .header {
     flex: 0 0 30px;
+    flex-wrap: nowrap;
+   // height: 35px;
+    width: 100%;
   }
   .main {
-     flex: 1 1 auto;
+    width: 100%;
+    flex: 1 1 auto;
    }
 
   button, input, select, textarea {

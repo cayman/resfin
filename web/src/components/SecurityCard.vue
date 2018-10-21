@@ -78,6 +78,7 @@ export default {
 
   .info {
     height: 100%;
+    width: 100%;
     background-color: $bg-color-white;
     font-family: $font-family-base;
     font-size: $font-size-base;
@@ -93,15 +94,15 @@ export default {
       margin: 5px 10px 0 10px;
       font-size: $font-size-middle;
     }
-
     &__action {
       display: inline-block;
       background-color: $button-color;
+      font-size: $font-size-middle;
       color: $icon-color;
       cursor: pointer;
       margin-left: $px5;
       margin-right: $px5;
-      padding: $px5;
+      padding: $px7;
       border-radius: $px2;
       line-height: normal;
       &:hover {
@@ -124,8 +125,7 @@ export default {
       white-space: nowrap;
     }
     &__toolbar {
-      font-family: $font-family-condensed;
-      font-weight: $font-weight-lite;
+
       background-color: $bg-color-toolbar;
       margin: $px5 $px2 $px2 $px2;
       padding: $px2 $px5 $px2 $px5;

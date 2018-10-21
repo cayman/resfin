@@ -7,7 +7,7 @@
         </a>
       </span>
       <span class="form__input">
-        <input type="text" v-model="fieldCode" placeholder="Тикер" size="9" style="width: 60px"/>
+        <input type="text" v-model="fieldCode" placeholder="Тикер" size="9" style="width: 70px"/>
       </span>
     </div>
     <div class="form__field">
@@ -17,7 +17,7 @@
          </a>
       </span>
       <span class="form__input">
-        <input type="text" v-model="fieldName" placeholder="Краткое название" style="width: 120px"/>
+        <input type="text" v-model="fieldName" placeholder="Краткое название" style="width: 130px"/>
       </span>
     </div>
     <div class="form__field">
@@ -61,7 +61,7 @@
       </span>        
     </div>
     <div class="form__field">
-      <span class="form__label">Сектор полный:</span>
+      <span class="form__label">Сектор путь:</span>
       <span class="form__input">
         <textarea v-model="fieldSectorName" placeholder="Сектор включая дочерний" rows="2" style="width: 250px"></textarea>
       </span>        
@@ -237,6 +237,9 @@ export default {
       line-height: $px25;
     }
     &__input {
+    }
+    textarea {
+      height: 45px;
     }
   }
 </style>

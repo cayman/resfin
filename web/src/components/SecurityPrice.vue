@@ -2,12 +2,11 @@
   <div class="price">
     <span :class="{bg_up: change > 0, bg_down: change < 0, bg_zero: !change}" >
       <span class="price__value" >{{price | currency}}</span> <!--&#8381;-->
-      <span :class="{zero: !change, up: change > 0, down: change < 0}">
+      <span class="price__percent" :class="{zero: !change, up: change > 0, down: change < 0}">
         &nbsp;{{changeSign}}{{change}} ({{changeSign}}{{percent}}%)
       </span>
     </span>
-    <span>
-    <span class="price__label">Листинг:</span> {{ securityLevel }}</span>
+    <span><span class="price__label">Листинг:</span>{{ securityLevel }}</span>
     <span class="price__portfolio" v-for="(account, code) in tradesAccounts" :key="code">
       <span class="price__label">{{ account.name }}:</span> {{ account.avg * account.volume | currency }} &#8381;
     </span>
@@ -77,15 +76,20 @@ export default {
       font-weight: $font-weight-bold;
     }
 
+    &__percent {
+      font-family: $font-family-condensed;
+    }
+
     &__label {
       color: $text-color-label;
+      font-family: $font-family-condensed;
       padding-left: $px5;
     }
 
     &__portfolio {
       float: right;
       font-family: $font-family-condensed;
-      margin-left: 5px;
+      // margin-left: 5px;
     }
   }
 

@@ -7,7 +7,7 @@
       </select>
     </span>
     <span class="field__input">
-      <input type="number" v-model="fieldIndicatorValue" step="any"  style="width: 80px"/>
+      <input type="number" v-model="fieldIndicatorValue" step="any"  style="width: 90px"/>
     </span>
   </div>
 </template>
@@ -61,7 +61,7 @@ export default {
     setIndicatorField(index, code, value) {
       console.log('setIndicatorField:', code, value);
       const item = {code: parseValue(code), value: parseValue(value, Number)};
-      this.$store.commit('spliceCommentField', {name:'indicators', index, value: item, type: Object});
+      this.$store.commit('spliceCommentField', { name:'indicators', index, value: item, type: Object });
     }
   }
 }
@@ -74,9 +74,10 @@ export default {
     padding-bottom: $px10;
     &__label {
       float: left;
-      width: 100px;
+      width: 110px;
       font-weight: $font-weight-regular;
       font-family: $font-family-condensed;
+      font-size: $font-size-smaller;
       color: $text-color-label;
       line-height: $px25;
     }

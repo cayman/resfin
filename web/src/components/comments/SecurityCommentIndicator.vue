@@ -58,6 +58,7 @@ export default {
     &__label {
       font-weight: $font-weight-bold;
       font-family: $font-family-condensed;
+      font-size: $font-size-smaller;
     }
     &__value {
       color: $text-color-normal;
