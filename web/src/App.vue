@@ -55,9 +55,8 @@ export default {
     text-size-adjust: none;
   }
 
-  html, body, #fullheight {
-    min-height: 100% !important;
-    height: 100%;
+  html, body {
+    height: 100vh;
   }
 
   body {
@@ -69,7 +68,7 @@ export default {
     font-family: $font-family-base;
     font-weight: $font-weight-regular;
     font-size: $font-size-base;
-    -webkit-text-size-adjust: none !important;
+    -webkit-text-size-adjust: none;
     -moz-text-size-adjust: none;
     -ms-text-size-adjust: none;
     text-size-adjust: none;
@@ -113,8 +112,7 @@ export default {
   #app {
     text-align: left;
     margin: 0;
-    min-height: 100% !important;
-    height: 100%;
+    height: 100vh;
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
@@ -129,13 +127,13 @@ export default {
   }
   .main {
     width: 100%;
-    flex: 1 1 auto;
+    flex: 1 1 100%;
    }
 
   button, input, select, textarea {
+    max-height:1000000px;
     font-family : inherit;
     font-size   : 100%;
-
     -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
     -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
     box-sizing: border-box;

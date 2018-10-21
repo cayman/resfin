@@ -4,7 +4,7 @@
       <input type="text" v-model="fieldTitle" placeholder="Заголовок" style="width: 360px"/>
     </div>
     <div class="form__field">
-        <textarea v-model="fieldText" placeholder="Комментарий" rows="4" style="width: 360px"></textarea>
+        <textarea v-model="fieldText" placeholder="Комментарий" rows="5" style="width: 360px"></textarea>
     </div>
     <div class="form__field">
       <input type="text" v-model="fieldSource" placeholder="Источник" style="width: 360px"/>
@@ -173,7 +173,12 @@ export default {
     }
     textarea {
       max-height:1000000px;
-      height: 90px;
+      font-size: $font-size-base;
+      font-max-size: $font-size-middle;
+      -webkit-text-size-adjust: none;
+      -moz-text-size-adjust: none;
+      -ms-text-size-adjust: none;
+      text-size-adjust: none;
     }
   }
 </style>

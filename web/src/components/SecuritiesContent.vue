@@ -34,7 +34,6 @@ export default {
 <style lang="scss" scoped>
   @import "../assets/var.scss";
   .content {
-    height: 100%;
     background: $bg-color-sidebar;
     padding: $px5;
     display: flex;
