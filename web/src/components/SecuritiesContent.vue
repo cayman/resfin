@@ -4,9 +4,10 @@
       <securities-list/>
     </div>
     <div class="content__right">
+      <security-links class="content__links"/>
       <template>
-        <security-form v-if="editing"></security-form>
-        <security-card v-else></security-card>
+        <security-form class="content__body" v-if="editing"/>
+        <security-card class="content__body" v-else/>
       </template>
     </div>
   </div>
@@ -14,11 +15,12 @@
 
 <script>
 import SecuritiesList from './SecuritiesList.vue'
-import SecurityCard from './SecurityCard.vue'
-import SecurityForm from './SecurityForm.vue'
+import SecurityLinks from './links/SecurityLinks.vue'
+import SecurityCard from './security/SecurityCard.vue'
+import SecurityForm from './security/SecurityForm.vue'
 export default {
   name: 'securities-content',
-  components: { SecuritiesList, SecurityCard, SecurityForm },
+  components: { SecuritiesList, SecurityLinks, SecurityCard, SecurityForm },
   computed: {
     editing () {
       return this.$store.state.security.editing === true;
@@ -41,12 +43,26 @@ export default {
     flex-wrap: nowrap;
     &__left {
       flex: 0 0 50px;
+      height: 100%;
     }
     .expanded {
       flex: 0 0 190px;
     }
     &__right {
-      flex: 1 1 200px;
+      flex: 1 1 200px;;
+      display: flex;
+      display: -webkit-flex;
+      flex-wrap: nowrap;
+      flex-direction: column;
+    }
+    &__links {
+      font-size: $font-size-smaller;
+      flex: 0 0 35px;
+    }
+    &__body {
+      // border: 1px solid red;
+      flex: 1 1 auto;
+      overflow: auto;
     }
   }
 </style>

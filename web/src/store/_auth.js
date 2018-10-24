@@ -1,39 +1,65 @@
 import {getSnapUser, parseError} from "../utils";
 import {auth, provider} from "./firebase";
+import {USER} from '../types';
+
 
 export default {
+  signInWithRedirect: ({commit}) => {
+    console.log('signInWithRedirect:');
+    commit('signIn', new Date().getTime());
+    return auth.signInWithRedirect(provider);
+  },
+
+  signRedirectResult: ({commit}) => {
+    console.log('signRedirectResult:');
+    commit('signIn', null);
+    return auth.getRedirectResult()
+      .then(user => getSnapUser(user))
+      .then(user => {
+        console.log('success:', user);
+        commit('setUser', user);
+        commit('loaded', USER);
+        return user;
+      })
+      .catch((error) => {
+        commit('setMessage', parseError('Ошибка авторизации:', error));
+        commit('loaded', USER);
+        return null;
+      });
+  },
+
   signInPopup: ({commit}) => {
     console.log('signInPopup:');
-    commit('loading', true);
+    commit('loading', USER);
     return auth.signInWithPopup(provider)
       .then(user => getSnapUser(user))
       .then(user => {
         console.log('success:', user);
         commit('setUser', user);
-        commit('loading', false);
+        commit('loaded', USER);
         return user;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка авторизации:', error));
-        commit('loading', false);
+        commit('loaded', USER);
         return null;
       });
   },
 
   signInEmailPassword: ({commit}, {email, password}) => {
     console.log('signInLoginPassword:' + email);
-    commit('loading', true);
+    commit('loading', USER);
     return auth.signInEmailPassword(email, password)
       .then(user => getSnapUser(user))
       .then(user => {
         console.log('success:', user);
         commit('setUser', user);
-        commit('loading', false);
+        commit('loaded', USER);
         return user;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка авторизации:', error));
-        commit('loading', false);
+        commit('loaded', USER);
         return null;
       });
   },

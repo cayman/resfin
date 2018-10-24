@@ -1,30 +1,39 @@
 <template>
   <div class="price">
-    <span :class="{bg_up: change > 0, bg_down: change < 0, bg_zero: !change}" >
-      <span class="price__value" >{{price | currency}}</span> <!--&#8381;-->
+    <span>
+      <span class="price__value" >{{price | currency}}</span>
       <span class="price__percent" :class="{zero: !change, up: change > 0, down: change < 0}">
         &nbsp;{{changeSign}}{{change}} ({{changeSign}}{{percent}}%)
       </span>
+      <security-liquidity class="price__liquidity"/>
     </span>
-    <span><span class="price__label">Листинг:</span>{{ securityLevel }}</span>
-    <span class="price__portfolio" v-for="(account, code) in tradesAccounts" :key="code">
-      <span class="price__label">{{ account.name }}:</span> {{ account.avg * account.volume | currency }} &#8381;
-    </span>
+    <security-account-price v-if="loaded" class="price__portfolio" v-for="(account, code) in tradesAccounts" :key="code" :account="account">
+    </security-account-price >
   </div>
 </template>
 
 <script>
-import SecurityLinks from './links/SecurityLinks.vue'
-import SecurityChart from './chart/SecurityChart.vue'
+import SecurityLinks from '../links/SecurityLinks.vue'
+import SecurityAccountPrice from './SecurityAccountPrice.vue'
+import SecurityLiquidity from './SecurityLiquidity.vue'
 export default {
   name: 'security-price',
-  components: { SecurityLinks, SecurityChart },
+  components: { SecurityLinks, SecurityAccountPrice, SecurityLiquidity },
   computed: {
+    securityLoaded () {
+      return !this.$store.state.security.loading;
+    },
+    loaded () {
+      return this.securityLoaded && !this.$store.state.trades.loading;
+    },
     price () {
       return this.$store.getters.securityPrice;
     },
     securityLevel () {
       return this.$store.getters.securityLevel;
+    },
+    securityVolume () {
+      return this.$store.getters.securityVolume;
     },
     securityStatus () {
       return this.$store.getters.securityStatus;
@@ -47,11 +56,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  @import "../assets/var.scss";
+  @import "../../assets/var";
 
   .price {
-    font-size: $font-size-base;
-    margin: 0 $px10;
+    height: 20px;
+    overflow: hidden;
+
     .up {
       color: $text-color-up;
     }
@@ -73,6 +83,7 @@ export default {
     }
 
     &__value {
+      font-family: $font-family-condensed;
       font-weight: $font-weight-bold;
     }
 
@@ -80,19 +91,15 @@ export default {
       font-family: $font-family-condensed;
     }
 
-    &__label {
-      color: $text-color-label;
+    &__liquidity {
       font-family: $font-family-condensed;
       padding-left: $px5;
     }
 
     &__portfolio {
       float: right;
+      margin-left: $px5;
       font-family: $font-family-condensed;
-      // margin-left: 5px;
     }
   }
-
-
-
 </style>

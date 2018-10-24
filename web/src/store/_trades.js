@@ -1,22 +1,23 @@
 import {currentDate, getSnapList, parseError} from '../utils';
+import { TRADE, TRADES } from '../types';
 
 export default {
   // Получение списка сделок по инструменту
   fetchTrades: ({commit, getters}, securityCode) => {
     console.log('fetchTrades:' + securityCode);
-    commit('loading', true);
+    commit('loading', TRADES);
     return getters.trades.where('securityCode', '==', securityCode).get()
       .then(trades => getSnapList(trades)
         .sort((a,b) => a.date > b.date ? 1 : a.date < b.date ? -1 : a.created > b.created ? 1 : -1)
       )
       .then(trades => {
         commit('setTrades', trades);
-        commit('loading', false);
+        commit('loaded', TRADES);
         return trades;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка получения сделок:', error));
-        commit('loading', false);
+        commit('loaded', TRADES);
       });
   },
 
@@ -63,7 +64,8 @@ export default {
   // Сохранение объекта
   saveTrade: ({getters, commit}, trade) => {
     console.log('saveTrade:', trade);
-    commit('loading', true);
+    commit('loading', TRADE);
+    commit('loading', TRADES);
     const id = trade.id;
     const isDividend = trade.typeCode === 'dividend';
     const updated = new Date().getTime();
@@ -86,27 +88,29 @@ export default {
       : getters.trades.add(data);
     return action
       .then((ref) => {
-        commit('loading', false);
+        commit('loaded', TRADE);
+        commit('loaded', TRADES);
         return id || ref.id;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка сохранения операции:', error));
-        commit('loading', false);
+        commit('loaded', TRADE);
+        commit('loaded', TRADES);
       });
   },
 
   // Удаление объекта
   deleteTrade: ({getters, commit}, id) => {
     console.log('deleteTrade:', id);
-    commit('loading', true);
+    commit('loading', TRADES);
     return getters.trades.doc(id).delete()
       .then((ref) => {
-        commit('loading', false);
+        commit('loaded', TRADES);
         return ref;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка удаления операции:', error));
-        commit('loading', false);
+        commit('loaded', TRADES);
       });
   },
 

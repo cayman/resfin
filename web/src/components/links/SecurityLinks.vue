@@ -23,11 +23,8 @@
   @import "../../assets/var.scss";
   ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+    padding: $px5;
     background-color: $bg-color-toolbar;
-
     li {
       float: left;
       padding: $px2;

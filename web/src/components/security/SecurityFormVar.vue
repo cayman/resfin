@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import {replaceUrl} from '../utils';
-import form from './form'
+import {replaceUrl} from '../../utils';
+import form from '../form'
 export default {
   name: 'security-form-var',
   mixins: [form],
@@ -50,7 +50,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  @import "../assets/var.scss";
+  @import "../../assets/var";
   .field {
     padding-bottom: 10px;
     &__label {

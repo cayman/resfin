@@ -21,12 +21,16 @@ export default {
   created() {
     if (this.isAuthenticated) {
       this.$store.dispatch('authenticated');
-    } else {
-      this.$store.dispatch('signInPopup', this.params).then(user => {
+    } else if (this.$store.getters.isAuthentication) {
+      // ждем callback от сервера
+      this.$store.dispatch('signRedirectResult').then(user => {
         if (user && user.id) {
           this.$store.dispatch('authenticated');
         }
       });
+    } else {
+      // отправляем редирект
+      this.$store.dispatch('signInWithRedirect');
     }
   },
   computed: {
@@ -60,8 +64,10 @@ export default {
   }
 
   body {
+    margin: 0;
     background-color: $bg-color-white;
     color: $text-color-base;
+    overflow: hidden;
   }
 
   body, textarea, input, select, button {
@@ -108,16 +114,15 @@ export default {
     }
   }
 
-
   #app {
     text-align: left;
     margin: 0;
-    height: 100vh;
+    height: 100%;
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
-    max-width: 800px;
-    min-width: 480px;
+    max-width: 1000px;
+    min-width: 440px;
   }
   .header {
     flex: 0 0 30px;
@@ -126,8 +131,10 @@ export default {
     width: 100%;
   }
   .main {
+    margin: 0;
     width: 100%;
-    flex: 1 1 100%;
+    height: 100%;
+    flex: 1 1 auto;
    }
 
   button, input, select, textarea {

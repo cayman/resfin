@@ -1,4 +1,5 @@
-import {getSnapList, getSnapData, parseError} from '../utils';
+import { getSnapList, getSnapData, parseError } from '../utils';
+import { SECURITY, SECURITIES } from '../types';
 
 export default {
   // Акции
@@ -8,7 +9,7 @@ export default {
       commit('setSecurities', []);
       return [];
     }
-    commit('loading', true);
+    commit('loading', SECURITIES);
     const securities = code === 'f' ? getters.securities.where('favorite', '>', 1)
       : code === 'p' ? getters.securities.where('portfolio', '==', true)
         : getters.securities.where('sectorCode', '==', code);
@@ -18,17 +19,18 @@ export default {
       )
       .then(securities => {
         commit('setSecurities', securities);
+        commit('loaded', SECURITIES);
         return securities;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка получения ценных бумаг:', error));
-        commit('loading', false);
+        commit('loaded', SECURITIES);
       });
   },
 
   fetchSecurity: ({commit, getters, state}, id) => {
     console.log('fetchSecurity:' + id);
-    commit('loading', true);
+    commit('loading', SECURITY);
     commit('editingSecurity', false);
     return getters.securities.doc(id).get()
       .then(security => getSnapData(security))
@@ -38,12 +40,12 @@ export default {
       })
       .then(data => {
         commit('setSecurityMoex', data);
-        commit('loading', false);
+        commit('loaded', SECURITY);
         return state.security.model;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка получения ценной бумаги:', error));
-        commit('loading', false);
+        commit('loaded', SECURITY);
       });
   },
 
@@ -81,7 +83,8 @@ export default {
   saveSecurity: ({commit, getters}, security) => {
     const id = security.id || security.code.toUpperCase();
     console.log('saveSecurity:', id, security);
-    commit('loading', true);
+    commit('loading', SECURITY);
+    commit('loading', SECURITIES);
     const data = Object.keys(security)
       .filter(key  => key.startsWith('ref'))
       .reduce((model, key) => ({...model, [key]: security[key]}),
@@ -96,33 +99,35 @@ export default {
         });
     return getters.securities.doc(id).set(data)
       .then(() => {
-        commit('loading', false);
+        commit('loaded', SECURITY);
+        commit('loaded', SECURITIES);
         return id;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка сохранения ценной бумаги:', error));
-        commit('loading', false);
+        commit('loaded', SECURITY);
+        commit('loaded', SECURITIES);
       });
   },
 
   favoriteSecurity: ({commit, getters}, {id, favorite}) => {
     const newFavorite = favorite === 0 ? 5 : favorite === 5 ? 1 : 0;
     console.log('favoriteSecurity:', id, favorite, newFavorite);
-    commit('loading', true);
+    commit('loading', SECURITIES);
     return getters.securities.doc(id).update({favorite: newFavorite})
       .then(() => {
-        commit('loading', false);
+        commit('loaded', SECURITIES);
         return id;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка изменения ценной бумаги:', error));
-        commit('loading', false);
+        commit('loaded', SECURITIES);
       });
   },
 
   renameSecuritiesFields: ({dispatch, commit, getters}) => {
     console.log('renameSecuritiesFields:');
-    commit('loading', true);
+    commit('loading', SECURITIES);
     return getters.securities.get()
       .then(securities => getSnapList(securities)
       )
@@ -130,11 +135,12 @@ export default {
         securities.forEach(trade => {
           dispatch('saveSecurity',trade);
         });
+        commit('loaded', SECURITIES);
         return securities;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка переименования ценных бумаг:', error));
-        commit('loading', false);
+        commit('loaded', SECURITIES);
       });
   }
 

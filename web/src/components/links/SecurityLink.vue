@@ -43,7 +43,6 @@
     padding: $px2;
     line-height: $px20;
     font-family: $font-family-condensed;
-    font-size: $font-size-smaller;
     color: $text-color-link;
     text-decoration: none;
     cursor: pointer;

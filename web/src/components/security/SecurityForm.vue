@@ -81,9 +81,9 @@
 </template>
 
 <script>
-import form from './form'
+import form from '../form'
 import SecurityFormVar from './SecurityFormVar';
-import {replaceUrl} from '../utils';
+import {replaceUrl} from '../../utils';
 export default {
   components: { SecurityFormVar },
   name: 'security-form',
@@ -216,10 +216,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  @import "../assets/var.scss";
+  @import "../../assets/var";
   .form {
     padding: $px10;
-    height: 100%;
     background-color: $bg-color-form;
     font-family: $font-family-base;
     font-size: $font-size-base;

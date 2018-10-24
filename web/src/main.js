@@ -11,6 +11,18 @@ Vue.filter('currency', function (value = null, fixed = null) {
   return fixed === null ? value.toLocaleString() : Number(value.toFixed(fixed)).toLocaleString();
 });
 
+Vue.filter('volume', function (volume = null) {
+  if (volume === null) return '';
+  if(volume === 0) return 0;
+
+  const del = (val,name) => (volume/val).toFixed(2) + ' '+ name;
+
+  return volume>=1000000000000 ? del(1000000000000,'трлн')
+    : volume>=1000000000 ? del(1000000000,'млрд')
+    : volume>=1000000 ? del(1000000,'млн')
+    : volume>=1000 ? del(1000,'тыс'): del(1,'руб');
+});
+
 Vue.filter('count', function (value = null, prefix = true) {
   if (value === null) return '';
   return value.toLocaleString() + (prefix ? ' шт.' : '');

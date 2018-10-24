@@ -31,6 +31,10 @@ export default {
     return !!state.user.id;
   },
 
+  isAuthentication (state) {
+    return state.signIn && state.signIn + 30 * 1000 > new Date().getTime();
+  },
+
   getSecurityMoex: (state) => (code) => {
     const url = state.security.url + code + '.json';
     console.log('fetch', url);
@@ -120,6 +124,9 @@ export default {
 
   securityReg : ({security}) =>
     security.market['REGNUMBER'],
+
+  securityVolume : ({security}) =>
+    security.price['VALTODAY'],
 
   securityPrice : ({security}) =>
     security.price['LAST'] || security.price['LCURRENTPRICE'],

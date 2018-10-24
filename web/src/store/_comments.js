@@ -1,29 +1,30 @@
 import {getSnapList, parseError} from '../utils';
+import { COMMENT, COMMENTS, SECURITIES } from '../types';
 
 export default {
 
   // Комментарии
   fetchComments: ({commit, getters}, securityCode) => {
     console.log('fetchComments:' + securityCode);
-    commit('loading', true);
+    commit('loading', COMMENTS);
     return getters.comments.where('securityCode', '==', securityCode).get()
       .then(comments => getSnapList(comments)
         .sort((a,b) => a.created > b.created ? -1 : 1)
       )
       .then(comments => {
         commit('setComments', comments);
-        commit('loading', false);
+        commit('loaded', COMMENTS);
         return comments;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка получения комментариев:', error));
-        commit('loading', false);
+        commit('loaded', COMMENTS);
       });
   },
 
   fetchSecuritiesComments: ({commit, getters}, codes) => {
     console.log('fetchSecuritiesComments:', codes);
-    commit('loading', true);
+    commit('loading', SECURITIES);
     return getters.comments.get()
       .then(comments => getSnapList(comments)
         .filter(comment => !codes || codes.includes(comment.securityCode))
@@ -31,12 +32,12 @@ export default {
       )
       .then(comments => {
         commit('setSecuritiesComments', comments);
-        commit('loading', false);
+        commit('loaded', SECURITIES);
         return comments;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка получения комментариев:', error));
-        commit('loading', false);
+        commit('loaded', SECURITIES);
       });
     },
 
@@ -64,7 +65,8 @@ export default {
 
   saveComment: ({commit, getters}, comment) => {
     console.log('saveComment:', comment);
-    commit('loading', true);
+    commit('loading', COMMENT);
+    commit('loading', COMMENTS);
     const id = comment.id;
     const updated = new Date().getTime();
     const data = {
@@ -83,32 +85,34 @@ export default {
       : getters.comments.add(data);
     return action
       .then((ref) => {
-        commit('loading', false);
+        commit('loaded', COMMENT);
+        commit('loaded', COMMENTS);
         return id || ref.id;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка сохранения комментария:', error));
-        commit('loading', false);
+        commit('loaded', COMMENT);
+        commit('loaded', COMMENTS);
       });
   },
 
   deleteComments: ({commit, getters}, id) => {
     console.log('deleteComments:', id);
-    commit('loading', true);
+    commit('loading', COMMENTS);
     return getters.comments.doc(id).delete()
       .then((ref) => {
-        commit('loading', false);
+        commit('loaded', COMMENTS);
         return ref;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка удаления комментария:', error));
-        commit('loading', false);
+        commit('loaded', COMMENTS);
       });
   },
 
   renameCommentsFields: ({dispatch, commit, getters}) => {
     console.log('renameCommentsFields:');
-    commit('loading', true);
+    commit('loading', COMMENTS);
     return getters.comments.get()
       .then(comments => getSnapList(comments)
       )
@@ -116,11 +120,12 @@ export default {
         comments.forEach(comment => {
           dispatch('saveComment',comment);
         });
+        commit('loaded', COMMENTS);
         return comments;
       })
       .catch((error) => {
         commit('setMessage', parseError('Ошибка переименования комментариев:', error));
-        commit('loading', false);
+        commit('loaded', COMMENTS);
       });
   }
 

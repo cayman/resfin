@@ -3,30 +3,36 @@ import {getAppStorageItem} from "../utils";
 export default {
   page: getAppStorageItem('page') || 'p',
   user: getAppStorageItem('user') || {},
-  loading: false,
+  signIn: getAppStorageItem('signIn') || null,
   message: {
     type: null,
     title: null,
     error: null
   },
   sectors : {
+    loading: false,
     list: []
   },
   links : {
+    loading: false,
     list: []
   },
   indicators : {
+    loading: false,
     list: []
   },
   accounts : {
+    loading: false,
     list: []
   },
   securities : {
+    loading: false,
     list: [],
     comments: []
   },
   security : {
     id: getAppStorageItem('securityId') || null,
+    loading: false,
     editing: false,
     expanded: [],
     url: 'https://iss.moex.com/iss/engines/stock/markets/shares/boards/tqbr/securities/',
@@ -50,9 +56,11 @@ export default {
     ],
   },
   trades : {
+    loading: false,
     list: []
   },
   trade : {
+    loading: false,
     editing: false,
     expanded: [],
     types: [
@@ -68,9 +76,11 @@ export default {
     }
   },
   comments : {
+    loading: false,
     list: []
   },
   comment : {
+    loading: false,
     editing: false,
     model: {
       securityCode: null,

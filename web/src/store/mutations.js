@@ -4,8 +4,11 @@ import {parseValue, setAppStorageItem, parseMoex} from '../utils';
 
 export default {
 
-  loading: (state, loading) => {
-    state.loading = loading;
+  loading: (state, name) => {
+    state[name].loading = true;
+  },
+  loaded: (state, name) => {
+    state[name].loading = false;
   },
 
   setMessage: (state, message) => {
@@ -15,6 +18,11 @@ export default {
   setUser: (state, user) => {
     state.user = user;
     setAppStorageItem('user', state.user);
+  },
+
+  signIn: (state, value) => {
+    state.signIn = value;
+    setAppStorageItem('signIn', value);
   },
 
   setLinks: (state, list) => {

@@ -15,6 +15,9 @@
     name: 'security-comments',
     components: { SecurityComment, SecurityCommentForm },
     computed: {
+      loaded () {
+        return !this.$store.state.comments.loading;
+      },
       comments () {
         return this.$store.state.comments.list;
       },

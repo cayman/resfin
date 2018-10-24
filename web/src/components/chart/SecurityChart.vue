@@ -1,13 +1,10 @@
 <template>
-  <div class="chart">
-
+  <div class="security-chart">
     <template v-for="link in links">
-      <img v-if="link.src && link.chartType === 'img'" :key="link.code"  :src="link.src"/>
+      <img v-if="link.src && link.chartType === 'img'" :key="link.code" class="security-chart__image"  :src="link.src"/>
     </template>
     <!--<trading-view :options="options" />-->
-    <!--http://mfd.ru/marketdata/chart/?id=41369&timeframe=1440&intervalMode=closedRay&count=-60&width=400&height=200&lineColor=#ff660a-->
-    <!--http://mfd.ru/marketdata/chart/?id=41369&timeframe=1440&intervalMode=closedRay&count=-60&width=400&height=200&lineColor=#ff660a-->
-
+    <!--http://mfd.ru/marketdata/chart/?id={$var}&timeframe=1440&intervalMode=closedRay&count=-120&width=450&height=250&lineColor=#ff660a-->
     <!--<trading-view :options="options" />-->
   </div>
 </template>
@@ -19,6 +16,9 @@
     name: 'security-chart',
     components: { TradingView },
     computed: {
+      loaded () {
+        return !this.$store.state.security.loading;
+      },
       security () {
         return this.$store.state.security.model;
       },
@@ -53,8 +53,14 @@
 </script>
 
 <style lang="scss" scoped>
-  .chart {
-    border: lightsteelblue;
-    font-size: 10px;
+  .security-chart {
+    min-height: 160px;
+    max-height: 280px;
+    max-width: 500px;
+    &__image {
+      // border: 1px solid firebrick;
+      width: 100%;
+      height: 100%;
+    }
   }
 </style>
