@@ -1,12 +1,12 @@
 <template>
   <tr class="trade">
-    <td class="form" colspan="9">
+    <td class="form" :colspan="$root.column">
       <div class="form__field">
         <span class="form__label">
            Вид сделки:
         </span>
-        <span class="form__input">
-          <select v-model="fieldTypeCode" placeholder="Выберите" style="width: 180px">
+        <span class="form__input--wide">
+          <select v-model="fieldTypeCode" placeholder="Выберите" :style="{width}">
             <option disabled value="">Выберите вид сделки</option>
             <option v-for="type in types" :key="type.code" :value="type.code" :label="type.name"></option>
           </select>
@@ -16,8 +16,8 @@
         <span class="form__label">
            Счет:
         </span>
-        <span class="form__input">
-          <select v-model="fieldAccountCode" placeholder="Выберите" style="width: 180px">
+        <span class="form__input--wide">
+          <select v-model="fieldAccountCode" placeholder="Выберите" :style="{width}">
             <option disabled value="">Выберите счет</option>
             <option v-for="account in accounts" :key="account.code" :value="account.code" :label="account.name"></option>
           </select>
@@ -27,8 +27,8 @@
         <span class="form__label">
            ПСБ:
         </span>
-        <span class="form__input">
-          <textarea v-model="fieldRaw" rows="2" style="width: 180px"/>
+        <span class="form__input--wide">
+          <textarea v-model="fieldRaw" rows="2" :style="{width}"/>
         </span>
       </div>
       <div class="form__field">
@@ -76,7 +76,7 @@
            <input type="number" step="any" v-model="fieldSum" style="width: 120px"/>
           </span>
           <span class="form__comment">
-            {{ fieldSum / fieldCount  }}
+            {{ fieldSum / fieldCount | currency(4)  }}
           </span>
         </div>
 
@@ -96,7 +96,7 @@
           <span class="form__label">
              Итого:
           </span>
-          <span class="form__input">
+          <span class="form__result">
             {{ fieldSum | currency }} -
             {{ fieldTax | currency }} =
             {{ fieldSum  - fieldTax | currency }}
@@ -129,9 +129,23 @@
           <span class="form__label">
              Комиссия:
           </span>
-          <span class="form__input">
+          <span class="form__input--wide">
             <input type="number" v-model="fieldCommission0" step="any" style="width: 60px"/>
             <input v-if="fieldCommission0" type="number" v-model="fieldCommission1" step="any" style="width: 60px"/>
+            <template v-if="$root.contentWidth > 400">
+              <input v-if="fieldCommission1" type="number" v-model="fieldCommission2" step="any" style="width: 60px"/>
+              <input v-if="fieldCommission2" type="number" v-model="fieldCommission3" step="any" style="width: 60px"/>
+            </template>
+          </span>
+          <span class="form__comment" v-if="$root.contentWidth > 440">
+              {{ commissionSum }}
+            </span>
+        </div>
+        <div class="form__field" v-if="$root.contentWidth <= 400">
+          <span class="form__label">
+            &nbsp;
+          </span>
+          <span class="form__input--wide">
             <input v-if="fieldCommission1" type="number" v-model="fieldCommission2" step="any" style="width: 60px"/>
             <input v-if="fieldCommission2" type="number" v-model="fieldCommission3" step="any" style="width: 60px"/>
           </span>
@@ -144,7 +158,7 @@
           <span class="form__label">
              Итого:
           </span>
-          <span class="form__input">
+          <span class="form__result">
               {{ fieldSum | currency }} {{ this.fieldTypeCode === 'buy' ? '+' : ' - '}} {{ commissionSum | currency }} =
               {{ resultSum | currency }}
           </span>
@@ -188,6 +202,9 @@ export default {
     },
     trade () {
       return this.$store.state.trade.model;
+    },
+    width() {
+      return (this.$root.contentWidth > 385 ? 240 : this.$root.contentWidth < 265 ? 120 : this.$root.contentWidth - 145) + 'px';
     },
     fieldRaw: {
       get () {
@@ -382,13 +399,21 @@ export default {
       line-height: $px20;
     }
     &__input {
-      padding-right: $px10;
+      padding-right: $px5;
       line-height: $px20;
+      &--wide {
+        width: 100%;
+      }
     }
     &__comment {
       line-height: $px20;
       font-family: $font-family-condensed;
       font-weight: $font-weight-lite;
+    }
+
+    &__result {
+      line-height: $px20;
+      font-family: $font-family-condensed;
     }
 
   }

@@ -20,19 +20,21 @@
         </td>
 
         <td class="trade__percent">
-          <interest-percent :price="trade.calc.avg" :interest="trade.price" :interest-visible="false"/>
+          <interest-percent :price="trade.calc.avg" :interest="trade.price" :interest-visible="false" :small="$root.tight"/>
         </td>
 
-        <td class="trade__sum">
+        <td class="trade__tax" v-if="$root.extraWide">
+          -{{trade.tax | currency}}
+        </td>
+
+        <td class="trade__sum" v-if="!$root.tight">
           {{ trade.sum - trade.tax | currency }}
         </td>
 
-        <td class="trade__tax">
-          <!--({{trade.tax}})-->
+        <td class="trade__commission" v-if="$root.extraWide">
         </td>
-
-        <td class="trade__result" >
-          {{ resultSumSign }}{{ resultSum | currency  }}
+        <td class="trade__tax" v-else-if="$root.wide">
+          ({{trade.tax | currency}})
         </td>
       </template>
 
@@ -44,22 +46,30 @@
         <td class="trade__percent">
         </td>
 
-        <td class="trade__sum">
+        <td class="trade__tax" v-if="$root.extraWide">
+        </td>
+
+        <td class="trade__sum" v-if="!$root.tight">
           {{ trade.sum | currency }}
         </td>
 
-        <td class="trade__commission">
+        <td class="trade__commission" v-if="$root.wide">
           {{ commissionSum | currency }}
         </td>
 
-        <td class="trade__result" >
-          {{ resultSumSign }}{{ resultSum | currency }}
-        </td>
       </template>
+
+      <td class="trade__result" >
+        {{ resultSumSign }}{{ resultSum | currency  }}
+      </td>
+
+      <td class="trade__balance"  v-if="$root.extraWide">
+        <profit v-if="calcIncome" :expense="calcExpense" :income="calcIncome"/>
+      </td>
 
     </tr>
     <tr class="trade__detail" :class="{ expanded }" v-if="expanded">
-      <td colspan="9">
+      <td :colspan="$root.column">
 
         <div class="trade__field">
           <span class="trade__label">
@@ -156,7 +166,6 @@
           </div>
         </template>
 
-
         <!--Общие итоги-->
         <div class="trade__field">
             <span class="trade__label">
@@ -191,15 +200,14 @@
         <div v-if="isDividendType" class="trade__field trade__export" >
           <pre @click="copyText">{{ security.code }}: {{ trade.count | count(false) }}x{{ trade.price | currency }}={{ trade.sum | currency }}
 Налог: {{ trade.tax | currency }}, Итого: {{ resultSum | currency }}
-{{ securityName }} ({{ securityIsin}}), {{ securityReg }}</pre>
-</div>
+{{ securityName }} <br v-if="$root.tight"/>({{ securityIsin}}), {{ securityReg }}</pre>
+        </div>
 
         <div v-else class="trade__field trade__export">
           <pre @click="copyText">{{ security.code }}: {{ trade.count | count(false) }}x{{ trade.price | currency }}={{ trade.sum | currency }}
 Комиссия: {{ trade.commission.join('+') }}={{ commissionSum | currency }}
-{{ securityName }} ({{ securityIsin}}), {{ securityReg }}</pre>
+{{ securityName }} <br v-if="$root.tight"/>({{ securityIsin}}), {{ securityReg }}</pre>
         </div>
-
       </td>
     </tr>
   </tbody>
@@ -209,7 +217,7 @@
 import InterestPercent from '../common/InterestPercent'
 import Profit from '../common/Profit.vue'
 import form from '../form'
-import {getCurrency, getLocalDate, percent} from '../../utils';
+import {getCurrency, getLocalDate} from '../../utils';
 export default {
   name: 'security-trade',
   mixins: [form],
@@ -275,10 +283,7 @@ export default {
     },
     calcProfit () {
       return this.calcIncome - this.calcExpense;
-    },
-    calcProfitPercent () {
-      return percent(this.calcProfit, this.calcExpense);
-    },
+    }
   },
   methods: {
     editTrade() {
@@ -347,9 +352,6 @@ export default {
         line-height: $px20;
       }
     }
-
-
-
     &:first-child {
       border-top: $px1 solid $line-color-base;
     }
@@ -392,10 +394,15 @@ export default {
       text-align: right;
     }
 
+    &__balance {
+      font-weight: $font-weight-lite;
+      text-align: right;
+    }
+
     &__detail {
       line-height: $px25;
       td {
-        font-family: $font-family-base;
+        font-family: $font-family-condensed;
         font-weight: $font-weight-regular;
         font-size: $font-size-smaller;
         border-top: $px2 solid $line-color-white;
@@ -423,7 +430,6 @@ export default {
     }
 
     &__label {
-      font-family: $font-family-condensed;
       font-weight: $font-weight-bold;
       color: $text-color-label;
       line-height: $px20;

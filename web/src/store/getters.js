@@ -72,6 +72,7 @@ export default {
           interest: 0, // общий приход дивидендов, проуентам или купону
           expense: 0, // общий расход на покупку
           commission: 0, // общая расход на коммиссию
+          tax: 0, // общая сумма налогов
           trades: []
         };
       console.log('model', model);
@@ -88,8 +89,10 @@ export default {
         a.income += model.sum; // получаем стоимость
       } else if (model.typeCode === 'dividend' ) {
         a.interest += (model.sum - model.tax); // получаем стоимость отдаем налог
+        a.tax += model.tax; // получаем суммарные налоги
       } else if (model.typeCode === 'coupon') {
         a.interest += (model.sum - model.tax); // получаем стоимость отдаем налог
+        a.tax += model.tax; // получаем суммарные налоги
       }
       a.date = model.date;
       a.commission += model.commission.reduce((sum, c) => sum + c, 0); // отдаем коммиссию
@@ -99,7 +102,8 @@ export default {
         income: a.income, // доход от продажи
         interest: a.interest, // доход от дивидендов
         expense: a.expense, // расход на покупку
-        commission: a.commission  // расход на комиссию
+        commission: a.commission,  // расход на комиссию
+        tax: a.tax  // сумма налогов
       };
       a.trades.push({...model, calc });
       console.log('account', a);

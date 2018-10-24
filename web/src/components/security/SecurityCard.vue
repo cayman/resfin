@@ -53,13 +53,13 @@ export default {
     font-size: $font-size-base;
     font-weight: $font-weight-regular;
     color: $text-color-base;
-    padding: 5px;
+    padding: $px5;
     &__links {
       margin: 0;
       font-size: $font-size-smaller;
     }
     &__header {
-      margin: 5px 10px 0 10px;
+      margin: 0 $px5;
       font-size: $font-size-middle;
     }
     &__toolbar {

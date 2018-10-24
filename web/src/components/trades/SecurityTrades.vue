@@ -3,27 +3,33 @@
     <template v-for="(account, code) in accounts" >
       <thead :key="code + '_header'">
         <tr class="header">
-          <th class="header__type" colspan="2">
+          <td class="header__name" colspan="2">
             {{ account.name }}
-          </th>
-          <th class="header__count">
+          </td>
+          <td class="header__count">
             Кол.
-          </th>
-          <th class="header__price">
+          </td>
+          <td class="header__price">
             Цена
-          </th>
-          <th class="header__percent">
+          </td>
+          <td class="header__percent">
             &#37;
-          </th>
-          <th class="header__sum">
+          </td>
+          <td class="header__balance" v-if="$root.extraWide">
+            Налог
+          </td>
+          <td class="header__sum" v-if="!$root.tight">
             Сумма
-          </th>
-          <th class="header__commission">
+          </td>
+          <td class="header__commission" v-if="$root.wide">
             Ком.
-          </th>
-          <th class="header__result">
+          </td>
+          <td class="header__result">
             Итого
-          </th>
+          </td>
+          <td class="header__balance" v-if="$root.extraWide">
+            Баланс
+          </td>
         </tr>
       </thead>
       <template v-for="_trade in account.trades" >
@@ -76,7 +82,7 @@
     border-collapse: collapse;
     // border: 1px solid lightsteelblue;
     margin: $px5 0;
-    th, td {
+    td {
       padding: 3px 0 3px $px5;
       &:first-child {
         padding-left: $px10;
@@ -88,14 +94,18 @@
   }
 
   .header {
-    font-family: $font-family-condensed;
-    font-weight: $font-weight-bold;
     background-color: $bg-color-row-header;
-    font-size: $font-size-smaller;
     color: $text-color-label;
+    border-top: $px1 solid $line-color-dark;
 
-    &__type {
-      width: 40px;
+    td {
+      font-family: $font-family-condensed;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-smaller;
+    }
+
+    &__name {
+      width: auto;
     }
     &__count {
       text-align: right;
@@ -107,7 +117,7 @@
     }
     &__percent {
       text-align: right;
-      width: auto;
+      width: 60px;
     }
     &__sum {
       text-align: right;
@@ -121,6 +131,9 @@
       text-align: right;
       width: auto;
     }
-
+    &__balance {
+      text-align: right;
+      width: 80px;
+    }
   }
 </style>

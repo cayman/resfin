@@ -11,23 +11,34 @@
         {{ account.avg | currency }}
       </td>
       <td class="footer__percent">
-        <profit :expense="account.avg" :income="securityPrice" ></profit>
+        <profit :expense="account.avg" :income="securityPrice" :small="$root.tight"></profit>
       </td>
-      <td class="footer__sum">
+      <td class="footer__tax" v-if="$root.extraWide">
+        -{{ account.tax | currency }}
+      </td>
+
+      <td class="footer__sum" v-if="$root.extraWide">
+        {{ calcNet | currency  }}
+      </td>
+      <td class="footer__sum" v-else-if="!$root.tight">
         <profit :expense="calcExpense" :income="calcIncome" ></profit>
       </td>
-      <td class="footer__commission">
+
+      <td class="footer__commission" v-if="$root.wide">
         {{ account.commission | currency }}
       </td>
       <td class="footer__result">
-        {{ calcProfit | currency}}
+        {{ calcProfit | currency }}
+      </td>
+      <td class="footer__balance" v-if="$root.extraWide">
+        <profit :expense="calcExpense" :income="calcIncome"/>
       </td>
     </tr>
     <tr class="footer__detail" :class="{ expanded }" v-if="expanded">
-      <td colspan="8">
+      <td :colspan="$root.column">
         <div class="footer__field">
           <span class="footer__label">
-            Сумма покупок (расход):
+            Сумма покупок:
           </span>
           <span class="footer__value">
             -{{ account.expense | currency }}
@@ -35,7 +46,7 @@
         </div>
         <div class="footer__field">
           <span class="footer__label">
-            Комиссия (расход):
+            Комиссия:
           </span>
           <span class="footer__value footer__comment">
             -{{ account.commission | currency }}
@@ -44,7 +55,7 @@
 
         <div class="footer__field">
           <span class="footer__label">
-            Сумма начислений:
+            Начисления:
           </span>
           <span class="footer__value">
             {{ account.interest | currency }}
@@ -53,7 +64,7 @@
         </div>
         <div class="footer__field">
           <span class="footer__label">
-            Сумма продаж (приход):
+            Сумма продаж:
           </span>
           <span class="footer__value">
             {{ account.income | currency }}
@@ -63,7 +74,7 @@
 
         <div class="footer__field">
           <span class="footer__label">
-            Средневзвешенная цена:
+            Средневзв.цена:
           </span>
           <span class="footer__addition">
               ({{ account.avg | currency }} x {{ account.volume | count }})
@@ -113,6 +124,9 @@
       },
       calcExpense () {
         return this.account.expense + this.account.commission;
+      },
+      calcNet () {
+        return this.calcIncome - this.account.expense;
       },
       calcProfit () {
         return this.calcIncome - this.calcExpense;
@@ -182,6 +196,11 @@
       text-align: right;
       width: auto;
     }
+    &__tax {
+      font-weight: $font-weight-lite;
+      text-align: right;
+      width: auto;
+    }
     &__sum {
       font-weight: $font-weight-bold;
       text-align: right;
@@ -197,6 +216,11 @@
       text-align: right;
       width: auto;
     }
+
+    &__balance {
+      font-weight: $font-weight-regular;
+      text-align: right;
+    }
     &__action {
       width: auto;
 
@@ -205,7 +229,7 @@
     &__detail {
       line-height: $px25;
       td {
-        font-family: $font-family-base;
+        font-family: $font-family-condensed;
         font-weight: $font-weight-regular;
         font-size: $font-size-smaller;
         border-top: 2px solid $line-color-white;
@@ -226,7 +250,7 @@
       color: $text-color-label;
       line-height: $px20;
       float: left;
-      width: 150px;
+      width: 100px;
     }
 
     &__value {

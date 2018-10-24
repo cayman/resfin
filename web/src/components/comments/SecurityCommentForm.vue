@@ -1,13 +1,14 @@
 <template>
   <div class="form">
+    {{ width }}
     <div class="form__field">
-      <input type="text" v-model="fieldTitle" placeholder="Заголовок" style="width: 360px"/>
+      <input type="text" v-model="fieldTitle" placeholder="Заголовок" :style="{width}"/>
     </div>
     <div class="form__field">
-        <textarea v-model="fieldText" placeholder="Комментарий" rows="5" style="width: 360px"></textarea>
+        <textarea v-model="fieldText" placeholder="Комментарий" rows="5" :style="{width}"></textarea>
     </div>
     <div class="form__field">
-      <input type="text" v-model="fieldSource" placeholder="Источник" style="width: 360px"/>
+      <input type="text" v-model="fieldSource" placeholder="Источник" :style="{width}"/>
     </div>
     <div class="form__field">
        <span class="form__label" @click="setFieldPrice">
@@ -69,6 +70,9 @@ export default {
       set (title) {
         this.setField('title', title);
       }
+    },
+    width() {
+      return (this.$root.contentWidth > 500 ? 470 : this.$root.contentWidth < 230 ? 200 : this.$root.contentWidth - 30) + 'px';
     },
     fieldText: {
       get () {

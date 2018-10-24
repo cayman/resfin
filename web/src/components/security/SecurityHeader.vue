@@ -36,6 +36,7 @@ export default {
       display: inline-block;
       font-family: $font-family-base;
       white-space: nowrap;
+      padding: $px2;
       margin-right: $px10;
     }
     &__sector {
@@ -43,8 +44,8 @@ export default {
       font-family: $font-family-condensed;
       font-weight: $font-weight-lite;
       color: $text-color-sector;
-      margin-right: $px5;
       white-space: nowrap;
+      padding: $px2;
     }
 
   }

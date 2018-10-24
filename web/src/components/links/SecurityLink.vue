@@ -1,7 +1,8 @@
 <template>
   <a v-if="href" @click.stop="open" :target="link.urlTarget || '_info'" :title="link.desc || link.code">
     <img v-if="link.icon" :src="link.icon" height="16px" width="16px">
-    {{ link.label }}
+    <span v-if="$root.extraWide">{{ link.name }}</span>
+    <span v-else-if="$root.wide">{{ link.label }}</span>
   </a>
 </template>
 
@@ -50,6 +51,7 @@
       margin: auto;
       vertical-align: middle;
       display: inline-block;
+      margin-right: $px2;
     }
   }
 

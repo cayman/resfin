@@ -38,18 +38,13 @@ export default {
     good() {
       return evalCriterion(this._indicator.good, this.indicator.value);
     }
-  },
-  methods: {
-    editComment() {
-      this.$store.dispatch('editComment', this.comment);
-    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  @import "../../assets/var.scss";
+  @import "../../assets/var";
 
   .indicator {
     a {

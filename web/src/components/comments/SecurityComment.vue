@@ -6,8 +6,10 @@
       </a>
       <span class="comment__date">{{ created }}</span>
       <span class="comment__price" v-if="comment.price">
-        <span class="comment__label">Цена:</span>{{ comment.price | currency }} &#8381;
+        <span class="comment__label">Цена:</span>
+        <span>{{ comment.price | currency }} &#8381;</span>
       </span>
+      <br v-if="comment.interest >= 0 && $root.tight" />
       <span v-if="comment.interest >= 0 " class="comment__interest">
         <span class="comment__label">Интерес:</span>
         <interest-percent :price="comment.price" :interest="comment.interest"></interest-percent>
@@ -22,19 +24,19 @@
     <div class="comment__text" v-html="comment.text">
     </div>
     <div class="comment__indicators" v-if="comment.indicators && comment.indicators.length">
-      <security-comment-indicator v-for="(indicator, index) in comment.indicators"
-                                  :key="index" :indicator="indicator"></security-comment-indicator>
+      <security-indicator v-for="(indicator, index) in comment.indicators"
+                                  :key="index" :indicator="indicator"></security-indicator>
     </div>
   </div>
 </template>
 
 <script>
 import InterestPercent from '../common/InterestPercent';
-import SecurityCommentIndicator from './SecurityCommentIndicator';
+import SecurityIndicator from '../common/SecurityIndicator';
 import {getLocalDate} from '../../utils';
 export default {
   name: 'security-comment',
-  components: { InterestPercent, SecurityCommentIndicator },
+  components: { InterestPercent, SecurityIndicator },
   props: {
     comment: {
       type: Object,
@@ -64,7 +66,7 @@ export default {
     font-size: $font-size-base;
     font-weight: $font-weight-regular;
     &:last-child {
-      // border-bottom: none;
+      border-bottom: none;
     }
     &__top {
       line-height: 20px;
@@ -91,17 +93,16 @@ export default {
       color: $text-color-date;
       font-size: $font-size-base;
       font-family: $font-family-condensed;
+      margin-right: $px5;
     }
     &__price {
       font-size: $font-size-base;
-      margin-left: $px5;
+      margin-right: $px5;
     }
     &__interest {
       font-size: $font-size-base;
-      margin-left: $px5;
     }
     &__label {
-      margin-left: $px5;
       margin-right: $px2;
       font-size: $font-size-base;
       color: $text-color-label;

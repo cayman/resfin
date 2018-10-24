@@ -1,7 +1,7 @@
 <template>
   <span :class="{zero: profit === 0, up: profit > 0, down: profit < 0}">
-    <span v-if="valueVisible">{{profitSign}}{{profit | currency}}({{profitSign}}{{percent | currency}} &#37;)
-    </span><span v-else>{{profitSign}}{{percent | currency}} &#37;</span>
+    <span v-if="valueVisible">{{profitSign}}{{profit | currency}}({{profitSign}}{{percent | currency}}<span v-if="!small">&nbsp;&#37;</span>)
+    </span><span v-else>{{profitSign}}{{percent | currency}}<span v-if="!small">&nbsp;&#37;</span></span>
   </span>
 </template>
 
@@ -23,6 +23,11 @@
         required: false,
         default: false
       },
+      small: {
+        type: Boolean,
+        required: false,
+        default: false
+      }
     },
     computed: {
       profit () {

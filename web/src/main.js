@@ -37,6 +37,37 @@ new Vue({
   render: h => h(App),
   store,
   data: {
-    expanded: window.innerWidth > 640
+    expanded: window.innerWidth > 640,
+    window: { width: window.innerWidth, height: window.innerHeight }
+  },
+  computed: {
+    contentWidth () {
+      return this.window.width - (this.expanded ? 190 : 50);
+    },
+    wide () {
+      return this.contentWidth > 430;
+    },
+    extraWide () {
+      return this.contentWidth > 600;
+    },
+    tight () {
+      return this.contentWidth < 370;
+    },
+    column () {
+      return this.extraWide ? 10 : this.wide ? 8 : this.tight ? 6 : 7;
+    }
+  },
+  created() {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize);
+  },
+  methods: {
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+    }
   }
 }).$mount('#app');

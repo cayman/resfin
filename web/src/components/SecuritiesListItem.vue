@@ -11,7 +11,7 @@
       <div class="security__text">{{ security.name }} {{ securityType.label  }}</div>
       <div class="security__indicator" v-if="indicatorsComment">
         <template v-for="(indicator, index) in indicators">
-          <security-comment-indicator :key="index" :indicator="indicator" :small="true"></security-comment-indicator>
+          <security-indicator :key="index" :indicator="indicator" :small="true"></security-indicator>
         </template>
       </div>
     </a>
@@ -23,12 +23,12 @@
 
 <script>
   import InterestPercent from './common/InterestPercent'
-  import SecurityCommentIndicator from './comments/SecurityCommentIndicator';
+  import SecurityIndicator from './common/SecurityIndicator';
   import form from './form'
   export default {
     name: 'securities-list-item',
     mixins: [form],
-      components: { InterestPercent, SecurityCommentIndicator  },
+      components: { InterestPercent, SecurityIndicator  },
     props: {
       security: {
         type: Object,
