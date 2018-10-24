@@ -1,6 +1,5 @@
 <template>
   <div class="form">
-    {{ width }}
     <div class="form__field">
       <input type="text" v-model="fieldTitle" placeholder="Заголовок" :style="{width}"/>
     </div>
