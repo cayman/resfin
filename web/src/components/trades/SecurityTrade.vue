@@ -20,20 +20,20 @@
         </td>
 
         <td class="trade__percent">
-          <interest-percent :price="trade.calc.avg" :interest="trade.price" :interest-visible="false" :small="$root.tight"/>
+          <interest-percent :price="trade.calc.avg" :interest="trade.price" :interest-visible="false" :small="!$root.gt370"/>
         </td>
 
-        <td class="trade__tax" v-if="$root.extraWide">
+        <td class="trade__tax" v-if="$root.gt600">
           -{{trade.tax | currency}}
         </td>
 
-        <td class="trade__sum" v-if="!$root.tight">
+        <td class="trade__sum" v-if="$root.gt370">
           {{ trade.sum - trade.tax | currency }}
         </td>
 
-        <td class="trade__commission" v-if="$root.extraWide">
+        <td class="trade__commission" v-if="$root.gt600">
         </td>
-        <td class="trade__tax" v-else-if="$root.wide">
+        <td class="trade__tax" v-else-if="$root.gt430">
           ({{trade.tax | currency}})
         </td>
       </template>
@@ -46,14 +46,14 @@
         <td class="trade__percent">
         </td>
 
-        <td class="trade__tax" v-if="$root.extraWide">
+        <td class="trade__tax" v-if="$root.gt600">
         </td>
 
-        <td class="trade__sum" v-if="!$root.tight">
+        <td class="trade__sum" v-if="$root.gt370">
           {{ trade.sum | currency }}
         </td>
 
-        <td class="trade__commission" v-if="$root.wide">
+        <td class="trade__commission" v-if="$root.gt430">
           {{ commissionSum | currency }}
         </td>
 
@@ -63,7 +63,7 @@
         {{ resultSumSign }}{{ resultSum | currency  }}
       </td>
 
-      <td class="trade__balance"  v-if="$root.extraWide">
+      <td class="trade__balance"  v-if="$root.gt600">
         <profit v-if="calcIncome" :expense="calcExpense" :income="calcIncome"/>
       </td>
 
@@ -200,13 +200,13 @@
         <div v-if="isDividendType" class="trade__field trade__export" >
           <pre @click="copyText">{{ security.code }}: {{ trade.count | count(false) }}x{{ trade.price | currency }}={{ trade.sum | currency }}
 Налог: {{ trade.tax | currency }}, Итого: {{ resultSum | currency }}
-{{ securityName }} <br v-if="$root.tight"/>({{ securityIsin}}), {{ securityReg }}</pre>
+{{ securityName }} <br v-if="!$root.gt370"/>({{ securityIsin}}), {{ securityReg }}</pre>
         </div>
 
         <div v-else class="trade__field trade__export">
           <pre @click="copyText">{{ security.code }}: {{ trade.count | count(false) }}x{{ trade.price | currency }}={{ trade.sum | currency }}
 Комиссия: {{ trade.commission.join('+') }}={{ commissionSum | currency }}
-{{ securityName }} <br v-if="$root.tight"/>({{ securityIsin}}), {{ securityReg }}</pre>
+{{ securityName }} <br v-if="!$root.gt370"/>({{ securityIsin}}), {{ securityReg }}</pre>
         </div>
       </td>
     </tr>

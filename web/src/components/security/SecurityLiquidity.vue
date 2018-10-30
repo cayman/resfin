@@ -1,9 +1,9 @@
 <template>
   <span class="liquidity">
-    <a class="liquidity__label" title="Листинг котировки">L</a>
-    <span class="liquidity__value" :class="{up: securityLevel === 1, down: securityLevel > 2}">{{ securityLevel }}</span>
-    <a class="liquidity__label" title="Объем дневных торгов">V</a>
-    <span class="liquidity__value" :class="{up: securityVolume > 100000000, down: securityVolume <= 500000 }">{{securityVolume | volume}}</span>
+    <a class="liquidity__label" title="Листинг котировки" v-if="$root.gt430">L</a>
+    <span class="liquidity__value" v-if="$root.gt400" :class="{up: securityLevel === 1, down: securityLevel > 2}">{{ securityLevel }}</span>
+    <a class="liquidity__label" title="Объем дневных торгов" v-if="$root.gt370">V</a>
+    <span class="liquidity__value" v-if="$root.gt370" :class="{up: securityVolume > 100000000, down: securityVolume <= 500000 }">{{securityVolume | volume}}</span>
   </span>
 </template>
 
@@ -47,7 +47,7 @@ export default {
 
     &__value {
       font-weight: $font-weight-lite;
-      padding-right: $px5;
+      padding-right: $px3;
       color: $text-color-normal;
       font-size: $font-size-smaller;
     }

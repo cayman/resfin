@@ -44,17 +44,26 @@ new Vue({
     contentWidth () {
       return this.window.width - (this.expanded ? 190 : 50);
     },
-    wide () {
+    gt370 () {
+      return this.contentWidth > 370;
+    },
+    gt400 () {
+      return this.contentWidth > 400;
+    },
+    gt430 () {
       return this.contentWidth > 430;
     },
-    extraWide () {
+    gt470 () {
+      return this.contentWidth > 470;
+    },
+    gt500 () {
+      return this.contentWidth > 500;
+    },
+    gt600 () {
       return this.contentWidth > 600;
     },
-    tight () {
-      return this.contentWidth < 370;
-    },
     column () {
-      return this.extraWide ? 10 : this.wide ? 8 : this.tight ? 6 : 7;
+      return this.gt600 ? 10 : this.gt430 ? 8 : this.gt370 ? 7 : 6;
     }
   },
   created() {

@@ -47,6 +47,7 @@ export default {
   @import "../../assets/var";
 
   .indicator {
+    white-space: nowrap;
     a {
       color: $text-color-label;
     }

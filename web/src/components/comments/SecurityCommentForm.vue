@@ -71,7 +71,7 @@ export default {
       }
     },
     width() {
-      return (this.$root.contentWidth > 500 ? 470 : this.$root.contentWidth < 230 ? 200 : this.$root.contentWidth - 30) + 'px';
+      return (this.$root.gt500 ? 470 : this.$root.contentWidth < 230 ? 200 : this.$root.contentWidth - 30) + 'px';
     },
     fieldText: {
       get () {

@@ -15,19 +15,19 @@
           <td class="header__percent">
             &#37;
           </td>
-          <td class="header__balance" v-if="$root.extraWide">
+          <td class="header__balance" v-if="$root.gt600">
             Налог
           </td>
-          <td class="header__sum" v-if="!$root.tight">
+          <td class="header__sum" v-if="$root.gt370">
             Сумма
           </td>
-          <td class="header__commission" v-if="$root.wide">
+          <td class="header__commission" v-if="$root.gt430">
             Ком.
           </td>
           <td class="header__result">
             Итого
           </td>
-          <td class="header__balance" v-if="$root.extraWide">
+          <td class="header__balance" v-if="$root.gt600">
             Баланс
           </td>
         </tr>

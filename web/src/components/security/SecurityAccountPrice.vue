@@ -4,7 +4,8 @@
     <template v-if="price">
        <span class="portfolio__value">{{ price * account.volume | currency}}</span>
        <span class="portfolio__percent" :class="{zero: !change, up: change > 0, down: change < 0}">
-        {{changeSign}}{{change | currency}} ({{changeSign}}{{percent}}%)
+         <span v-if="$root.gt470">{{changeSign}}{{change | currency}}</span>
+         <span v-if="true">({{changeSign}}{{percent}}%)</span>
        </span>
     </template>
    <template v-else>
@@ -75,6 +76,9 @@ export default {
 
     &__percent {
       font-weight: $font-weight-lite;
+      span {
+        padding-left: $px3;
+      }
     }
 
     &__label {

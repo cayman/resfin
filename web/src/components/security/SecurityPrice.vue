@@ -3,11 +3,13 @@
     <span>
       <span class="price__value" >{{price | currency}}</span>
       <span class="price__percent" :class="{zero: !change, up: change > 0, down: change < 0}">
-        &nbsp;{{changeSign}}{{change}} ({{changeSign}}{{percent}}%)
+        <span v-if="$root.gt430">{{changeSign}}{{change}}</span>
+        <span v-if="true">({{changeSign}}{{percent}}%)</span>
       </span>
       <security-liquidity class="price__liquidity"/>
     </span>
-    <security-account-price v-if="loaded" class="price__portfolio" v-for="(account, code) in tradesAccounts" :key="code" :account="account">
+    <security-account-price v-if="loaded" class="price__portfolio" v-for="(account, code) in tradesAccounts"
+                            :key="code" :account="account">
     </security-account-price >
   </div>
 </template>
@@ -89,6 +91,9 @@ export default {
 
     &__percent {
       font-family: $font-family-condensed;
+      span {
+        padding-left: $px3;
+      }
     }
 
     &__liquidity {

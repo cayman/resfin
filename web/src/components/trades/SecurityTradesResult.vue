@@ -11,26 +11,26 @@
         {{ account.avg | currency }}
       </td>
       <td class="footer__percent">
-        <profit :expense="account.avg" :income="securityPrice" :small="$root.tight"></profit>
+        <profit :expense="account.avg" :income="securityPrice" :small="!$root.gt370"></profit>
       </td>
-      <td class="footer__tax" v-if="$root.extraWide">
+      <td class="footer__tax" v-if="$root.gt600">
         -{{ account.tax | currency }}
       </td>
 
-      <td class="footer__sum" v-if="$root.extraWide">
+      <td class="footer__sum" v-if="$root.gt600">
         {{ calcNet | currency  }}
       </td>
-      <td class="footer__sum" v-else-if="!$root.tight">
+      <td class="footer__sum" v-else-if="$root.gt370">
         <profit :expense="calcExpense" :income="calcIncome" ></profit>
       </td>
 
-      <td class="footer__commission" v-if="$root.wide">
+      <td class="footer__commission" v-if="$root.gt430">
         {{ account.commission | currency }}
       </td>
       <td class="footer__result">
         {{ calcProfit | currency }}
       </td>
-      <td class="footer__balance" v-if="$root.extraWide">
+      <td class="footer__balance" v-if="$root.gt600">
         <profit :expense="calcExpense" :income="calcIncome"/>
       </td>
     </tr>

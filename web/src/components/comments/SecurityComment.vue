@@ -9,7 +9,7 @@
         <span class="comment__label">Цена:</span>
         <span>{{ comment.price | currency }} &#8381;</span>
       </span>
-      <br v-if="comment.interest >= 0 && $root.tight" />
+      <br v-if="comment.interest >= 0 && !$root.gt370" />
       <span v-if="comment.interest >= 0 " class="comment__interest">
         <span class="comment__label">Интерес:</span>
         <interest-percent :price="comment.price" :interest="comment.interest"></interest-percent>
@@ -24,8 +24,10 @@
     <div class="comment__text" v-html="comment.text">
     </div>
     <div class="comment__indicators" v-if="comment.indicators && comment.indicators.length">
-      <security-indicator v-for="(indicator, index) in comment.indicators"
-                                  :key="index" :indicator="indicator"></security-indicator>
+      <template v-for="(indicator, index) in comment.indicators">
+        <security-indicator :key="indicator.id" :indicator="indicator"></security-indicator>
+        <wbr :key="index"/>
+      </template>
     </div>
   </div>
 </template>
