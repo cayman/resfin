@@ -3,10 +3,10 @@
     <span>
       <span class="price__value" >{{price | currency}}</span>
       <span class="price__percent" :class="{zero: !change, up: change > 0, down: change < 0}">
-        <span v-if="$root.gt430">{{changeSign}}{{change}}</span>
+        <span v-if="!existTradeAccounts || $root.gt430">{{changeSign}}{{change}}</span>
         <span v-if="true">({{changeSign}}{{percent}}%)</span>
       </span>
-      <security-liquidity class="price__liquidity"/>
+      <security-liquidity class="price__liquidity" :few="existTradeAccounts"/>
     </span>
     <security-account-price v-if="loaded" class="price__portfolio" v-for="(account, code) in tradesAccounts"
                             :key="code" :account="account">
@@ -51,6 +51,9 @@ export default {
     },
     tradesAccounts () {
       return this.$store.getters.tradeAccounts;
+    },
+    existTradeAccounts () {
+      return this.$store.state.trades.list.length > 0;
     }
   }
 }

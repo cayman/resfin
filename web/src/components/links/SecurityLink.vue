@@ -1,5 +1,5 @@
 <template>
-  <a v-if="href" @click.stop="open" :target="link.urlTarget || '_info'" :title="link.desc || link.code">
+  <a :href="href" :target="link.urlTarget || '_info'" :title="link.desc || link.code">
     <img v-if="link.icon" :src="link.icon" height="16px" width="16px">
     <span v-if="$root.gt600">{{ link.name }}</span>
     <span v-else-if="$root.gt430">{{ link.label }}</span>

@@ -129,8 +129,14 @@ export default {
   securityReg : ({security}) =>
     security.market['REGNUMBER'],
 
+  securityIssueSize : ({security}) =>
+    security.market['ISSUESIZE'],
+
   securityVolume : ({security}) =>
     security.price['VALTODAY'],
+
+  securityIssueCapitalization : ({security}) =>
+    security.price['ISSUECAPITALIZATION'],
 
   securityPrice : ({security}) =>
     security.price['LAST'] || security.price['LCURRENTPRICE'],
