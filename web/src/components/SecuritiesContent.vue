@@ -49,6 +49,7 @@ export default {
       flex: 0 0 190px;
     }
     &__right {
+      min-width: 310px;
       flex: 1 1 200px;;
       display: flex;
       display: -webkit-flex;

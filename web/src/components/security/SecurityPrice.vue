@@ -3,30 +3,23 @@
     <span>
       <span class="price__value" >{{price | currency}}</span>
       <span class="price__percent" :class="{zero: !change, up: change > 0, down: change < 0}">
-        <span v-if="!existTradeAccounts || $root.gt430">{{changeSign}}{{change}}</span>
+        <span v-if="true">{{changeSign}}{{change}}</span>
         <span v-if="true">({{changeSign}}{{percent}}%)</span>
       </span>
-      <security-liquidity class="price__liquidity" :few="existTradeAccounts"/>
+      <security-liquidity class="price__liquidity"/>
     </span>
-    <security-account-price v-if="loaded" class="price__portfolio" v-for="(account, code) in tradesAccounts"
-                            :key="code" :account="account">
-    </security-account-price >
   </div>
 </template>
 
 <script>
 import SecurityLinks from '../links/SecurityLinks.vue'
-import SecurityAccountPrice from './SecurityAccountPrice.vue'
 import SecurityLiquidity from './SecurityLiquidity.vue'
 export default {
   name: 'security-price',
-  components: { SecurityLinks, SecurityAccountPrice, SecurityLiquidity },
+  components: { SecurityLinks, SecurityLiquidity },
   computed: {
     securityLoaded () {
       return !this.$store.state.security.loading;
-    },
-    loaded () {
-      return this.securityLoaded && !this.$store.state.trades.loading;
     },
     price () {
       return this.$store.getters.securityPrice;
@@ -49,12 +42,7 @@ export default {
     percent () {
       return this.$store.getters.securityPriceChangePercent;
     },
-    tradesAccounts () {
-      return this.$store.getters.tradeAccounts;
-    },
-    existTradeAccounts () {
-      return this.$store.state.trades.list.length > 0;
-    }
+
   }
 }
 </script>
@@ -102,12 +90,6 @@ export default {
     &__liquidity {
       font-family: $font-family-condensed;
       padding-left: $px5;
-    }
-
-    &__portfolio {
-      float: right;
-      margin-left: $px5;
-      font-family: $font-family-condensed;
     }
   }
 </style>

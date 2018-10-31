@@ -5,6 +5,11 @@
       <security-chart class="security-card__chart"/>
       <security-price class="security-card__price"/>
       <security-toolbar class="security-card__toolbar"/>
+      <div class="security-card__portfolio" v-if="tradeAccountsLoaded">
+        <security-account-price  v-for="(account, code, index) in tradesAccounts"
+                                :key="code" :index="index" :account="account">
+        </security-account-price >
+      </div>
       <security-comments class="security-card__comments"/>
       <security-trades  class="security-card__trades"/>
     </template>
@@ -15,7 +20,7 @@
 import SecurityHeader from './SecurityHeader.vue'
 import SecurityPrice from './SecurityPrice.vue'
 import SecurityToolbar from './SecurityToolbar.vue'
-
+import SecurityAccountPrice from './SecurityAccountPrice.vue'
 import SecurityLinks from '../links/SecurityLinks.vue'
 import SecurityChart from '../chart/SecurityChart.vue'
 import SecurityTrades from '../trades/SecurityTrades.vue'
@@ -28,17 +33,27 @@ export default {
     SecurityHeader,
     SecurityChart,
     SecurityPrice,
+    SecurityAccountPrice,
     SecurityToolbar,
     SecurityTrades,
     SecurityComments
   },
   computed: {
-    loaded () {
-      return !this.$store.state.security.loading;
-    },
     security () {
       return this.$store.state.security.model;
-    }
+    },
+    securityLoaded () {
+      return !this.$store.state.security.loading;
+    },
+    tradesAccounts () {
+      return this.$store.getters.tradeAccounts;
+    },
+    tradeAccountsExist () {
+      return this.$store.state.trades.list.length > 0;
+    },
+    tradeAccountsLoaded () {
+      return this.securityLoaded && !this.$store.state.trades.loading;
+    },
   }
 }
 </script>
@@ -73,6 +88,13 @@ export default {
     &__price {
       margin: 0 $px10;
       font-size: $font-size-base;
+    }
+    &__portfolio {
+      line-height: $px20;
+      margin: 0 $px10;
+      font-family: $font-family-condensed;
+      font-size: $font-size-smaller;
+      border-bottom: 1px solid $line-color-base;
     }
     &__comments {
       margin: 0;

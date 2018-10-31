@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <li v-for="link in links" :key="link.id">
+    <li v-for="link in links" :key="link.id" :class="{ wide: $root.gt370, tight: !$root.gt350 }">
       <security-link :link="link"/>
     </li>
   </ul>
@@ -31,6 +31,12 @@
       a {
         display: block;
       }
+    }
+    li.wide {
+      padding: $px2 $px3;
+    }
+    li.tight {
+      padding: $px2 $px1;
     }
   }
 

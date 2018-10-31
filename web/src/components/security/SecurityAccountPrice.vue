@@ -4,7 +4,7 @@
     <template v-if="price">
        <span class="portfolio__value">{{ price * account.volume | currency}}</span>
        <span class="portfolio__percent" :class="{zero: !change, up: change > 0, down: change < 0}">
-         <span v-if="$root.gt470">{{changeSign}}{{change | currency}}</span>
+         <span v-if="index > 0 ? $root.gt370 : $root.gt350">{{changeSign}}{{change | currency}}</span>
          <span v-if="true">({{changeSign}}{{percent}}%)</span>
        </span>
     </template>
@@ -24,6 +24,10 @@ export default {
   props: {
     account: {
       type: Object,
+      required: true
+    },
+    index: {
+      type: Number,
       required: true
     }
   },
@@ -50,6 +54,7 @@ export default {
 
   .portfolio {
     font-family: $font-family-condensed;
+    padding-right: $px5;
     .up {
       color: $text-color-up;
     }

@@ -44,6 +44,9 @@ new Vue({
     contentWidth () {
       return this.window.width - (this.expanded ? 190 : 50);
     },
+    gt350 () {
+      return this.contentWidth > 350;
+    },
     gt370 () {
       return this.contentWidth > 370;
     },
@@ -59,8 +62,14 @@ new Vue({
     gt500 () {
       return this.contentWidth > 500;
     },
+    gt530 () {
+      return this.contentWidth > 530;
+    },
     gt600 () {
       return this.contentWidth > 600;
+    },
+    gt850 () {
+      return this.contentWidth > 850;
     },
     column () {
       return this.gt600 ? 10 : this.gt430 ? 8 : this.gt370 ? 7 : 6;

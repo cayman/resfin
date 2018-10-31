@@ -122,7 +122,7 @@ export default {
     display: -webkit-flex;
     flex-direction: column;
     max-width: 1024px;
-    min-width: 360px;
+    // min-width: 360px;
   }
   .header {
     flex: 0 0 30px;
