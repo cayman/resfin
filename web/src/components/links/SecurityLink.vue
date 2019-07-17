@@ -1,6 +1,6 @@
 <template>
   <a :href="href" :target="link.urlTarget || '_info'" :title="link.desc || link.code">
-    <img v-if="link.icon" :src="link.iconSrc" height="16px" width="16px">
+    <img v-if="link.icon" :src="link.icon" height="16px" width="16px">
     <span v-if="$root.gt850">{{ link.name }}</span>
     <span v-else-if="$root.gt600">{{ link.label }}</span>
   </a>
