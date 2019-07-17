@@ -170,6 +170,10 @@
           &nbsp;
         </span>
         <span class="form__input">
+          fieldCode = {{ fieldCode }}
+          <!--AccountCode = {{ fieldAccountCode }} -->
+          <!--Type = {{ fieldTypeCode }}-->
+          <!--price = {{ fieldCount }} * {{ fieldPrice }}-->
           <button @click="saveTrade" :disabled="!allow">Сохранить</button>&nbsp;
           <button @click="cancelTrade">Отмена</button>
         </span>

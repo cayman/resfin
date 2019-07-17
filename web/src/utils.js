@@ -17,22 +17,11 @@ export function setAppStorageItem(name, value) {
 
 
 function createModel(snap) {
-  const model = {id: snap.id, ...snap.data()};
-  // if(model.stock) {
-  //   model.securityCode = model.stock;
-  // }
-  // if(model.account) {
-  //   model.accountCode = model.account;
-  // }
-  // if(model.type) {
-  //   model.typeCode = model.type;
-  // }
-  // if(model.sector) {
-  //   model.sectorName = model.sector;
-  // }
-  // if(model.dividend) {
-  //   model.interest = model.dividend;
-  // }
+  const model = Object.entries(snap.data()).reduce((data, [key,value]) => {
+      data[key] = value && typeof value === 'object' && value.toDate ? value.toDate() : value;
+      return data;
+  }, {id: snap.id});
+  console.log('createModel', model);
   return model;
 }
 
@@ -75,6 +64,11 @@ export function evalCriterion (criterion = null, value = null) {
     console.error('evalCriterion', error);
     return null;
   }
+}
+
+export function currency(value, fixed, local) {
+  const val = fixed === null ? value : Number(value.toFixed(fixed));
+  return local ? value.toLocaleString() : val.toString()
 }
 
 export function percent(interest, price) {

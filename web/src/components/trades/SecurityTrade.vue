@@ -1,6 +1,6 @@
 <template>
   <tbody class="trade">
-    <tr class="trade__row" :class="{ expanded, editing }" @click="toggleExpandTrade">
+    <tr class="trade__row" :class="{ expanded, editing, warning }" @click="toggleExpandTrade">
 
       <td class="trade__type">
         <a v-if="type" :title="type.name">
@@ -129,6 +129,16 @@
               {{ trade.tax | currency }} = {{ trade.sum - trade.tax | currency }}
             </span>
           </div>
+          <div class="trade__field">
+            <span class="trade__label">
+              Total amount:
+            </span>
+            <span class="trade__comment">
+              ({{ trade.price | currency(null, false) }} x {{ trade.count | count }})
+              -
+              {{ trade.tax | currency(null, false) }} = {{ trade.sum - trade.tax | currency(null, false) }}
+            </span>
+          </div>
         </template>
 
         <!--Покупка или продажа-->
@@ -147,7 +157,7 @@
             </span>
             <span class="trade__comment">
               <span v-if=" trade.commission.length > 1">
-                {{ trade.commission.join(' + ') }} = {{ commissionSum | currency }}
+                {{ trade.commission | currency }} = {{ commissionSum | currency }}
               </span>
               <span v-else>
                 {{ commissionSum | currency }}
@@ -162,6 +172,16 @@
               ({{ trade.price | currency }} x {{ trade.count | count }})
               {{ trade.type === 'buy' ? '+' : ' - '}}
               {{ commissionSum | currency }} = {{ resultSum | currency }}
+            </span>
+          </div>
+          <div class="trade__field">
+            <span class="trade__label">
+              Total amount:
+            </span>
+            <span class="trade__comment">
+              ({{ trade.price | currency(null, false) }} x {{ trade.count | count }})
+              {{ trade.type === 'buy' ? '+' : ' - '}}
+              {{ commissionSum | currency(null, false) }} = {{ resultSum | currency(null, false) }}
             </span>
           </div>
         </template>
@@ -189,13 +209,13 @@
             </span>
         </div>
 
-        <div class="trade__field">
-            <span class="trade__value">
+        <!--<div class="trade__field">-->
+            <!--<span class="trade__value">-->
               <!--IRKT: 1200x76 + 100x76,05 + 1400x76,1 + 700x76,2 + 500x76,25 = 304 395,00-->
               <!--Комиссия 12,02 + 12,02 + 4,29 + 138,50 = 166,83 ,-->
               <!--АО "Корпорация "Иркут" ОАО, выпуск 03 RU0006752979-->
-            </span>
-        </div>
+            <!--</span>-->
+        <!--</div>-->
 
         <div v-if="isDividendType" class="trade__field trade__export" >
           <pre @click="copyText">{{ security.code }}: {{ trade.count | count(false) }}x{{ trade.price | currency }}={{ trade.sum | currency }}
@@ -205,7 +225,7 @@
 
         <div v-else class="trade__field trade__export">
           <pre @click="copyText">{{ security.code }}: {{ trade.count | count(false) }}x{{ trade.price | currency }}={{ trade.sum | currency }}
-Комиссия: {{ trade.commission.join('+') }}={{ commissionSum | currency }}
+Комиссия: {{ trade.commission | currency }}={{ commissionSum | currency }}
 {{ securityName }} <br v-if="!$root.gt370"/>({{ securityIsin}}), {{ securityReg }}</pre>
         </div>
       </td>
@@ -255,6 +275,9 @@ export default {
     },
     expanded () {
       return this.$store.state.trades.expanded.includes(this.trade.id);
+    },
+    warning () {
+      return !this.trade.code || this.trade.code.length < 3;
     },
     isDividendType () {
       return this.trade.typeCode === 'dividend';
@@ -338,6 +361,9 @@ export default {
     }
     tr.editing td {
       background-color: $bg-color-form;
+    }
+    tr.warning td {
+      background-color: $bg-color-row-warning;
     }
     tr:hover td {
       background-color: $bg-color-row-hover;

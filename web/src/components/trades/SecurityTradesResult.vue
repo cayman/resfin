@@ -72,6 +72,16 @@
           </span>
         </div>
 
+        <div class="footer__field" v-if="securityPrice">
+          <span class="footer__label">
+            Рыночная.цена:
+          </span>
+          <span class="footer__addition">
+              ({{ securityPrice | currency }} x {{ account.volume | count }})
+              = {{ securityPrice * account.volume | currency }}
+          </span>
+        </div>
+
         <div class="footer__field">
           <span class="footer__label">
             Средневзв.цена:
@@ -80,7 +90,7 @@
               ({{ account.avg | currency }} x {{ account.volume | count }})
               = {{ account.avg * account.volume | currency }}
             <span v-if="securityPrice">(<profit :expense="account.avg" :income="securityPrice"/>)</span>
-            </span>
+          </span>
         </div>
 
         <div class="footer__field">

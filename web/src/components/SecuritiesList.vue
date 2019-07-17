@@ -7,7 +7,7 @@
         <i class="fa fa-plus" aria-hidden="true"></i>
       </a>
 
-      {{ $root.contentWidth }}
+      <!--{{ $root.contentWidth }}-->
       <!--<a class="security-list__action" @click="batchAction">-->
       <!--<i class="fa fa-address-book" aria-hidden="true"></i>-->
       <!--</a>-->

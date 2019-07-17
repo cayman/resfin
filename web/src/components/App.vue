@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import SecuritiesContent from './components/SecuritiesContent.vue'
-import MenuBar from './components/MenuBar.vue'
-import Login from './components/Login.vue'
+import SecuritiesContent from './SecuritiesContent.vue'
+import MenuBar from './MenuBar.vue'
+import Login from './Login.vue'
 
 export default {
   name: 'app',
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "./assets/var.scss";
+  @import "../assets/var";
 
   html {
     font-size: 15px;

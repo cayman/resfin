@@ -1,5 +1,6 @@
 <template>
   <div class="security-header">
+    <span class="security-header__code">{{ security.code }}</span>
     <span class="security-header__title">{{ security.desc }}</span>
     <span class="security-header__sector">{{ sector }}</span>
   </div>
@@ -32,6 +33,14 @@ export default {
   .security-header {
     min-height: 20px;
 
+    &__code {
+      display: inline-block;
+      font-family: $font-family-condensed;
+      white-space: nowrap;
+      color: $text-color-label;
+      padding: $px2;
+      margin-right: $px2;
+    }
     &__title {
       display: inline-block;
       font-family: $font-family-base;

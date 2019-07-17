@@ -12,8 +12,11 @@
     name: 'security-links',
     components: { SecurityLink },
     computed: {
+      security () {
+          return this.$store.state.security.model;
+      },
       links () {
-        return this.$store.state.links.list;
+        return this.$store.state.links.list.filter(link => this.security[link.var]);
       }
     }
   }
