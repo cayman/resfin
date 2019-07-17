@@ -2,7 +2,7 @@ import {getLocalDate, currency} from './utils';
 
 const filters = {};
 
-filters.install = function (Vue, options) {
+filters.install = function (Vue) {
 
     Vue.filter('currency', function (value = null, fixed = null, local = true) {
         if (value === null) return '';
@@ -11,11 +11,6 @@ filters.install = function (Vue, options) {
         } else {
             return currency(value, fixed, local);
         }
-    });
-
-    Vue.filter('currencyJoin', function (values = null, fixed = null) {
-        if (values === null) return '';
-
     });
 
     Vue.filter('volume', function (volume = null) {
