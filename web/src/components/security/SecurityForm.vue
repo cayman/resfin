@@ -51,6 +51,12 @@
       </span>
     </div>
     <div class="form__field">
+      <span class="form__label">Исключена:</span>
+      <span class="form__input">
+        <input type="checkbox" v-model="fieldDisabled"/>
+      </span>
+    </div>
+    <div class="form__field">
       <span class="form__label">Сектор:</span>
       <span class="form__input">
         <select v-model="fieldSectorCode" @change="selectSector(fieldSectorCode)" style="width: 250px">
@@ -156,6 +162,14 @@ export default {
       },
       set (portfolio) {
         this.setField('portfolio', portfolio, Boolean);
+      }
+    },
+    fieldDisabled: {
+      get () {
+        return this.security.disabled;
+      },
+      set (disabled) {
+        this.setField('disabled', disabled, Boolean);
       }
     },
     fieldSectorCode: {

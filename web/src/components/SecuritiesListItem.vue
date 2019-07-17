@@ -1,5 +1,5 @@
 <template>
-  <div class="security" :class="{active, portfolio}">
+  <div class="security" :class="{active, portfolio, disabled}">
     <a class="security__code" :title="security.desc + ' ' + securityType.label" @click="select(security.id)">
       <div class="security__text">{{ security.code }}</div>
       <div class="security__indicator" >
@@ -47,6 +47,9 @@
       },
       portfolio () {
         return this.page !== 'p' && this.security.portfolio;
+      },
+      disabled () {
+        return this.security.disabled;
       },
       active () {
         return this.$store.state.security.model.id === this.security.id;
@@ -151,6 +154,13 @@
 
   .active {
     background-color: $bg-color-sidebar-active;
+  }
+
+  .disabled {
+    .security__text {
+      color: $text-color-disable;
+      text-decoration: line-through;
+    }
   }
 
   .portfolio {

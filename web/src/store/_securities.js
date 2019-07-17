@@ -71,6 +71,7 @@ export default {
       typeCode: null,
       favorite: page === 'f',
       portfolio: page === 'p',
+      disabled: false,
       sectorName: state.sectors.list
         .filter(sector => sector.code === page).map(sector => sector.name)[0],
       sectorCode: ['p', 'f'].includes(page) ? null : page,
@@ -94,6 +95,7 @@ export default {
           typeCode: security.typeCode,
           favorite: security.favorite,
           portfolio: security.portfolio,
+          disabled: security.disabled,
           sectorName: security.sectorName,
           sectorCode: security.sectorCode
         });
