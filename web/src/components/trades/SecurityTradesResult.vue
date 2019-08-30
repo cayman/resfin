@@ -8,7 +8,7 @@
         {{ account.volume | count(false) }}
       </td>
       <td class="footer__price">
-        {{ account.avg | currency }}
+        {{ account.avg | currency(4) }}
       </td>
       <td class="footer__percent">
         <profit :expense="account.avg" :income="securityPrice" :small="!$root.gt370"></profit>

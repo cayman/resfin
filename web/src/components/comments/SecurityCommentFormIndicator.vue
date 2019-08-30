@@ -35,7 +35,9 @@ export default {
       return this.comment.indicators || [];
     },
     remainingIndicators () {
-      return this.indicators.filter(indicator => !this.fieldIndicators.slice(0, this.index).some(selected => selected.code === indicator.code));
+        return this.indicators.filter(indicator =>
+            !this.fieldIndicators.slice(0, this.index).some(selected => selected.code === indicator.code))
+            .concat({code: null, value: null});
     },
     fieldIndicator () {
       return this.fieldIndicators[this.index] || { code: null, value: null};
@@ -61,7 +63,8 @@ export default {
     setIndicatorField(index, code, value) {
       console.log('setIndicatorField:', code, value);
       const item = {code: parseValue(code), value: parseValue(value, Number)};
-      this.$store.commit('spliceCommentField', { name:'indicators', index, value: item, type: Object });
+      const params = { name:'indicators', index, value: code ? item : undefined , type: Object };
+      this.$store.commit('spliceCommentField', params);
     }
   }
 }

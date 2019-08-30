@@ -94,8 +94,8 @@ export default {
           desc: security.desc,
           typeCode: security.typeCode,
           favorite: security.favorite,
-          portfolio: security.portfolio,
-          disabled: security.disabled,
+          portfolio: !!security.portfolio,
+          disabled: !!security.disabled,
           sectorName: security.sectorName,
           sectorCode: security.sectorCode
         });

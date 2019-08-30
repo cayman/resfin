@@ -100,10 +100,15 @@ export default {
     Vue.set(state.comment.model, name, val);
   },
   spliceCommentField: (state, {name, index, value, type}) => {
-    const val = parseValue(value, type);
-    console.log('parsed:', name, value, '=>', val, typeof val);
     const list = state.comment.model[name] || [];
-    list.splice(index, 1, val);
+    if (value !== undefined) {
+        const val = parseValue(value, type);
+        console.log('parsed:', name, index, value, '=>', val, typeof val);
+        list.splice(index, 1, val);
+    } else {
+        console.log('remove:', name, index);
+        list.splice(index, 1);
+    }
     Vue.set(state.comment.model, name, list);
   },
 

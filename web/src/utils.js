@@ -52,7 +52,7 @@ export function replaceUrl (template, varName, varValue, toLowerCase = false) {
 
 export function evalCriterion (criterion = null, value = null) {
   try {
-    if (criterion === null && value === null) {
+    if (criterion === null || value === null) {
       return null;
     }
     const _criterion = criterion.replace(/\$value/g, value);
@@ -67,8 +67,9 @@ export function evalCriterion (criterion = null, value = null) {
 }
 
 export function currency(value, fixed, local) {
-  const val = fixed === null ? value : Number(value.toFixed(fixed));
-  return local ? value.toLocaleString() : val.toString()
+  const val = fixed!==null && fixed >= 0 ? Number(value).toFixed(fixed) : Number(value).toFixed(6);
+  const str = (val * 1).toString();
+  return local ? str.replace('.',',') : str;
 }
 
 export function percent(interest, price) {
@@ -118,7 +119,7 @@ export function parseValue(val = null, type) {
 }
 
 export function parseMoex(metadata) {
-  return metadata.data && metadata.columns && metadata.data[0] ? metadata.columns.reduce((model, column, index) => {
+  return metadata && metadata.data && metadata.columns && metadata.data[0] ? metadata.columns.reduce((model, column, index) => {
     model[column] = metadata.data[0][index];
     return model;
   },{}) :  {};

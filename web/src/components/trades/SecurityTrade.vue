@@ -148,7 +148,7 @@
               Сумма {{ isBuyType ? 'покупки': 'продажи' }}:
             </span>
             <span class="trade__value">
-              {{ trade.price | currency }} x {{ trade.count | count }} = {{ trade.sum | currency }}
+              ({{trade.price}}) {{ trade.price | currency }} x {{ trade.count | count }} = {{ trade.sum | currency }}
             </span>
           </div>
           <div class="trade__field">

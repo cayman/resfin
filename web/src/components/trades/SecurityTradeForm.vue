@@ -170,7 +170,7 @@
           &nbsp;
         </span>
         <span class="form__input">
-          fieldCode = {{ fieldCode }}
+          <!--fieldCode = {{ fieldCode }}-->
           <!--AccountCode = {{ fieldAccountCode }} -->
           <!--Type = {{ fieldTypeCode }}-->
           <!--price = {{ fieldCount }} * {{ fieldPrice }}-->

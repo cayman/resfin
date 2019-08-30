@@ -21,7 +21,9 @@
         <i class="fa fa-external-link" aria-hidden="true"></i>
       </a>
     </div>
-    <div class="comment__text" v-html="comment.text">
+    <div class="comment__text" @click="expanded = !expanded">
+      <span v-if ="expanded || isShortText"  v-html="comment.text" ></span>
+      <span v-else v-html="commentBriefText"></span>
     </div>
     <div class="comment__indicators" v-if="comment.indicators && comment.indicators.length">
       <template v-for="(indicator, index) in comment.indicators">
@@ -45,9 +47,20 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      expanded: false
+    };
+  },
   computed: {
     created() {
       return getLocalDate(this.comment.created)
+    },
+    isShortText() {
+      return !this.comment.text || this.comment.text.length < 184;
+    },
+    commentBriefText() {
+      return this.comment.text.substr(0, 184) + '...';
     }
   },
   methods: {
