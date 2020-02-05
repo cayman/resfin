@@ -1,5 +1,5 @@
 <template>
-  <div class="comments" v-if="comments.length || editing">
+  <div class="comments">
     <div class="comments__header">
       <span class="comments__expander" @click="expanded = !expanded">
         <i class="fa fa-compress" v-if="expanded" aria-hidden="true"></i>
@@ -45,7 +45,7 @@
         return this.$store.getters.securityPrice;
       },
       comments () {
-        return this.$store.state.comments.list;
+        return this.$store.state.comments.list || [];
       },
       editing () {
         return this.$store.state.comment.editing;
@@ -70,7 +70,7 @@
     &__header {
       margin-top: 5px;
       padding: $px5;
-      color: $text-color-label;
+      color: $text-color-date;
       background-color: $bg-color-row-header;
       border-bottom: 1px solid $bg-color-sidebar;
       font-family: $font-family-base;
@@ -82,7 +82,7 @@
       cursor: pointer;
     }
     &__code {
-      padding: $px5 $px10;
+      padding: $px5 0 $px5 $px10;
     }
     &__title {
       padding: $px5 $px10;

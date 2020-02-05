@@ -2,7 +2,7 @@
   <div class="security-info">
     <span class="security-info__code">{{ security.code }}</span>
     <span class="security-info__title">{{ security.desc }}</span>
-    <span class="security-info__sector">{{ sector }}</span>
+    <br/><span class="security-info__sector">{{ sector }}</span>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
       return this.security.sectorName.split('/');
     },
     sector () {
-      return this.sectors[this.sectors.length - 1];
+      return this.sectors.join(' / ');
     }
   }
 }
@@ -36,11 +36,12 @@ export default {
 
     &__code {
       display: inline-block;
-      font-family: $font-family-condensed;
+      font-family: $font-family-base;
+      font-weight: $font-weight-boldest;
       white-space: nowrap;
-      color: $text-color-label;
+      color: $text-color-link;
       padding: $px2;
-      margin-right: $px2;
+      margin-right: $px10;
     }
     &__title {
       display: inline-block;
@@ -52,7 +53,7 @@ export default {
     &__sector {
       display: inline-block;
       font-family: $font-family-condensed;
-      font-weight: $font-weight-lite;
+      font-weight: $font-weight-regular;
       color: $text-color-sector;
       white-space: nowrap;
       padding: $px2;

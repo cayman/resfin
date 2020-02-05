@@ -98,7 +98,7 @@ export default {
 
     &__header {
       padding: $px5;
-      color: $text-color-label;
+      color: $text-color-date;
       background-color: $bg-color-row-header;
       border-bottom: 1px solid $bg-color-sidebar;
       font-family: $font-family-base;
@@ -110,7 +110,7 @@ export default {
       cursor: pointer;
     }
     &__code {
-      padding: $px5 $px10;
+      padding: $px5 0 $px5 $px10;
     }
     &__title {
       padding: $px5 $px10;
