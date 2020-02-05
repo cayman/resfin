@@ -1,14 +1,14 @@
 <template>
-  <div class="security-header">
-    <span class="security-header__code">{{ security.code }}</span>
-    <span class="security-header__title">{{ security.desc }}</span>
-    <span class="security-header__sector">{{ sector }}</span>
+  <div class="security-info">
+    <span class="security-info__code">{{ security.code }}</span>
+    <span class="security-info__title">{{ security.desc }}</span>
+    <span class="security-info__sector">{{ sector }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'security-header',
+  name: 'security-info',
   computed: {
     loaded () {
       return !this.$store.state.security.loading;
@@ -30,8 +30,9 @@ export default {
 <style lang="scss" scoped>
   @import "../../assets/var";
 
-  .security-header {
+  .security-info {
     min-height: 20px;
+    padding: $px10 $px10 0 $px10;
 
     &__code {
       display: inline-block;

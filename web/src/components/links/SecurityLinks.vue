@@ -27,7 +27,8 @@
   ul {
     list-style-type: none;
     padding: $px5;
-    background-color: $bg-color-toolbar;
+    background-color: $bg-color-white;
+    border-bottom: 1px solid $bg-color-sidebar;
     li {
       float: left;
       padding: $px2;

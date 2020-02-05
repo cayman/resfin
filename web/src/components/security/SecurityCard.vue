@@ -1,15 +1,29 @@
 <template>
   <div class="security-card">
     <template v-if="security.id">
-      <security-header class="security-card__header"/>
-      <security-chart class="security-card__chart"/>
-      <security-price class="security-card__price"/>
-      <security-toolbar class="security-card__toolbar"/>
-      <div class="security-card__portfolio" v-if="tradeAccountsLoaded">
-        <security-account-price  v-for="(account, code, index) in tradesAccounts"
-                                :key="code" :index="index" :account="account">
-        </security-account-price >
+      <div class="security-card__header">
+      <span class="security-card__expander" @click="expanded = !expanded">
+        <i class="fa fa-compress" v-if="expanded" aria-hidden="true"></i>
+        <i class="fa fa-expand" v-else aria-hidden="true"></i>
+        <span class="security-card__code">{{ security.code }}</span>
+        <span class="security-card__title">{{ security.desc }}</span>
+      </span>
+        <template v-if="expanded">
+          <a class="security-card__action" @click="editSecurity">
+            <i class="fa fa fa-pencil" aria-hidden="true" title="Редактировать"></i>
+          </a>
+        </template>
       </div>
+      <template v-if="expanded">
+        <security-info class="security-card__info"/>
+        <security-chart class="security-card__chart"/>
+        <security-price class="security-card__price"/>
+        <div class="security-card__portfolio" v-if="tradeAccountsLoaded">
+          <security-account-price  v-for="(account, code, index) in tradesAccounts"
+                                  :key="code" :index="index" :account="account">
+          </security-account-price >
+        </div>
+      </template>
       <security-comments class="security-card__comments"/>
       <security-trades  class="security-card__trades"/>
     </template>
@@ -17,26 +31,27 @@
 </template>
 
 <script>
-import SecurityHeader from './SecurityHeader.vue'
-import SecurityPrice from './SecurityPrice.vue'
-import SecurityToolbar from './SecurityToolbar.vue'
-import SecurityAccountPrice from './SecurityAccountPrice.vue'
-import SecurityLinks from '../links/SecurityLinks.vue'
+import SecurityInfo from './SecurityInfo.vue'
 import SecurityChart from '../chart/SecurityChart.vue'
+import SecurityPrice from './SecurityPrice.vue'
+import SecurityAccountPrice from './SecurityAccountPrice.vue'
 import SecurityTrades from '../trades/SecurityTrades.vue'
 import SecurityComments from '../comments/SecurityComments';
 
 export default {
   name: 'security-card',
   components: {
-    SecurityLinks,
-    SecurityHeader,
+    SecurityInfo,
     SecurityChart,
     SecurityPrice,
     SecurityAccountPrice,
-    SecurityToolbar,
     SecurityTrades,
     SecurityComments
+  },
+  data () {
+    return {
+      expanded: true
+    }
   },
   computed: {
     security () {
@@ -54,6 +69,17 @@ export default {
     tradeAccountsLoaded () {
       return this.securityLoaded && !this.$store.state.trades.loading;
     },
+    sectors () {
+      return this.security.sectorName.split('/');
+    },
+    sector () {
+      return this.sectors[this.sectors.length - 1];
+    }
+  },
+  methods: {
+    editSecurity() {
+      this.$store.commit('editingSecurity', true);
+    }
   }
 }
 </script>
@@ -68,19 +94,43 @@ export default {
     font-size: $font-size-base;
     font-weight: $font-weight-regular;
     color: $text-color-base;
-    padding: $px5;
-    &__links {
-      margin: 0;
-      font-size: $font-size-smaller;
-    }
+    padding: 0 $px5 $px5 $px5;
+
     &__header {
-      margin: 0 $px5;
+      padding: $px5;
+      color: $text-color-label;
+      background-color: $bg-color-row-header;
+      border-bottom: 1px solid $bg-color-sidebar;
+      font-family: $font-family-base;
+      font-weight: $font-weight-bold;
       font-size: $font-size-middle;
+      line-height: 20px;
     }
-    &__toolbar {
-      margin: $px5 $px2 $px2 $px2;;
-      font-size: $font-size-middle;
+    &__expander {
+      cursor: pointer;
     }
+    &__code {
+      padding: $px5 $px10;
+    }
+    &__title {
+      padding: $px5 $px10;
+    }
+    &__action {
+      display: inline-block;
+      background-color: $button-color;
+      color: $icon-color;
+      cursor: pointer;
+      margin-left: $px5;
+      margin-right: $px5;
+      padding: 0 $px3;
+      border-radius: $px1;
+      line-height: normal;
+      &:hover {
+        background-color: $button-color-hover;
+        color: $icon-color-hover;
+      }
+    }
+
     &__chart {
       margin: 0;
       font-size: $font-size-base;

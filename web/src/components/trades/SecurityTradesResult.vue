@@ -154,7 +154,7 @@
   @import "../../assets/var.scss";
 
   .footer {
-
+    border-bottom: 1px solid $bg-color-sidebar;
     td {
       padding: $px2 0 $px2 $px5;
       &:first-child {

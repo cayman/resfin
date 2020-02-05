@@ -3,18 +3,7 @@
     <a class="security-toolbar__action" @click="editSecurity">
       <i class="fa fa fa-pencil" aria-hidden="true" title="Редактировать"></i>
     </a>
-    <a class="security-toolbar__action" @click="addComment">
-      <i class="fa fa-commenting-o" aria-hidden="true" title="Добавить комментарий"></i>
-    </a>
-    <a class="security-toolbar__action" @click="addTrade('dividend')" title="Добавить дивиденд">
-      <i class="fa fa-money" aria-hidden="true"></i>
-    </a>
-    <a class="security-toolbar__action" @click="addTrade('buy')" title="Купить">
-      <i class="fa fa-plus" aria-hidden="true"></i>
-    </a>
-    <a class="security-toolbar__action" @click="addTrade('sell')" title="Продать">
-      <i class="fa fa-minus" aria-hidden="true"></i>
-    </a>
+
   </div>
 </template>
 
@@ -25,6 +14,9 @@ export default {
     loaded () {
       return !this.$store.state.security.loading;
     },
+    securityPrice () {
+      return this.$store.getters.securityPrice;
+    },
     security () {
       return this.$store.state.security.model;
     },
@@ -34,9 +26,6 @@ export default {
     lastTrade () {
       return this.trades.length > 0 ? this.trades[this.trades.length - 1] : null;
     },
-    securityPrice () {
-      return this.$store.getters.securityPrice;
-    },
     accounts () {
       return this.$store.state.accounts.list ;
     }
@@ -44,13 +33,6 @@ export default {
   methods: {
     editSecurity() {
       this.$store.commit('editingSecurity', true);
-    },
-    addComment() {
-      this.$store.dispatch('newComment', {securityCode: this.security.code, price: this.securityPrice});
-    },
-    addTrade(typeCode) {
-      this.$store.dispatch('newTrade', this.lastTrade ? {...this.lastTrade, typeCode}
-        : { securityCode: this.security.code, accountCode: this.accounts[0].code, typeCode});
     }
   }
 }

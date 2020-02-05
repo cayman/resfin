@@ -51,7 +51,10 @@ export default {
     ],
     favorites: [
       { code:5, icon:'fa fa-star-o', name: 'Избранная'},
-      { code:1, icon:'fa fa-thumbs-o-down', name: 'Плохая'},
+      { code:4, icon:'fa fa-thumbs-o-up', name: 'Хорошая компания'},
+      { code:3, icon:'fa fa-hand-o-up', name: 'Планирую покупать'},
+      { code:2, icon:'fa fa-hand-o-down', name: 'Планирую прдавать'},
+      { code:1, icon:'fa fa-thumbs-o-down', name: 'Плохая компания'},
       { code:0, icon:'fa', name: 'Обычная'},
     ],
   },

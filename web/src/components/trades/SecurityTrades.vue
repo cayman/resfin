@@ -1,39 +1,29 @@
 <template>
-  <table class="trades" v-if="loaded">
+  <div class="trades">
+  <div class="trades__header">
+    <span class="trades__expander" @click="expanded = !expanded">
+      <i class="fa fa-compress" v-if="expanded" aria-hidden="true"></i>
+      <i class="fa fa-expand" v-else aria-hidden="true"></i>
+      <span class="trades__code">{{ security.code }}</span>
+      <span class="trades__title">Операции</span>
+    </span>
+    <template v-if="expanded">
+      <a class="trades__action" @click="addTrade('dividend')" title="Добавить дивиденд">
+        <i class="fa fa-money" aria-hidden="true"></i>
+      </a>
+      <a class="trades__action" @click="addTrade('buy')" title="Купить">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+      </a>
+      <a class="trades__action" @click="addTrade('sell')" title="Продать">
+        <i class="fa fa-minus" aria-hidden="true"></i>
+      </a>
+    </template>
+  </div>
+  <table v-show="expanded" class="trades__table" v-if="loaded">
     <template v-for="(account, code) in accounts" >
-      <thead :key="code + '_header'">
-        <tr class="header">
-          <td class="header__name" colspan="2">
-            {{ account.name }}
-          </td>
-          <td class="header__count">
-            Кол.
-          </td>
-          <td class="header__price">
-            Цена
-          </td>
-          <td class="header__percent">
-            &#37;
-          </td>
-          <td class="header__balance" v-if="$root.gt600">
-            Налог
-          </td>
-          <td class="header__sum" v-if="$root.gt370">
-            Сумма
-          </td>
-          <td class="header__commission" v-if="$root.gt430">
-            Ком.
-          </td>
-          <td class="header__result">
-            Итого
-          </td>
-          <td class="header__balance" v-if="$root.gt600">
-            Баланс
-          </td>
-        </tr>
-      </thead>
+      <security-trades-head :name="account.name" :key="code + '_head'"/>
       <template v-for="_trade in account.trades" >
-        <security-trade :key="_trade.id" :trade="_trade"></security-trade>
+        <security-trade-card :key="_trade.id" :trade="_trade"></security-trade-card>
         <security-trade-form v-if="editing && tradeId===_trade.id" :key="_trade.id + '_edit'"></security-trade-form>
       </template>
       <security-trades-result :account="account" :key="code + '_footer'"></security-trades-result>
@@ -41,35 +31,58 @@
     </template>
     <security-trade-form v-if="editing && emptyTrades" key="trade_add"></security-trade-form>
   </table>
+  </div>
 </template>
 
 <script>
-  import SecurityTrade from './SecurityTrade.vue'
+  import SecurityTradesHead from './SecurityTradesHead.vue'
+  import SecurityTradeCard from './SecurityTradeCard.vue'
   import SecurityTradeForm from './SecurityTradeForm.vue'
   import SecurityTradesResult from './SecurityTradesResult';
   export default {
     name: 'security-trades',
-    components: {SecurityTrade, SecurityTradeForm, SecurityTradesResult },
+    components: {SecurityTradesHead, SecurityTradeCard, SecurityTradeForm, SecurityTradesResult},
+    data() {
+      return {
+        expanded: true
+      }
+    },
     computed: {
-      loaded () {
+      loaded() {
         return !this.$store.state.trades.loading;
       },
-      accounts () {
+      accounts() {
         return this.$store.getters.tradeAccounts;
       },
-      editing () {
+      editing() {
         return this.$store.state.trade.editing;
       },
-      tradeAccountCode () {
+      tradeAccountCode() {
         return this.$store.state.trade.model.accountCode;
       },
-      tradeId () {
+      tradeId() {
         return this.$store.state.trade.model.id;
       },
-      emptyTrades () {
+      emptyTrades() {
         return !this.accounts[this.tradeAccountCode];
       },
+      security () {
+        return this.$store.state.security.model;
+      },
+      trades () {
+        return this.$store.state.trades.list;
+      },
+      lastTrade () {
+        return this.trades.length > 0 ? this.trades[this.trades.length - 1] : null;
+      }
     },
+    methods: {
+      addTrade(typeCode) {
+        this.$store.dispatch('newTrade', this.lastTrade ? {...this.lastTrade, typeCode}
+          : {securityCode: this.security.code, accountCode: this.accounts[0].code, typeCode});
+
+      }
+    }
   }
 </script>
 
@@ -77,63 +90,50 @@
   @import "../../assets/var.scss";
   .trades {
     width: 100%;
-    max-width: 100%;
-    overflow: scroll;
-    border-collapse: collapse;
-    // border: 1px solid lightsteelblue;
-    margin: $px5 0;
-    td {
-      padding: 3px 0 3px $px5;
-      &:first-child {
-        padding-left: $px10;
-      }
-      &:last-child {
-        padding-right: $px10;
-      }
-    }
-  }
-
-  .header {
-    background-color: $bg-color-row-header;
-    color: $text-color-label;
-    border-top: $px1 solid $line-color-dark;
-
-    td {
-      font-family: $font-family-condensed;
+    margin-bottom: 20px;
+    &__header {
+      margin-top: 5px;
+      padding: $px5;
+      color: $text-color-label;
+      background-color: $bg-color-row-header;
+      border-bottom: 1px solid $bg-color-sidebar;
+      font-family: $font-family-base;
       font-weight: $font-weight-bold;
-      font-size: $font-size-smaller;
+      font-size: $font-size-middle;
+      line-height: 20px;
+    }
+    &__expander {
+      cursor: pointer;
+    }
+    &__code {
+      padding: $px5 $px10;
+    }
+    &__title {
+      padding: $px5 $px10;
+    }
+    &__action {
+      display: inline-block;
+      background-color: $button-color;
+      color: $icon-color;
+      cursor: pointer;
+      margin-left: $px5;
+      margin-right: $px5;
+      padding: 0 $px3;
+      border-radius: $px1;
+      line-height: normal;
+      &:hover {
+        background-color: $button-color-hover;
+        color: $icon-color-hover;
+      }
+    }
+    &__table {
+      width: 100%;
+      max-width: 100%;
+      overflow: scroll;
+      border-collapse: collapse;
+      // border: 1px solid lightsteelblue;
     }
 
-    &__name {
-      width: auto;
-    }
-    &__count {
-      text-align: right;
-      width: auto;
-     }
-    &__price {
-      text-align: right;
-      width: auto;
-    }
-    &__percent {
-      text-align: right;
-      width: 60px;
-    }
-    &__sum {
-      text-align: right;
-      width: auto;
-    }
-    &__commission {
-      text-align: right;
-      width: auto;
-    }
-    &__result {
-      text-align: right;
-      width: auto;
-    }
-    &__balance {
-      text-align: right;
-      width: 80px;
-    }
   }
+
 </style>

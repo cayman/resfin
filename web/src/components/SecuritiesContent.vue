@@ -5,10 +5,8 @@
     </div>
     <div class="content__right">
       <security-links class="content__links"/>
-      <template>
-        <security-form class="content__body" v-if="editing"/>
-        <security-card class="content__body" v-else/>
-      </template>
+      <security-form class="content__body" v-if="editing"/>
+      <security-card class="content__body" v-else/>
     </div>
   </div>
 </template>
@@ -64,6 +62,7 @@ export default {
       // border: 1px solid red;
       flex: 1 1 auto;
       overflow: auto;
+      margin-bottom: 35px;
     }
   }
 </style>

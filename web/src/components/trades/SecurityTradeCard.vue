@@ -239,7 +239,7 @@ import Profit from '../common/Profit.vue'
 import form from '../form'
 import {getCurrency, getLocalDate} from '../../utils';
 export default {
-  name: 'security-trade',
+  name: 'security-trade-card',
   mixins: [form],
   components: { InterestPercent, Profit },
   props: {
