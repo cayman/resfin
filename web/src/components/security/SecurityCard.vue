@@ -18,7 +18,8 @@
         <security-info class="security-card__info"/>
         <security-chart class="security-card__chart"/>
         <security-price class="security-card__price"/>
-        <div class="security-card__portfolio" v-if="tradeAccountsLoaded">
+        <div class="security-card__portfolio">
+          <security-interest class="security-card__interest"/>
           <security-account-price  v-for="(account, code, index) in tradesAccounts"
                                   :key="code" :index="index" :account="account">
           </security-account-price >
@@ -37,10 +38,12 @@ import SecurityPrice from './SecurityPrice.vue'
 import SecurityAccountPrice from './SecurityAccountPrice.vue'
 import SecurityTrades from '../trades/SecurityTrades.vue'
 import SecurityComments from '../comments/SecurityComments';
+import SecurityInterest from "./SecurityInterest";
 
 export default {
   name: 'security-card',
   components: {
+    SecurityInterest,
     SecurityInfo,
     SecurityChart,
     SecurityPrice,
@@ -61,7 +64,7 @@ export default {
       return !this.$store.state.security.loading;
     },
     tradesAccounts () {
-      return this.$store.getters.tradeAccounts;
+      return this.$store.getters.tradeAccounts || [];
     },
     tradeAccountsExist () {
       return this.$store.state.trades.list.length > 0;
