@@ -78,8 +78,8 @@
     },
     methods: {
       addTrade(typeCode) {
-        this.$store.dispatch('newTrade', this.lastTrade ? {...this.lastTrade, typeCode}
-          : {securityCode: this.security.code, accountCode: this.accounts[0].code, typeCode});
+        this.$store.dispatch('newTrade', this.lastTrade ? {...this.lastTrade, date: null, typeCode}
+          : {securityCode: this.security.code, accountCode: null, typeCode});
 
       }
     }
