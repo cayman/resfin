@@ -82,6 +82,17 @@
           </span>
         </div>
 
+        <!--<div class="footer__field">-->
+          <!--<span class="footer__label">-->
+            <!--Рыночные.див:-->
+          <!--</span>-->
+          <!--<span class="footer__addition">-->
+              <!--({{ interest | currency }} x {{ account.volume | count }})-->
+              <!--=-->
+            <!--<span v-if="securityPrice && interest"><interest-percent :price="securityPrice * account.volume" :interest="interest * account.volume"></interest-percent></span>-->
+          <!--</span>-->
+        <!--</div>-->
+
         <div class="footer__field">
           <span class="footer__label">
             Средневзв.цена:
@@ -89,7 +100,18 @@
           <span class="footer__addition">
               ({{ account.avg | currency }} x {{ account.volume | count }})
               = {{ account.avg * account.volume | currency }}
-            <span v-if="securityPrice">(<profit :expense="account.avg" :income="securityPrice"/>)</span>
+            <span v-if="securityPrice && account.avg">(<profit :expense="account.avg" :income="securityPrice"/>)</span>
+          </span>
+        </div>
+
+        <div class="footer__field">
+          <span class="footer__label">
+            Дивиденды:
+          </span>
+          <span class="footer__addition">
+              ({{ interest | currency }} x {{ account.volume | count }})
+              =
+            <span v-if="interest && account.avg"><interest-percent :price="account.avg * account.volume" :interest="interest * account.volume"></interest-percent></span>
           </span>
         </div>
 
@@ -111,13 +133,13 @@
 
 <script>
   import Profit from '../common/Profit.vue'
+  import InterestPercent from '../common/InterestPercent.vue'
   export default {
     name: 'security-trades-result',
-    components: { Profit },
+    components: { Profit, InterestPercent },
     data () {
       return {
-        expanded: false
-      }
+        expanded: true      }
     },
     props: {
       account: {
@@ -140,7 +162,16 @@
       },
       calcProfit () {
         return this.calcIncome - this.calcExpense;
-      }
+      },
+      comments () {
+        return this.$store.state.comments.list || [];
+      },
+      comment () {
+        return this.comments[0];
+      },
+      interest () {
+        return this.comment ? this.comment.interest : 0;
+      },
     },
     methods: {
       toggleExpand() {

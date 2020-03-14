@@ -3,10 +3,16 @@ import { TRADE, TRADES } from '../types';
 
 export default {
   // Получение списка сделок по инструменту
-  fetchTrades: ({commit, getters}, securityCode) => {
+  fetchTrades: ({commit, getters}, { accountCode, securityCode, typeCode }) => {
     console.log('fetchTrades:' + securityCode);
     commit('loading', TRADES);
-    return getters.trades.where('securityCode', '==', securityCode).get()
+
+    let trades = getters.trades;
+    if (accountCode) trades = trades.where('accountCode', '==', accountCode);
+    if (securityCode) trades = trades.where('securityCode', '==', securityCode);
+    if (typeCode) trades = trades.where('typeCode', '==', typeCode);
+
+    return trades.get()
       .then(trades => getSnapList(trades)
         .sort((a,b) => a.date > b.date ? 1 : a.date < b.date ? -1 : a.created > b.created ? 1 : -1)
       )

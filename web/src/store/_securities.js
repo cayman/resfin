@@ -56,7 +56,7 @@ export default {
       .then(security => {
         commit('setExpandTrades', []);
         commit('setExpandComments', []);
-        dispatch('fetchTrades', security.code);
+        dispatch('fetchTrades', { securityCode: security.code });
         return dispatch('fetchComments', security.code);
       });
   },

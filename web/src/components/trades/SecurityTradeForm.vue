@@ -344,9 +344,9 @@ export default {
       this.$store.commit('spliceTradeField', {name:'commission', index, value, type: Number});
     },
     saveTrade() {
-      this.$store.dispatch('saveTrade', this.trade).then((tradeId) =>{
+      this.$store.dispatch('saveTrade', this.trade).then((tradeId) => {
         this.$store.commit('editingTrade', false);
-        this.$store.dispatch('fetchTrades', this.security.code);
+        this.$store.dispatch('fetchTrades', { securityCode: this.security.code });
         this.$store.commit('setExpandTrades', [tradeId]);
       });
     },

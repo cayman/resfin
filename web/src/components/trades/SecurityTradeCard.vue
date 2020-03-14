@@ -318,7 +318,7 @@ export default {
     deleteTrade() {
       this.$store.dispatch('deleteTrade', this.trade.id).then(() =>{
         this.$store.commit('editingTrade', false);
-        this.$store.dispatch('fetchTrades', this.security.code);
+        this.$store.dispatch('fetchTrades', { securityCode: this.security.code });
         this.$store.commit('setExpandTrades', []);
       });
     },
