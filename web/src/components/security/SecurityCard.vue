@@ -64,7 +64,7 @@ export default {
       return !this.$store.state.security.loading;
     },
     tradesAccounts () {
-      return this.$store.getters.tradeAccounts || [];
+      return this.$store.getters.securityTradeAccounts || [];
     },
     tradeAccountsExist () {
       return this.$store.state.trades.list.length > 0;

@@ -58,12 +58,21 @@ export default {
       return favorites;
     }, {}),
 
-  tradeAccounts ({trades, accounts}) {
+  securityTradeAccounts ({trades, accounts}) {
     return trades.list.reduce((items, model) => {
       console.log('model', model);
-      const account = accounts.list.find(account => account.code === model.accountCode);
-      items[model.accountCode] = items[model.accountCode] ||
-        { code: model.accountCode,
+      const code = model.accountCode;
+      const account = accounts.list.find(account => account.code === code);
+      items[code] = items[code] ||
+        { code,
+          name: account ? account.name : '-',
+          securities: {},
+          trades: []
+        };
+
+      const securityCode = model.securityCode;
+      items[code].securities[securityCode] = items[code].securities[securityCode] ||
+        { code: model.securityCode,
           name: account ? account.name : '-',
           date: null,
           volume: 0,
@@ -73,10 +82,10 @@ export default {
           expense: 0, // общий расход на покупку
           commission: 0, // общая расход на коммиссию
           tax: 0, // общая сумма налогов
-          trades: []
         };
+
       console.log('model', model);
-      const a = items[model.accountCode];
+      const a = items[code].securities[securityCode];
       if (model.typeCode === 'buy') {
         // средневзвешенная после покупки
         a.avg =  (a.avg * a.volume + model.price * model.count) / (a.volume + model.count);
@@ -105,11 +114,11 @@ export default {
         commission: a.commission,  // расход на комиссию
         tax: a.tax  // сумма налогов
       };
-      a.trades.push({...model, calc });
-      console.log('account', a);
+      items[code].trades.push({...model, calc });
       return items;
     }, {});
   },
+
 
   securityCode : ({security}) =>
     security.market['SECID'],

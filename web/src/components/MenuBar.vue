@@ -7,7 +7,7 @@
         </a>
       </li>
       <template v-for="page in pages" >
-        <li :key="page.id" :class="{active: currentPage === page.code}" >
+        <li :key="page.id" :class="{active: pageCode === page.code}" >
           <a @click="setPage(page.code)" :title="page.code + ' - ' + page.name">
             <i v-if="page.icon" :class="page.icon" aria-hidden="true"></i>
             <span v-if="page.label">{{ page.label }}</span>
@@ -29,37 +29,26 @@
     },
     data() {
       return {
-        main: [
+        prefix: [
           {id:'f', code:'f',  icon: 'fa fa-bookmark-o'},
           {id:'p', code:'p', icon: 'fa fa-briefcase'}
+        ],
+        suffix: [
+          {id:'t', code:'t',  icon: 'fa fa-shopping-cart'},
         ]
       }
     },
     computed: {
-      currentPage () {
-        return this.$store.state.page;
-      },
       sectors () {
         return this.$store.state.sectors.list;
       },
       pages () {
-        return this.main.concat(this.sectors);
+        return this.prefix.concat(this.sectors).concat(this.suffix);
       }
     },
     methods: {
       setPage (code) {
-        console.log('setPage', code);
-        this.$store.commit('setPage', code);
-        this.$store.dispatch('fetchSecurities', code)
-          .then(securities => {
-            if(securities.length) {
-              this.$store.dispatch('fetchSecurityInfo', securities[0].id);
-              // this.$store.dispatch('fetchSecuritiesComments', securities.map(s => s.code));
-              // не запрашиваем, так как уже имеем весь список, в релации будем
-            }else {
-              this.$store.dispatch('newSecurity', code);
-            }
-          });
+        this.$store.dispatch('setPage', code);
       },
       toggleExpand() {
         this.$root.expanded = !this.$root.expanded;

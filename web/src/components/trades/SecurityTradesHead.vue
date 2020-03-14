@@ -4,6 +4,9 @@
       <td class="header__name" colspan="2">
         {{ name }}
       </td>
+      <td class="header__code" v-if="codeColumn">
+        Код
+      </td>
       <td class="header__count">
         Кол.
       </td>
@@ -39,6 +42,10 @@
       name: {
         type: String,
         required: true,
+      },
+      codeColumn: {
+        type: Boolean,
+        default: false
       }
     }
   }
@@ -69,6 +76,9 @@
 
     &__name {
        width: auto;
+    }
+    &__code {
+      width: auto;
     }
     &__count {
        text-align: right;

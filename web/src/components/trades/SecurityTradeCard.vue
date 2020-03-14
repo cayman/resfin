@@ -10,6 +10,11 @@
       <td class="trade__date">
         {{ date }}
       </td>
+
+      <td class="trade__code" v-if="codeColumn">
+        {{ trade.securityCode }}
+      </td>
+
       <td class="trade__count">
         {{ trade.count | count(false) }}
       </td>
@@ -69,7 +74,7 @@
 
     </tr>
     <tr class="trade__detail" :class="{ expanded }" v-if="expanded">
-      <td :colspan="$root.column">
+      <td :colspan="$root.column + (codeColumn ? 1 : 0)">
 
         <div class="trade__field">
           <span class="trade__label">
@@ -217,17 +222,21 @@
             <!--</span>-->
         <!--</div>-->
 
+        <template v-if="!codeColumn && securityName && securityIsin && securityReg">
+
         <div v-if="isDividendType" class="trade__field trade__export" >
           <pre @click="copyText">{{ security.code }}: {{ trade.count | count(false) }}x{{ trade.price | currency }}={{ trade.sum | currency }}
 Налог: {{ trade.tax | currency }}, Итого: {{ resultSum | currency }}
-{{ securityName }} <br v-if="!$root.gt370"/>({{ securityIsin}}), {{ securityReg }}</pre>
+{{ securityName }} <br v-if="!$root.gt370"/>({{ securityIsin }}), {{ securityReg }}</pre>
         </div>
 
         <div v-else class="trade__field trade__export">
           <pre @click="copyText">{{ security.code }}: {{ trade.count | count(false) }}x{{ trade.price | currency }}={{ trade.sum | currency }}
 Комиссия: {{ trade.commission | currency }}={{ commissionSum | currency }}
-{{ securityName }} <br v-if="!$root.gt370"/>({{ securityIsin}}), {{ securityReg }}</pre>
+{{ securityName }} <br v-if="!$root.gt370"/>({{ securityIsin }}), {{ securityReg }}</pre>
         </div>
+
+        </template>
       </td>
     </tr>
   </tbody>
@@ -246,6 +255,10 @@ export default {
     trade: {
       type: Object,
       required: true
+    },
+    codeColumn: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -254,9 +267,6 @@ export default {
     },
     security () {
       return this.$store.state.security.model;
-    },
-    securityCode () {
-      return this.$store.getters.securityCode;
     },
     securityName () {
       return this.$store.getters.securityName;
@@ -274,7 +284,7 @@ export default {
       return this.$store.state.trade.editing && this.$store.state.trade.model.id === this.trade.id;
     },
     expanded () {
-      return this.$store.state.trades.expanded.includes(this.trade.id);
+      return this.$store.state.trades.expanded && this.$store.state.trades.expanded.includes(this.trade.id);
     },
     warning () {
       return !this.trade.code || this.trade.code.length < 3;
@@ -318,7 +328,7 @@ export default {
     deleteTrade() {
       this.$store.dispatch('deleteTrade', this.trade.id).then(() =>{
         this.$store.commit('editingTrade', false);
-        this.$store.dispatch('fetchTrades', { securityCode: this.security.code });
+        this.$store.dispatch('fetchTrades', { securityCode: this.trade.securityCode });
         this.$store.commit('setExpandTrades', []);
       });
     },
@@ -386,6 +396,11 @@ export default {
       width: 50px;
       font-weight: $font-weight-lite;
       color: $text-color-date;
+    }
+    &__code {
+      width: 30px;
+      font-weight: $font-weight-regular;
+      color: $text-color-label;
     }
     &__type {
       width: 10px;

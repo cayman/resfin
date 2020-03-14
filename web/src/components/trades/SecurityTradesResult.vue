@@ -82,16 +82,16 @@
           </span>
         </div>
 
-        <!--<div class="footer__field">-->
-          <!--<span class="footer__label">-->
-            <!--Рыночные.див:-->
-          <!--</span>-->
-          <!--<span class="footer__addition">-->
-              <!--({{ interest | currency }} x {{ account.volume | count }})-->
-              <!--=-->
-            <!--<span v-if="securityPrice && interest"><interest-percent :price="securityPrice * account.volume" :interest="interest * account.volume"></interest-percent></span>-->
-          <!--</span>-->
-        <!--</div>-->
+        <div class="footer__field">
+          <span class="footer__label">
+            Дивиденды:
+          </span>
+          <span class="footer__addition">
+              ({{ interest | currency }} x {{ account.volume | count }})
+              =
+            <span v-if="securityPrice && interest"><interest-percent :price="securityPrice * account.volume" :interest="interest * account.volume"></interest-percent></span>
+          </span>
+        </div>
 
         <div class="footer__field">
           <span class="footer__label">
@@ -106,7 +106,7 @@
 
         <div class="footer__field">
           <span class="footer__label">
-            Дивиденды:
+            Средневзв.див:
           </span>
           <span class="footer__addition">
               ({{ interest | currency }} x {{ account.volume | count }})

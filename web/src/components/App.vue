@@ -2,9 +2,10 @@
   <div id="app">
     <template v-if="isAuthenticated">
       <div class="header">
-        <menu-bar></menu-bar>
+        <menu-bar :page-code="currentPage"></menu-bar>
       </div>
-      <securities-content class="main"/>
+      <securities-portfolio v-if="currentPage === 't'" class="main"/>
+      <securities-content v-else class="main"/>
     </template>
     <!--<login v-else class="main"/>-->
   </div>
@@ -12,12 +13,13 @@
 
 <script>
 import SecuritiesContent from './SecuritiesContent.vue'
+import SecuritiesPortfolio from './SecuritiesPortfolio.vue'
 import MenuBar from './MenuBar.vue'
 import Login from './Login.vue'
 
 export default {
   name: 'app',
-  components: { Login, MenuBar, SecuritiesContent },
+  components: { Login, MenuBar, SecuritiesContent, SecuritiesPortfolio },
   created() {
     if (this.isAuthenticated) {
       this.$store.dispatch('authenticated');
@@ -36,6 +38,9 @@ export default {
   computed: {
     isAuthenticated () {
       return this.$store.getters.isAuthenticated;
+    },
+    currentPage () {
+      return this.$store.state.page;
     }
   }
 }

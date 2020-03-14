@@ -60,6 +60,7 @@ export default {
   },
   trades : {
     loading: false,
+    expanded: [],
     list: []
   },
   trade : {

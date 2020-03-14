@@ -20,14 +20,16 @@
     </template>
   </div>
   <table v-show="expanded" class="trades__table" v-if="loaded">
-    <template v-for="(account, code) in accounts" >
-      <security-trades-head :name="account.name" :key="code + '_head'"/>
-      <template v-for="_trade in account.trades" >
-        <security-trade-card :key="_trade.id" :trade="_trade"></security-trade-card>
+    <template v-for="(_account, accountCode) in accounts" >
+      <security-trades-head :name="_account.name" :key="accountCode + '_head'"/>
+      <template v-for="_trade in _account.trades" >
+        <security-trade-card :key="_trade.id" :trade="_trade" :security="security"></security-trade-card>
         <security-trade-form v-if="editing && tradeId===_trade.id" :key="_trade.id + '_edit'"></security-trade-form>
       </template>
-      <security-trades-result :account="account" :key="code + '_footer'"></security-trades-result>
-      <security-trade-form v-if="editing && !tradeId && tradeAccountCode === code" :key="code + '_add'"></security-trade-form>
+        <template v-for="(_security, securityCode) in _account.securities" >
+          <security-trades-result :account="_security" :key="accountCode + securityCode + '_footer'"></security-trades-result>
+        </template>
+      <security-trade-form v-if="editing && !tradeId && tradeAccountCode === accountCode" :key="accountCode + '_add'"></security-trade-form>
     </template>
     <security-trade-form v-if="editing && emptyTrades" key="trade_add"></security-trade-form>
   </table>
@@ -52,7 +54,7 @@
         return !this.$store.state.trades.loading;
       },
       accounts() {
-        return this.$store.getters.tradeAccounts;
+        return this.$store.getters.securityTradeAccounts;
       },
       editing() {
         return this.$store.state.trade.editing;
@@ -67,7 +69,13 @@
         return !this.accounts[this.tradeAccountCode];
       },
       security () {
-        return this.$store.state.security.model;
+        return {
+          code: this.$store.state.security.model.code,
+          column: this.$store.getters.securityName,
+          name: this.$store.getters.securityName,
+          isin: this.$store.getters.securityIsin,
+          reg: this.$store.getters.securityReg,
+        }
       },
       trades () {
         return this.$store.state.trades.list;
